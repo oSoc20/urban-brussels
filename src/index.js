@@ -5,6 +5,7 @@ import { createBrowserHistory } from "history";
 import { Router, Route, Switch } from "react-router-dom";
 import Map from "./Map";
 import Home from "./Home";
+import Chart from "./Chart";
 import Timeline from "./Timeline";
 import * as serviceWorker from "./serviceWorker";
 
@@ -15,6 +16,7 @@ ReactDOM.render(<Router history={hist}>
     <Route exact path="/" component={Home} />
     <Route path="/map" component={Map} />
     <Route path="/timeline" component={Timeline} />
+    <Route path="/chart" component={Chart} />
   </Switch>
 </Router>, document.getElementById('root'));
 
