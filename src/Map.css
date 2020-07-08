@@ -5,3 +5,136 @@
     left: 0;
     bottom: 0;
 }
+
+.sidebarStyle {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 12px;
+    background-color: #404040;
+    color: #ffffff;
+    z-index: 1;
+    padding: 6px;
+    font-weight: bold;
+}
+     
+
+.mapboxgl-popup {
+    max-width: 400px;
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+.detail-popup.shown {
+    transform: none;
+}
+
+.detail-popup {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 28rem;
+    max-width: 28rem;
+    border-left: solid #808080 1px;
+    background-color: white;
+    transform: translate(100%, 0);
+    z-index: 2;
+    transition: transform 0.4s ease, width 0.4s ease;
+}
+
+.detail-popup .scrolling {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    padding: 2.5rem;
+    overflow: auto;
+}
+
+.detail-popup .city {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    display: inline-block;
+    margin-bottom: .5rem;
+}
+
+.detail-popup .street {
+    margin: 0;
+    font-size: 1.7rem;
+    font-weight: bold;    
+    line-height: 1;
+}
+
+.detail-popup .thumbnail {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background: center center no-repeat;
+    background-size: contain;
+    overflow: hidden;
+    margin-top: 1.5rem;
+}
+
+.detail-popup .img-responsive {
+    max-width: 100%;
+    min-width: 100%;
+    height: auto;
+}
+
+.detail-popup .description {
+    margin: 1.5rem 0 0;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.detail-popup .square-button {
+    display: inline-block;
+    border: 1px solid black;
+    width: 12.5rem;
+    height: 3rem;
+    line-height: 2.75rem;
+    letter-spacing: 0.02em;
+    padding: auto;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+}
+
+.detail-popup .square-button {
+    margin: 1.5rem 0;
+    padding: .2rem 1.5rem;
+    border-color: #033B79;
+    border-width: 3px;
+    color: #033B79;
+    height: 2.5rem;
+    font-size: 1.125rem;
+    width: auto;
+    line-height: 2.2;
+}
+
+.detail-popup .tags-title {
+    margin-top: 2rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    letter-spacing: 0.03em;
+}
+
+.detail-popup .tags {
+    margin: 1rem -0.25rem 2.5rem -0.25rem;
+}
+
+.detail-popup .tag {
+    height: 2rem;
+    margin: 0 0.25rem 0.5rem;
+    padding: 0 0.75rem;
+    background-color: #033B79;
+    border: 1px solid #033B79;
+    font-size: 1.125rem;
+    line-height: 1.9rem;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: bottom;
+    transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+}
