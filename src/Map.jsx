@@ -1,10 +1,10 @@
 import React, { useRef, useEffect } from "react";
-import "./App.css";
+import "./Map.css";
 import mapboxgl from 'mapbox-gl';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
-const App = () => {
+const Map = () => {
     const mapContainerRef = useRef(null);
 
     //Initialize map after render
@@ -13,7 +13,7 @@ const App = () => {
             container: mapContainerRef.current,
             style: process.env.REACT_APP_MAPBOX_STYLE,
             center: [4.355, 50.847],
-            zoom: 11.5
+            zoom: 12
         });
 
         map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
@@ -25,4 +25,4 @@ const App = () => {
     return <div className="mapContainer" ref={mapContainerRef} />;
 };
 
-export default App;
+export default Map;
