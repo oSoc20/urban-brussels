@@ -9,7 +9,7 @@ import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Timeline />
   </React.StrictMode>,
   document.getElementById('root')
 );
