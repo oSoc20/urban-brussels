@@ -3,10 +3,10 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch } from "react-router-dom";
-import Map from "./Map";
-import Home from "./Home";
-import Chart from "./Chart";
-import Timeline from "./Timeline";
+import Map from "./components/Map/MapPage";
+import Home from "./components/Home/HomePage";
+import Chart from "./components/Chart/ChartPage";
+import Timeline from "./components/Timeline/TimelinePage";
 import * as serviceWorker from "./serviceWorker";
 
 var hist = createBrowserHistory();

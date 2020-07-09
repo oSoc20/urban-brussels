@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import BarChart from './charts/d3';
+import BarChart from '../../charts/d3';
 
 const datas = [
     [10, 30, 40, 20],

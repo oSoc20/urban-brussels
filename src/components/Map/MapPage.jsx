@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
-import "./Map.css";
+import "./MapPage.css";
 import mapboxgl from 'mapbox-gl';
-import markerBuilding from './assets/icons/building_marker.png';
+import markerBuilding from '../../assets/icons/building_marker.png';
 
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
