@@ -2,7 +2,9 @@ let Navbar = {
     render: async () => {
         let view =  /*html*/`
             <nav class="navbar" >
-                <a href="#">Urban Brussels</a>
+                <a href="#">
+                    <img id="home_logo" src="assets/img/finalcrest.png"/>
+                </a>
                 <div>
                 <ul class="nav">
                     <li>
