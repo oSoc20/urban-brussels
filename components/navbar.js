@@ -22,6 +22,11 @@ let Navbar = {
                             Facts
                         </a>
                     </li>
+                    <li>
+                        <a class="nav-item" href="/#/list">
+                            List
+                        </a>
+                    </li>
                 </ul>
                 </div>
             </nav>
