@@ -7,9 +7,9 @@ const Api = {
            }
        };
        try {
-           const response = await fetch(`https://cors-anywhere.herokuapp.com/https://joke-api-strict-cors.appspot.com/jokes/random`, options)
+           const response = await fetch(`https://urban-brussels-api-dev.netlify.app/.netlify/functions/app/getInfo/stats`, options)
            const json = await response.json();
-           console.log(json)
+           //console.log(json)
            return json
        } catch (err) {
            console.log('Error getting documents', err)
