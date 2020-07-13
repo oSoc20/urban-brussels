@@ -5,8 +5,6 @@ import Error404 from './components/error404.js'
 
 import Utils from './utils.js'
 
-//import Navbar       from './views/components/Navbar.js'
-
 // List of supported routes. Any url other than these routes will throw a 404 error
 const routes = {
     '/'             : Landing
