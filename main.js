@@ -1,7 +1,7 @@
-import Navbar from './components/Navbar/navbar.js'
-import Landing from './components/LandingPage/landing.js'
-import Map from './components/Map/map.js'
-import Error404 from './components/Error404/error404.js'
+import Navbar from './components/navbar.js'
+import Landing from './components/landing.js'
+import Map from './components/map.js'
+import Error404 from './components/error404.js'
 
 import Utils from './utils.js'
 

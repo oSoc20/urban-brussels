@@ -2,7 +2,7 @@ let Landing = {
    render : async () => {
        let view =  /*html*/`
            <section class="section">
-               <h1> Home </h1>
+               <h1> Home page </h1>
            </section>
        `
        return view
