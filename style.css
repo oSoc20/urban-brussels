@@ -2,9 +2,44 @@
 #title{
     text-align: center;
 }
-/* Navbar */
 
+/* Navbar */
 #home_logo{
     width: 5%;
     height: 5%;
+}
+
+/* Fun facts */
+#page-content {
+    max-width: 500px;
+    margin-top: 100px;
+    margin-left: 100px;
+}
+.fun-fact-container {
+  font-family: sans-serif;
+  padding : 1em;
+  width: 100%;
+  height: 200px;
+  box-sizing: border-box;
+  box-shadow: 0px -2px 2px #dbdbdb;
+
+  background-color: #f3dfee;
+
+  background-image: 
+                    linear-gradient(175deg, rgba(0,0,0,0) 75%, #6A359C 75%),
+                    linear-gradient( 85deg, rgba(0,0,0,0) 83%, #804FB3 83%),
+                    linear-gradient(175deg, rgba(0,0,0,0) 70%, #9969C7 70%),
+                    linear-gradient( 85deg, rgba(0,0,0,0) 80%, #B589D6 80%);
+}
+#fact-image {
+  float: center;
+}
+.arrow-right {
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  border-left: 30px solid #f3dfee;
+  float: right;
+  position: absolute;
+  left: 570px;
+  top: 220px;
 }

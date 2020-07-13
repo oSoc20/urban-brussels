@@ -2,13 +2,15 @@ import Navbar from './components/navbar.js'
 import Landing from './components/landing.js'
 import Map from './components/map.js'
 import Error404 from './components/error404.js'
+import Facts from './components/facts.js'
 
 import Utils from './utils.js'
 
 // List of supported routes. Any url other than these routes will throw a 404 error
 const routes = {
-    '/'             : Landing
-    , '/map'      : Map
+    '/' : Landing
+    , '/map': Map
+    , '/facts' : Facts
 };
 
 

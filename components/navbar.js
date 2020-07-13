@@ -17,6 +17,11 @@ let Navbar = {
                             Map
                         </a>
                     </li>
+                    <li>
+                        <a class="nav-item" href="/#/facts">
+                            Facts
+                        </a>
+                    </li>
                 </ul>
                 </div>
             </nav>
