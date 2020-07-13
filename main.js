@@ -27,6 +27,8 @@ const router = async () => {
     // Render the Header and footer of the page
     header.innerHTML = await Navbar.render();
     await Navbar.after_render();
+    //footer.innerHTML = await Bottombar.render();
+    //await Bottombar.after_render();
 
     // Get the parsed URl from the addressbar
     let request = Utils.parseRequestURL()
