@@ -1,0 +1,61 @@
+/* Buildings List CSS */
+
+#list_ctn {
+    margin: 20px;
+  }
+  
+  #ul_list {
+    list-style-type: none;
+    width: 800px;
+  }
+  
+  .building_name {
+    font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+  }
+  
+  .building_img {
+    float: left;
+    margin: 0 15px 0 0;
+    width: 30%;
+  }
+  
+  .building_desc {
+    font: 200 12px/1.5 Georgia, Times New Roman, serif;
+  }
+  
+  .li_list {
+    padding: 10px;
+    overflow: auto;
+  }
+  
+  .li_list:hover {
+    background: #eee;
+    cursor: pointer;
+  }
+
+  .nb_page:hover{
+    cursor: pointer;
+  }
+  #pagination {
+    display: flex;
+    height: 10vh;
+    align-items: left;
+    justify-content: center;
+    flex-direction: column;
+  }
+  #ul_pagination{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+  #ul_pagination li{
+    color: #fff;
+    display: flex;
+  }
+  #ul_pagination li a{
+    background-color: #444B6E;
+    padding: 5px 10px;
+    border: 2px solid #3D315B;
+    border-right: 0;
+  }

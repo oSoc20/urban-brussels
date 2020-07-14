@@ -1,4 +1,9 @@
-import Api from './api.js'
+import Api from '../api.js'
+import Pagination from './pagination.js'
+
+let pagination;
+let nb_pages;
+let active_page;
 
 const List = {
   render: async () => {
@@ -11,6 +16,13 @@ const List = {
       data = await Api.getData()
       window.localStorage.setItem('building_data', JSON.stringify(data))
     }
+
+    console.log(data.numberReturned)
+
+    //Pagination
+    nb_pages = Math.floor(data.numberReturned/10);
+    pagination = Pagination.createPagination(nb_pages, 1);
+
 
     // List the 10 first building
     // TEMPORARY, TO BE MODIFIED
@@ -28,16 +40,7 @@ const List = {
     }
 
     const view = /* html */`
-            <div class="pagination">
-              <a href="#">&laquo;</a>
-              <a href="#" class="active">1</a>
-              <a href="#">2</a>
-              <a href="#">3</a>
-              <a href="#">4</a>
-              <a href="#">5</a>
-              <a href="#">6</a>
-              <a href="#">&raquo;</a>
-            </div>
+            <div id="pagination"></div>
             <div id="list_ctn">
                 <ul id="ul_list">
                     ${list}
@@ -47,8 +50,19 @@ const List = {
     return view
   },
   after_render: async () => {
+    document.getElementById('pagination').innerHTML = pagination;
+    document.getElementsByClassName('nb_page').addEventListener("click", () =>{
+      if (nb_pages > 1){
+        Pagination.createPagination(nb_pages, nb_pages-1)
+      }
+      if (nb_pages > 6){
+        active_page = nb_pages
+      }
+    })
   }
 
 }
 
 export default List
+
+
