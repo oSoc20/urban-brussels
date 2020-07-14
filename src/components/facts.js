@@ -1,6 +1,6 @@
-let Facts = {
-    render : async () => {
-        let view =  /*html*/`
+const Facts = {
+  render: async () => {
+    const view = /* html */`
         <div id="page-content">
             <div class="fun-fact-container">
                 <h2 class="did-you-know">Did you know?</h2>
@@ -12,11 +12,11 @@ let Facts = {
             </div>
         </div>
         `
-        return view
-    }
-    , after_render: async () => {
-    }
- 
- }
- 
- export default Facts;
+    return view
+  },
+  after_render: async () => {
+  }
+
+}
+
+export default Facts
