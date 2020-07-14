@@ -2,7 +2,15 @@ import Api from './api.js'
 
 const List = {
   render: async () => {
-    const data = await Api.getData()
+
+    //Checks if data has already been stored in local storage and retrieve it
+    let data = JSON.parse(window.localStorage.getItem('building_data'));
+
+    //Send a request to the API is the data in local storage is empty
+    if (data === null){
+      data = await Api.getData()
+      window.localStorage.setItem('building_data', JSON.stringify(data))
+    }
 
     // List the 10 first building
     // TEMPORARY, TO BE MODIFIED
@@ -19,11 +27,17 @@ const List = {
       i++
     }
 
-    // console.log(data.features)
-    // let count = data.buildingsCount;
-
-    // console.log(data.municipalityStatistics)
     const view = /* html */`
+            <div class="pagination">
+              <a href="#">&laquo;</a>
+              <a href="#" class="active">1</a>
+              <a href="#">2</a>
+              <a href="#">3</a>
+              <a href="#">4</a>
+              <a href="#">5</a>
+              <a href="#">6</a>
+              <a href="#">&raquo;</a>
+            </div>
             <div id="list_ctn">
                 <ul id="ul_list">
                     ${list}
