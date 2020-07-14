@@ -4,6 +4,8 @@ let List = {
     render : async () => {
         let data = await Api.getData()
 
+        //List the 10 first building
+        //TEMPORARY, TO BE MODIFIED
         let i = 0;
         let list = "";
         while (i < 10){
@@ -17,7 +19,7 @@ let List = {
             i++;
         }
 
-        console.log(data.features)
+        //console.log(data.features)
         //let count = data.buildingsCount;
         
         //console.log(data.municipalityStatistics)

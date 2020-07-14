@@ -18,6 +18,8 @@ const Api = {
            console.log('Error getting documents', err)
        }
     }
+
+    //More functions to add later
 }
 
 export default Api;
