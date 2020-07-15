@@ -21,15 +21,15 @@ const routes = {
 const router = async () => {
   // Lazy load view element:
 
-  const header = null || document.getElementById('header_ctn')
+  // const header = null || document.getElementById('header_ctn')
 
   const content = null || document.getElementById('page_ctn')
   // const footer = null || document.getElementById('footer_ctn');
 
   // Render the Header and footer of the page
 
-  header.innerHTML = await Navbar.render()
-  await Navbar.after_render()
+  // header.innerHTML = await Navbar.render()
+  // await Navbar.after_render()
 
   // footer.innerHTML = await Bottombar.render();
   // await Bottombar.after_render();

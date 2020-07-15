@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "main.js",
   "dependencies": {
+    "mapbox-gl": "^1.11.1",
     "regenerator-runtime": "^0.13.5"
   },
   "devDependencies": {
