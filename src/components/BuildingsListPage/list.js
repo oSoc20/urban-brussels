@@ -1,18 +1,24 @@
 import Api from '../api.js'
 import Pagination from './pagination.js'
 
+//Variables declaration
 let pagination;
 let nb_pages;
 let active_page;
+let data;
+let current_data={
+  'type': 'FeatureCollection',
+  'features': []
+};
 
 const List = {
   render: async () => {
 
     //Checks if data has already been stored in local storage and retrieve it
-    let data = JSON.parse(window.localStorage.getItem('building_data'));
+    data = JSON.parse(window.localStorage.getItem('building_data'));
 
     //Send a request to the API is the data in local storage is empty
-    if (data === null){
+    if (data === null) {
       data = await Api.getData()
       window.localStorage.setItem('building_data', JSON.stringify(data))
     }
@@ -20,12 +26,12 @@ const List = {
     console.log(data.numberReturned)
 
     //Pagination
-    nb_pages = Math.floor(data.numberReturned/10);
+    nb_pages = Math.floor(data.numberReturned / 10);
     pagination = Pagination.createPagination(nb_pages, 1);
 
 
     // List the 10 first building
-    // TEMPORARY, TO BE MODIFIED
+    // TODO ADD PAGINATION
     let i = 0
     let list = ''
     while (i < 10) {
@@ -39,28 +45,78 @@ const List = {
                     <p class="building_desc">${data.features[i].properties.URL_FR}</p>
                 </li>
             `
+      let tmp = {
+        'type': 'Feature',
+        'properties': {
+          'message': 'Foo',
+          'iconSize': [50, 50],
+          'img': data.features[i].properties.FIRSTIMAGE
+        },
+        'geometry': {
+          'type': 'Point',
+          'coordinates': data.features[i].geometry.coordinates
+        }
+      }
+      current_data.features.push(tmp);
       i++
     }
 
     const view = /* html */`
-            <div id="list_ctn">
+            <div class="split" id="list_ctn">
                 <ul id="ul_list">
                   <h2 id="properties_title">Urban Properties</h2>
                     ${list}
                   <div id="pagination"></div>
                 </ul>
             </div>
+            <div class="split" id="map_ctn">
+            </div>
         `
     return view
   },
   after_render: async () => {
+    //Buildings list code
     document.getElementById('pagination').innerHTML = pagination;
-    let page_buttons= document.getElementsByClassName('nb_page')
+    let page_buttons = document.getElementsByClassName('nb_page')
     for (let i = 0; i < page_buttons.length; i++) {
-      page_buttons[i].addEventListener("click", () =>{
+      page_buttons[i].addEventListener("click", () => {
         console.log(page_buttons[i].innerHTML)
       })
     }
+
+    //Mapbox GL code
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYW5hZHYxOCIsImEiOiJja2NibWI1dmIyNjh4MzBvMDJzazJlNzI0In0.n6nqsasihr0Cmsik6AU3zQ';
+    let map = new mapboxgl.Map({
+      container: 'map_ctn',
+      style: 'mapbox://styles/mapbox/light-v10',
+      center: [4.3270, 50.8787],
+      zoom: 12
+    });
+
+    //Add controls for map navigation
+    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+
+    console.log(current_data)
+  
+    current_data.features.forEach(function (marker) {
+      // create a DOM element for the marker
+      var el = document.createElement('div');
+      el.className = 'marker';
+      //console.log(marker.properties.img)
+      el.style.backgroundImage = 'url('+marker.properties.img+')'
+      el.style.width = marker.properties.iconSize[0] + 'px';
+      el.style.height = marker.properties.iconSize[1] + 'px';
+  
+      el.addEventListener('click', function () {
+        window.alert(marker.properties.message);
+      });
+  
+      // add marker to map
+      new mapboxgl.Marker(el)
+        .setLngLat(marker.geometry.coordinates)
+        .addTo(map);
+    });
+
   }
 
 }

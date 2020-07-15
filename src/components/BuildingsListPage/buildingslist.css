@@ -1,74 +1,99 @@
 /* Buildings List CSS */
 
+.split{
+    height: 100%;
+    width: 50%;
+    position: fixed;
+}
+
+.marker {
+  display: block;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+}
+
 #list_ctn {
-    margin: 20px;
-  }
-  
-  #ul_list {
-    list-style-type: none;
-    width: 800px;
-  }
-  
-  .building_streetname {
-    font: bold 18px/1.5 Helvetica, Verdana, sans-serif;
-  }
-  
-  .building_img {
-    float: left;
-    margin: 0 15px 0 0;
-    width: 130px;
-    height: 130px;
-    border-radius: 5%;
-  }
-  
-  .building_desc {
-    font: 200 12px/1.5 Georgia, Times New Roman, serif;
-  }
-  
-  .li_list {
-    padding: 10px;
-    overflow: auto;
-  }
-  
-  .li_list:hover {
-    background: #eee;
-    cursor: pointer;
-  }
+  margin: 20px;
+  left: 0;
+  width: 50%;
+  position: absolute;
+}
 
-  .nb_page:hover{
-    cursor: pointer;
-  }
-  #pagination {
-    display: flex;
-    height: 10vh;
-    align-items: left;
-    justify-content: center;
-    flex-direction: column;
-  }
-  #ul_pagination{
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-  }
-  #ul_pagination li{
-    color: #fff;
-    display: flex;
-  }
-  #ul_pagination li a{
-    background-color: #444B6E;
-    padding: 5px 10px;
-    border: 2px solid #3D315B;
-    border-right: 0;
-  }
+#map_ctn{
+  border-radius: 5%;
+  right: 0;
+  position: absolute;
+  margin-right: 5%;
+  margin-top: 5%;
+}
+  
+#ul_list {
+  list-style-type: none;
+  width: 800px;
+}
 
-  .building_style, .building_type{
-    background-color: #e7e7e7;
-    border: none;
-    text-align: center;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 7%;
-    height: 30px;
-  }
+.building_streetname {
+  font: bold 18px/1.5 Helvetica, Verdana, sans-serif;
+}
+
+.building_img {
+  float: left;
+  margin: 0 15px 0 0;
+  width: 130px;
+  height: 130px;
+  border-radius: 5%;
+}
+
+.building_desc {
+  font: 200 12px/1.5 Georgia, Times New Roman, serif;
+}
+
+.li_list {
+  padding: 10px;
+  overflow: auto;
+}
+
+.li_list:hover {
+  background: #eee;
+  cursor: pointer;
+}
+
+.nb_page:hover{
+  cursor: pointer;
+}
+#pagination {
+  display: flex;
+  height: 10vh;
+  align-items: left;
+  justify-content: center;
+  flex-direction: column;
+}
+#ul_pagination{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+#ul_pagination li{
+  color: #fff;
+  display: flex;
+}
+#ul_pagination li a{
+  background-color: #444B6E;
+  padding: 5px 10px;
+  border: 2px solid #3D315B;
+  border-right: 0;
+}
+
+.building_style, .building_type{
+  background-color: #e7e7e7;
+  border: none;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 7%;
+  height: 30px;
+}
