@@ -6,13 +6,13 @@ const Pagination = {
         let pageCutHigh = page + 1;
         // Show the Previous button only if you are on a page other than the first
         if (page > 1) {
-          str += '<li class="page-item previous no"><a class="nb_page" onclick="Pagination.createPagination(pages, '+(page-1)+')">Previous</a></li>';
+          str += '<li class="page-item previous no"><a class="nb_page">Previous</a></li>';
         }
         // Show all the pagination elements if there are less than 6 pages total
         if (pages < 6) {
           for (let p = 1; p <= pages; p++) {
             active = page == p ? "active" : "no";
-            str += '<li class="'+active+'"><a class="nb_page" onclick="Pagination.createPagination(pages, '+p+')">'+ p +'</a></li>';
+            str += '<li class="'+active+'"><a class="nb_page">'+ p +'</a></li>';
           }
         }
         // Use "..." to collapse pages outside of a certain range
@@ -20,9 +20,9 @@ const Pagination = {
           // Show the very first page followed by a "..." at the beginning of the
           // pagination section (after the Previous button)
           if (page > 2) {
-            str += '<li class="no page-item"><a class="nb_page" onclick="Pagination.createPagination(pages, 1)">1</a></li>';
+            str += '<li class="no page-item"><a class="nb_page">1</a></li>';
             if (page > 3) {
-                str += '<li class="out-of-range"><a class="nb_page" onclick="Pagination.createPagination(pages,'+(page-2)+')">...</a></li>';
+                str += '<li class="out-of-range"><a class="nb_page">...</a></li>';
             }
           }
           // Determine how many pages to show after the current page index
@@ -47,20 +47,20 @@ const Pagination = {
               continue
             }
             active = page == p ? "active" : "no";
-            str += '<li class="page-item '+active+'"><a class="nb_page" onclick="Pagination.createPagination(pages, '+p+')">'+ p +'</a></li>';
+            str += '<li class="page-item '+active+'"><a class="nb_page">'+ p +'</a></li>';
           }
           // Show the very last page preceded by a "..." at the end of the pagination
           // section (before the Next button)
           if (page < pages-1) {
             if (page < pages-2) {
-              str += '<li class="out-of-range"><a class="nb_page" onclick="Pagination.createPagination(pages,'+(page+2)+')">...</a></li>';
+              str += '<li class="out-of-range"><a class="nb_page">...</a></li>';
             }
-            str += '<li class="page-item no"><a class="nb_page" onclick="Pagination.createPagination(pages, pages)">'+pages+'</a></li>';
+            str += '<li class="page-item no"><a class="nb_page">'+pages+'</a></li>';
           }
         }
         // Show the Next button only if you are on a page other than the last
         if (page < pages) {
-          str += '<li class="page-item next no"><a class="nb_page" onclick="Pagination.createPagination(pages, '+(page+1)+')">Next</a></li>';
+          str += '<li class="page-item next no"><a class="nb_page">Next</a></li>';
         }
         str += '</ul>';
         // Return the pagination string to be outputted in the pug templates

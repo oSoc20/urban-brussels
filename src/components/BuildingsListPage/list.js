@@ -32,7 +32,10 @@ const List = {
       list += /* html */`
                 <li class="li_list">
                     <img class="building_img" src="${data.features[i].properties.FIRSTIMAGE}" >
-                    <h3 class="building_name">${data.features[i].properties.STREET_FR}, ${data.features[i].properties.NUMBER}</h3>
+                    <button class="building_style">${data.features[i].properties.STYLE_FR}</button>
+                    <button class="building_type">${data.features[i].properties.TYPO_FR}</button>
+                    <h3 class="building_streetname">${data.features[i].properties.STREET_FR} ${data.features[i].properties.NUMBER}, ${data.features[i].properties.CITIES_FR} ${data.features[i].properties.CITY}</h3>
+                    <p class="building_municipality"></p>
                     <p class="building_desc">${data.features[i].properties.URL_FR}</p>
                 </li>
             `
@@ -40,10 +43,11 @@ const List = {
     }
 
     const view = /* html */`
-            <div id="pagination"></div>
             <div id="list_ctn">
                 <ul id="ul_list">
+                  <h2 id="properties_title">Urban Properties</h2>
                     ${list}
+                  <div id="pagination"></div>
                 </ul>
             </div>
         `
@@ -51,14 +55,12 @@ const List = {
   },
   after_render: async () => {
     document.getElementById('pagination').innerHTML = pagination;
-    document.getElementsByClassName('nb_page').addEventListener("click", () =>{
-      if (nb_pages > 1){
-        Pagination.createPagination(nb_pages, nb_pages-1)
-      }
-      if (nb_pages > 6){
-        active_page = nb_pages
-      }
-    })
+    let page_buttons= document.getElementsByClassName('nb_page')
+    for (let i = 0; i < page_buttons.length; i++) {
+      page_buttons[i].addEventListener("click", () =>{
+        console.log(page_buttons[i].innerHTML)
+      })
+    }
   }
 
 }

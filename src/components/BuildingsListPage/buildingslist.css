@@ -9,14 +9,16 @@
     width: 800px;
   }
   
-  .building_name {
-    font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+  .building_streetname {
+    font: bold 18px/1.5 Helvetica, Verdana, sans-serif;
   }
   
   .building_img {
     float: left;
     margin: 0 15px 0 0;
-    width: 30%;
+    width: 130px;
+    height: 130px;
+    border-radius: 5%;
   }
   
   .building_desc {
@@ -58,4 +60,15 @@
     padding: 5px 10px;
     border: 2px solid #3D315B;
     border-right: 0;
+  }
+
+  .building_style, .building_type{
+    background-color: #e7e7e7;
+    border: none;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 7%;
+    height: 30px;
   }
