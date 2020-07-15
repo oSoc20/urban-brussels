@@ -18,7 +18,8 @@
     "test": "eslint src/components/* src/main.js",
     "init": "eslint --init",
     "fix": "eslint --fix src/components/* src/main.js",
-    "bundle": "parcel src/index.html"
+    "bundle": "parcel src/index.html",
+    "build": "parcel build src/index.html"
   },
   "repository": {
     "type": "git",
