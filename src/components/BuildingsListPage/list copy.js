@@ -62,6 +62,18 @@ const List = {
     }
 
     const view = /* html */`
+            <div class="split" id="searchbar_ctn">
+              <div id="myDropdown" class="dropdown-content">
+                <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                <a href="#about">About</a>
+                <a href="#base">Base</a>
+                <a href="#blog">Blog</a>
+                <a href="#contact">Contact</a>
+                <a href="#custom">Custom</a>
+                <a href="#support">Support</a>
+                <a href="#tools">Tools</a>
+              </div>
+            </div>
             <div class="split" id="list_ctn">
                 <ul id="ul_list">
                   <h2 id="properties_title">Urban Properties</h2>

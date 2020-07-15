@@ -62,6 +62,14 @@ const List = {
     }
 
     const view = /* html */`
+            <div class="split" id="searchbar_ctn">
+              <div class="search">
+                <input type="text" class="searchTerm" placeholder="What are you looking for?">
+                <button type="submit" class="searchButton">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
             <div class="split" id="list_ctn">
                 <ul id="ul_list">
                   <h2 id="properties_title">Urban Properties</h2>
@@ -81,6 +89,8 @@ const List = {
     return view
   },
   after_render: async () => {
+
+
     //Buildings list code
     document.getElementById('pagination').innerHTML = pagination;
     let page_buttons = document.getElementsByClassName('nb_page')
