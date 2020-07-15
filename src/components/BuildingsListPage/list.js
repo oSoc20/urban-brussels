@@ -69,7 +69,13 @@ const List = {
                   <div id="pagination"></div>
                 </ul>
             </div>
-            <div class="split" id="map_ctn">
+            <div class="split" id="toggle_ctn">
+              <label class="switch">
+                <input type="checkbox" id="toggle_switch">
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="split" id="map_ctn"></div>
             </div>
         `
     return view
@@ -90,32 +96,144 @@ const List = {
       container: 'map_ctn',
       style: 'mapbox://styles/mapbox/light-v10',
       center: [4.3270, 50.8787],
-      zoom: 12
+      zoom: 11
     });
 
     //Add controls for map navigation
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
-    console.log(current_data)
-  
-    current_data.features.forEach(function (marker) {
-      // create a DOM element for the marker
-      var el = document.createElement('div');
-      el.className = 'marker';
-      //console.log(marker.properties.img)
-      el.style.backgroundImage = 'url('+marker.properties.img+')'
-      el.style.width = marker.properties.iconSize[0] + 'px';
-      el.style.height = marker.properties.iconSize[1] + 'px';
-  
-      el.addEventListener('click', function () {
-        window.alert(marker.properties.message);
+    map.on('load', async () => { 
+      // Add a new source from our GeoJSON data and
+      // set the 'cluster' option to true. GL-JS will
+      var dataformap = await Api.getData ();
+      console.log (dataformap);
+      map.addSource('earthquakes', {
+          type: 'geojson', 
+          // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
+          // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
+          data: dataformap,
+          //
+          cluster: true,
+          clusterMaxZoom: 14, // Max zoom to cluster points on
+          clusterRadius: 50 
+          });
+      map.addLayer({
+          id: 'clusters',
+          type: 'circle',
+          source: 'earthquakes',
+          filter: ['has', 'point_count'],
+          paint: {
+          // Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
+      
+          'circle-color': [
+              'step',
+              ['get', 'point_count'],
+              '#51bbd6',
+              100,
+              '#f1f075',
+              750,
+              '#f28cb1'
+          ],
+          'circle-radius': [
+              'step',
+              ['get', 'point_count'],
+              20,
+              100,
+              30,
+              750,
+              40
+          ]
+          }
       });
-  
-      // add marker to map
-      new mapboxgl.Marker(el)
-        .setLngLat(marker.geometry.coordinates)
-        .addTo(map);
-    });
+          map.addLayer({
+              id: 'cluster-count',
+              type: 'symbol',
+              source: 'earthquakes',
+              filter: ['has', 'point_count'],
+              layout: {
+              'text-field': '{point_count_abbreviated}',
+              'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+              'text-size': 12
+              }
+          });
+          map.addLayer({
+            id: 'unclustered-point',
+            type: 'circle',
+            source: 'earthquakes',
+            filter: ['!', ['has', 'point_count']],
+            paint: {
+            'circle-color': '#11b4da',
+            'circle-radius': 4,
+            'circle-stroke-width': 1,
+            'circle-stroke-color': '#fff'
+            }
+            });
+             
+            // inspect a cluster on click
+            map.on('click', 'clusters', function(e) {
+            var features = map.queryRenderedFeatures(e.point, {
+            layers: ['clusters']
+            });
+            var clusterId = features[0].properties.cluster_id;
+            map.getSource('earthquakes').getClusterExpansionZoom(
+            clusterId,
+            function(err, zoom) {
+            if (err) return;
+             
+            map.easeTo({
+            center: features[0].geometry.coordinates,
+            zoom: zoom
+            });
+            }
+            );
+            });
+             
+            // When a click event occurs on a feature in
+            // the unclustered-point layer, open a popup at
+            // the location of the feature, with
+            // description HTML from its properties.
+            map.on('click', 'unclustered-point', function(e) {
+            var coordinates = e.features[0].geometry.coordinates.slice();
+            var mag = e.features[0].properties.mag;
+            var tsunami;
+             
+            if (e.features[0].properties.tsunami === 1) {
+            tsunami = 'yes';
+            } else {
+            tsunami = 'no';
+            }
+             
+            // Ensure that if the map is zoomed out such that
+            // multiple copies of the feature are visible, the
+            // popup appears over the copy being pointed to.
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+             
+            new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(
+            'magnitude: ' + mag + '<br>Was there a tsunami?: ' + tsunami
+            )
+            .addTo(map);
+            });
+             
+            map.on('mouseenter', 'clusters', function() {
+            map.getCanvas().style.cursor = 'pointer';
+            });
+            map.on('mouseleave', 'clusters', function() {
+            map.getCanvas().style.cursor = '';
+            });
+      })
+
+    document.getElementById('toggle_switch').addEventListener("click", () =>{
+      let btn = document.getElementById('map_ctn');
+      if (btn.style.display === "none") {
+        btn.style.display = "block";
+      } else {
+        btn.style.display = "none";
+      }
+    })
 
   }
 
