@@ -80,11 +80,75 @@
 }
 
 
-.mapContainer {
+.map-building-detail {
   position: absolute;
   top: 40px;
   right: 40px;
   left: 40px;
   bottom: 40px;
   border-radius: 15px;
+}
+
+.mapboxgl-popup {
+  max-width: 400px;
+}
+
+.detail-popup.is-visible {
+  transform: none;
+}
+
+.detail-popup {
+  position: absolute;
+  left: 70px;
+  top: 140px;
+  bottom: 80px;
+  width: 28rem;
+  max-width: 28rem;
+  border-radius: 15px;
+  background-color: white;
+  transform: translate(100%, 0);
+  z-index: 2;
+  transition: transform 0.4s ease, width 0.4s ease;
+}
+
+.detail-popup__container {
+  padding: 40px;
+}
+
+.detail-popup__img {
+  /* position: absolute;
+  top: -50px; */
+  border-radius: 10px;
+  min-height: 320px;
+  height: 20vw;
+}
+
+.detail-popup__overflow {
+  position: absolute;
+  top: -50px; 
+}
+
+.detail-popup__row {
+  display: flex;
+}
+
+.detail-popup__address {
+  align-self: flex-end;
+  margin-bottom: 30px;
+  margin-left: 25px;
+}
+
+.detail-popup__address__street, .detail-popup__address__municipality {
+  display: inline-block;
+  background-color: #DBDBDB;
+  padding: 10px 25px 10px 15px;
+  border-radius: 5px;
+  font-size: 35px;
+  color: #2C3550;
+  width: max-content;
+}
+
+.detail-popup__address__street {
+  margin-bottom: 10px;
+  padding-right: 80px;
 }
