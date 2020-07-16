@@ -2,6 +2,7 @@ import mapboxgl from 'mapbox-gl'
 import styleIcon from '../assets/icons/style-icon.svg'
 import typeIcon from '../assets/icons/type-icon.svg'
 import architectIcon from '../assets/icons/architect-icon.svg'
+import watchIcon from '../assets/icons/eye-icon.svg'
 
 const DetailBuilding = {
   render: async () => {
@@ -14,7 +15,12 @@ const DetailBuilding = {
       <div class="detail-popup__overflow">
  
       <div class="detail-popup__row">
-        <img class="detail-popup__img" src=https://monument.heritage.brussels/medias/500/buildings/10900023/10900023_0007_P01.jpg alt="" />
+        <div class="detail-popup__img-container">
+          <img class="detail-popup__img" src=https://monument.heritage.brussels/medias/500/buildings/10900023/10900023_0007_P01.jpg alt="" />
+          <img class="watch__icon" src="${watchIcon}" alt="icon watch image">
+        </div>
+
+        
 
         <div class="detail-popup__address">
             <h1 class="detail-popup__name">The name of the building</h1>
@@ -69,6 +75,12 @@ const DetailBuilding = {
    
     </div>
   </section>
+  
+  <div class="img-modal">
+    <span class="btn-close">&times;</span>
+    <div class="img-modal__content">
+      <img class="img-model__img" src="https://monument.heritage.brussels/medias/500/buildings/10900023/10900023_0007_P01.jpg">
+  </div>    
 
           `
     return view
@@ -177,6 +189,20 @@ const DetailBuilding = {
         }
       })
     })
+    const clickHandlerWatchImg = () => {
+      document.querySelector('.img-modal').style.display = 'block'
+      document.querySelector('body').style.overflow = 'hidden'
+    }
+
+    const clickHandlerCloseImg = () => {
+      document.querySelector('.img-modal').style.display = 'none'
+      document.querySelector('body').style.overflow = 'auto'
+    }
+
+    const watchButton = document.querySelector('.watch__icon')
+    const closeButton = document.querySelector('.btn-close')
+    watchButton.addEventListener('click', clickHandlerWatchImg)
+    closeButton.addEventListener('click', clickHandlerCloseImg)
   }
 }
 
