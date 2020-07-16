@@ -74,11 +74,18 @@ const DetailBuilding = {
     return view
   },
   after_render: async () => {
+    const coordinates = {
+      long: 4.32120602,
+      lat: 50.88532209
+    }
+
+    const centerMap = coordinates.long - 0.0200
+
     mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
     const map = new mapboxgl.Map({
       container: 'mapContainer',
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [4.3270, 50.8787],
+      center: [centerMap, coordinates.lat],
       zoom: 12.71
     })
 
@@ -155,7 +162,7 @@ const DetailBuilding = {
               type: 'Feature',
               geometry: {
                 type: 'Point',
-                coordinates: [4.32120602, 50.88532209]
+                coordinates: [coordinates.long, coordinates.lat]
               }
             }
           ]
