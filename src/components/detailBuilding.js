@@ -87,6 +87,3 @@ const DetailBuilding = {
 }
 
 export default DetailBuilding
-{/* <img class="detail-popup__img" src="https://monument.heritage.brussels/medias/500/buildings/10900023/10900023_0007_P01.jpg" alt="" />
-<h1 class="detail-popup__name">The name of the building</h1>
-<h2 class="detail-popup__address">Capartlaan 7 1090 Jette</h2> */}
