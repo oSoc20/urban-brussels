@@ -1,45 +1,108 @@
 /* Landing page */
 #title{
-    text-align: center;
+  text-align: center;
 }
+body {
+font-family: Arial, sans-serif;
+}
+#map {
+height: 100%;
+width: 100%;
+position:absolute;
+top: 0;
+left: 0;
+z-index: 1;
+}
+.fun-fact-box {
+position: absolute;
+top: 300px;
+z-index: 2;
+font-family: Arial,sans-serif;
+width: 30%;
+margin-left: 20px;  
+border: 0.3 px solid black;
+background-color: #c4c4c4;
+border-radius: 3px;
+flex-flow: column;
+border-radius: 25px;
 
+}
+.inside-box {
+margin-left: 20px;
+margin-right: 20px;
+font-weight: lighter; 
+background-color: #f7f8f8;
+color: #222;
+font-size: 14px;
+border-radius: 25px;
+}
+.inside-text {
+list-style: none;
+padding: 10px;
+margin-bottom: 10px;
+margin-top: 20px;
+line-height: 1.6;
+}
 /* Navbar */
 #home_logo{
-    width: 5%;
-    height: 5%;
+  width: 5%;
+  height: 5%;
+  position: relative;
+  z-index: 2;
 }
-
+#nav {
+list-style-type: none;
+position: absolute;
+z-index: 2;
+margin: 0;
+padding: 0;
+overflow: hidden;
+border: 1px solid #e7e7e7;
+background-color: #f3f3f3;
+}
+ul > li {
+float: left;
+}
+li a {
+display: block;
+color: #666;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+}
+li a:hover:not(.active) {
+background-color: #ddd;
+}
 /* Fun facts */
 #page-content {
-    max-width: 500px;
-    margin-top: 100px;
-    margin-left: 100px;
+  max-width: 500px;
+  margin-top: 100px;
+  margin-left: 100px;
 }
 .fun-fact-container {
-  font-family: sans-serif;
-  padding : 1em;
-  width: 100%;
-  height: 200px;
-  box-sizing: border-box;
-  box-shadow: 0px -2px 2px #dbdbdb;
+padding : 1em;
+width: 100%;
+height: 200px;
+box-sizing: border-box;
+box-shadow: 0px -2px 2px #dbdbdb;
 
-  background-color: #f3dfee;
+background-color: #f3dfee;
 
-  background-image: 
-                    linear-gradient(175deg, rgba(0,0,0,0) 75%, #6A359C 75%),
-                    linear-gradient( 85deg, rgba(0,0,0,0) 83%, #804FB3 83%),
-                    linear-gradient(175deg, rgba(0,0,0,0) 70%, #9969C7 70%),
-                    linear-gradient( 85deg, rgba(0,0,0,0) 80%, #B589D6 80%);
+background-image: 
+                  linear-gradient(175deg, rgba(0,0,0,0) 75%, #6A359C 75%),
+                  linear-gradient( 85deg, rgba(0,0,0,0) 83%, #804FB3 83%),
+                  linear-gradient(175deg, rgba(0,0,0,0) 70%, #9969C7 70%),
+                  linear-gradient( 85deg, rgba(0,0,0,0) 80%, #B589D6 80%);
 }
 #fact-image {
-  float: center;
+float: center;
 }
 .arrow-right {
-  border-top: 30px solid transparent;
-  border-bottom: 30px solid transparent;
-  border-left: 30px solid #f3dfee;
-  float: right;
-  position: absolute;
-  left: 570px;
-  top: 220px;
+border-top: 30px solid transparent;
+border-bottom: 30px solid transparent;
+border-left: 30px solid #f3dfee;
+float: right;
+position: absolute;
+left: 570px;
+top: 220px;
 }

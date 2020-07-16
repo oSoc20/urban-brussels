@@ -46,6 +46,7 @@ const SearchBar = {
             if (event.keyCode === 13) {
                 console.log(search.value)
                 //response = await Api.searchData(lang, filter, search.value, limit, offset)
+                window.location.href = "/#/list";
             }
             //return response;
         })
