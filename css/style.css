@@ -79,19 +79,24 @@
   cursor: pointer;
 }
 
+@font-face {
+  font-family: 'ProximaNova-Bold';
+  font-weight: 500;
+  src: url('/assets/fonts/proxima_nova_bold.woff');
+
+}
 
 .map-building-detail {
   position: absolute;
-  top: 40px;
-  right: 40px;
-  left: 40px;
-  bottom: 40px;
-  border-radius: 15px;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  border-radius: 15px 15px 0 0;
+  position: fixed;
 }
 
-.mapboxgl-popup {
-  max-width: 400px;
-}
+
 
 .detail-popup.is-visible {
   transform: none;
@@ -99,56 +104,139 @@
 
 .detail-popup {
   position: absolute;
-  left: 70px;
-  top: 140px;
-  bottom: 80px;
-  width: 28rem;
-  max-width: 28rem;
-  border-radius: 15px;
+  left: 80px;
+  top: 80px;
+  bottom: 0;
+  width: 29vw;
+  min-width: 400px;
   background-color: white;
   transform: translate(100%, 0);
   z-index: 2;
   transition: transform 0.4s ease, width 0.4s ease;
+  box-shadow: 0px 3.3655px 3.3655px rgba(0, 0, 0, 0.1);
+  height: fit-content;  
+  border-radius: 15px 15px 0 0;
 }
+
 
 .detail-popup__container {
-  padding: 40px;
+  padding: 30px;
 }
 
+
 .detail-popup__img {
-  /* position: absolute;
-  top: -50px; */
   border-radius: 10px;
-  min-height: 320px;
+  min-height: 300px;
   height: 20vw;
 }
 
-.detail-popup__overflow {
-  position: absolute;
-  top: -50px; 
+.tag__group-name{
+  font-size: 21px;
+  font-family: 'ProximaNova-Bold';
+  color: #212E44;
+  margin-right: 9px;
+  margin-left: 8px;
+}
+
+.detail-popup__tags {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 5px;
+  margin-bottom: 35px;
+
+}
+
+.tag__category, .tag-group-architect {
+  display: flex;
+  align-items: center;
+}
+
+.tag__category {
+  margin-bottom: 15px;
+}
+
+
+.tag  {
+  font-size: 16px;
+  font-family: 'ProximaNova-Bold';
+  padding: 12px 35px;
+  text-align: center;
+  border-radius: 30px;
+  margin: 0 10px 15px 0
+}
+
+.line {
+  width: 65%;
+  height: 4px;
+  border-radius: 30px;
+  margin-left: 9px;
+}
+
+.tag--style, .line--style {
+  background-color: #F0F5FF;
+  color: #618EEC;
+}
+
+.tag--type, .line--type {
+  background-color: #FDF5F2;
+  color: #F58975;
+}
+
+.tag--architect, .line--architect {
+  background-color: #FCF1F7;
+  color: #AF447F;
+}
+
+.tag__icon {
+  margin-left: 4px;
+}
+
+.button {
+  font-family: 'ProximaNova-Bold';
+  font-size: 16px;
+  text-decoration: none;
+  padding: 9px;
+  border-radius: 4px;
+  display: block;
+  text-align: center;
+}
+
+.button--dark {
+  background-color: #212E44;
+  color: white;
 }
 
 .detail-popup__row {
   display: flex;
+  margin-bottom: 45px;
+  margin-top: -70px;
 }
 
 .detail-popup__address {
+  position: relative;
   align-self: flex-end;
-  margin-bottom: 30px;
-  margin-left: 25px;
+  margin-left: 20px;
 }
 
-.detail-popup__address__street, .detail-popup__address__municipality {
+.detail-popup__address__street, .detail-popup__address__municipality, .detail-popup__name {
   display: inline-block;
-  background-color: #DBDBDB;
+  background-color: white;
   padding: 10px 25px 10px 15px;
   border-radius: 5px;
-  font-size: 35px;
-  color: #2C3550;
+  color: #212E44;
   width: max-content;
+  font-size: 30px;
+  font-family: 'ProximaNova-Bold';
 }
 
-.detail-popup__address__street {
-  margin-bottom: 10px;
-  padding-right: 80px;
+.detail-popup__address__municipality {
+  border-radius: 0 0 5px 5px;
+}
+
+
+.detail-popup__name {
+  font-size: 32px;
+  position: absolute;
+  bottom: 130px;
+  max-width: 45vw;
 }
