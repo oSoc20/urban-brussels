@@ -5,7 +5,6 @@ import Pagination from './pagination.js'
 //Variables declaration
 let pagination;
 let nb_pages;
-let active_page;
 let data;
 let current_data = {
   'type': 'FeatureCollection',
@@ -16,12 +15,15 @@ const List = {
   render: async () => {
 
     //Checks if data has already been stored in local storage and retrieve it
-    data = JSON.parse(window.localStorage.getItem('building_data'));
+    data = window.localStorage.getItem('building_data');
 
     //Send a request to the API is the data in local storage is empty
-    if (data === null) {
+    //if (Object.entries(data).length === 0 && data.constructor === Object) {
+    if (data === "undefined"){
       data = await Api.getData()
       window.localStorage.setItem('building_data', JSON.stringify(data))
+    } else {
+      data = JSON.parse(data);
     }
 
     console.log(data.numberReturned)

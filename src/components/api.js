@@ -23,11 +23,11 @@ const Api = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'lang': lang,
-        'type': type,
-        'value': value,
-        'limit': limit,
-        'offset': offset
+        lang: lang,
+        type: type,
+        value: value,
+        limit: limit,
+        offset: offset
       }
     }
     try {
