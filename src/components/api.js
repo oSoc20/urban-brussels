@@ -1,7 +1,6 @@
 const Api = {
 
   // Fetches buildings data from the API
-  // TODO localstorage
   getData: async () => {
     const options = {
       method: 'GET',
@@ -17,9 +16,31 @@ const Api = {
     } catch (err) {
       console.log('Error getting documents', err)
     }
+  },
+
+  searchData: async (lang, type, value, limit, offset) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'lang': lang,
+        'type': type,
+        'value': value,
+        'limit': limit,
+        'offset': offset
+      }
+    }
+    try {
+      const response = await fetch('https://urban-brussels-api-dev.netlify.app/.netlify/functions/app/getInfo/search', options)
+      const json = await response.json()
+      // console.log(json)
+      return json
+    } catch (err) {
+      console.log('Error getting documents', err)
+    }
   }
 
-  // More functions to add later
+  // Add more functions
 }
 
 export default Api
