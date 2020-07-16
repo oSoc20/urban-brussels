@@ -53,10 +53,3 @@ const SearchBar = {
   }
   
   export default SearchBar;
-
-/* 
-<form class="searchbar_ctn">
-                <input id="search_bar" type="text" placeholder="Please select a filter">
-                <button id="submit_search" type="submit">
-            </form>
-*/
