@@ -46,7 +46,7 @@ const List = {
                     <p class="building_desc">${data.features[i].properties.URL_FR}</p>
                 </li>
             `
-      let tmp = {
+      /*let tmp = {
         'type': 'Feature',
         'properties': {
           'message': 'Foo',
@@ -58,7 +58,8 @@ const List = {
           'coordinates': data.features[i].geometry.coordinates
         }
       }
-      current_data.features.push(tmp);
+      current_data.features.push(tmp);*/
+      current_data.features.push(data.features[i]);
       i++
     }
 
@@ -122,13 +123,11 @@ const List = {
     map.on('load', async () => {
       // Add a new source from our GeoJSON data and
       // set the 'cluster' option to true. GL-JS will
-      var dataformap = await Api.getData();
-      console.log(dataformap);
       map.addSource('earthquakes', {
         type: 'geojson',
         // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
         // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
-        data: dataformap,
+        data: current_data,
         //
         cluster: true,
         clusterMaxZoom: 14, // Max zoom to cluster points on
@@ -226,6 +225,7 @@ const List = {
           coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
         }
 
+        console.log(e.features[0].properties);
         new mapboxgl.Popup()
           .setLngLat(e.features[0].geometry.coordinates)
           .setHTML('<b>City:</b> ' + e.features[0].properties["CITIES_NL"] + "<br><img width='200px' src='" + e.features[0].properties["FIRSTIMAGE"] + "'>")
