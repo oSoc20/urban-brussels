@@ -7,7 +7,7 @@
 #drop_btn {
     background-color: #585858;
     color: white;
-    padding: 16px;
+    padding: 12px;
     font-size: 16px;
     border: none;
     border-radius: 5%;
@@ -36,13 +36,13 @@
     display: block;
   }
   
-  .dropdown_content a:hover {background-color: #f1f1f1}
+  .hover_filter a:hover {background-color: #f1f1f1}
   
-  .dropdown_search:hover .dropdown_content {
+  .hover_filter:hover .dropdown_content {
     display: block;
   }
   
-  .dropdown_search:hover #drop_btn {
+  .hover_filter:hover #drop_btn {
     background-color: #e7e7e7;
   }
 
@@ -70,4 +70,21 @@
   #search_bar{
       border-radius: 5%;
   }
-  
+
+  /* TAGS */
+
+  .tags{
+    background-color: #A9A9A9;
+    color: white;
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin: 5px;
+  }
+
+  .close_tags_button{
+     width: 18px;
+     color: #3C3D3E;
+  }
