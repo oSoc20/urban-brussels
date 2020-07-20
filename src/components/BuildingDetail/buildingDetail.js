@@ -1,8 +1,8 @@
 import mapboxgl from 'mapbox-gl'
-import styleIcon from '../assets/icons/style-icon.svg'
-import typeIcon from '../assets/icons/type-icon.svg'
-import architectIcon from '../assets/icons/architect-icon.svg'
-import watchIcon from '../assets/icons/eye-icon.svg'
+import styleIcon from '../../assets/icons/style-icon.svg'
+import typeIcon from '../../assets/icons/type-icon.svg'
+import architectIcon from '../../assets/icons/architect-icon.svg'
+import watchIcon from '../../assets/icons/eye-icon.svg'
 
 const DetailBuilding = {
   render: async () => {
@@ -19,8 +19,6 @@ const DetailBuilding = {
           <img class="detail-popup__img" src=https://monument.heritage.brussels/medias/500/buildings/10900023/10900023_0007_P01.jpg alt="" />
           <img class="watch__icon" src="${watchIcon}" alt="icon watch image">
         </div>
-
-        
 
         <div class="detail-popup__address">
             <h1 class="detail-popup__name">The name of the building</h1>
