@@ -3,8 +3,8 @@ import Landing from './components/landing.js'
 import Map from './components/map.js'
 import Error404 from './components/error404.js'
 import Facts from './components/facts.js'
-import List from './components/list.js'
 import Detail from './components/detailBuilding.js'
+import List from './components/BuildingsListPage/list.js'
 
 import Utils from './utils.js'
 
