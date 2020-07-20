@@ -69,9 +69,8 @@ const DetailBuilding = {
               </div>
           </div>
         </div>
-
-        <a href="" class="button button--dark" >Get to know more</a>
-      </div>
+        <a href="https://monument.heritage.brussels/nl/Jette/Capartlaan/7/24664" class="button button--dark" >Get to know more</a> 
+        </div>
    
     </div>
   </section>
@@ -90,13 +89,14 @@ const DetailBuilding = {
       long: 4.32120602,
       lat: 50.88532209
     }
+    let centerMap
 
-    const centerMap = coordinates.long - 0.0200
+    window.innerWidth > 880 ? centerMap = coordinates.long - 0.0200 : centerMap = coordinates.long
 
     mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
     const map = new mapboxgl.Map({
       container: 'mapContainer',
-      style: 'mapbox://styles/mapbox/streets-v11',
+      style: process.env.MAPBOX_STYLE,
       center: [centerMap, coordinates.lat],
       zoom: 12.71
     })
