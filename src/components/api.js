@@ -38,6 +38,50 @@ const Api = {
     } catch (err) {
       console.log('Error getting documents', err)
     }
+  },
+
+  searchRandom: async (lang, limit) => {
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        lang: lang,
+        limit: limit
+      }
+    }
+    try {
+      const response = await fetch('https://urban-brussels-api-dev.netlify.app/.netlify/functions/app/getInfo/search/random', options)
+      const json = await response.json()
+      return json
+    } catch (err) {
+      console.log('Error getting documents', err)
+    }
+  },
+
+  searchFunFacts: async (lang, limit) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        lang: lang,
+        limit: limit
+      }
+    }
+    try {
+      const response = await fetch('https://urban-brussels-api-dev.netlify.app/.netlify/functions/app/getInfo/fun-facts', options)
+      const json = await response.json()
+      return json
+    } catch (err) {
+      console.log('Error getting documents', err)
+    }
+  },
+
+  getInfo: async () => {
+
+  },
+
+  getStatistics: async () => {
+
   }
 
   // Add more functions

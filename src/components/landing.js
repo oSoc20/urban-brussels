@@ -1,6 +1,6 @@
 import SearchBar from './SearchBar/searchbar.js'
 
-let Landing = {
+const Landing = {
    render : async () => {
        let view =  /*html*/`
       <div id="map"></div>
@@ -24,14 +24,14 @@ let Landing = {
           </div>
         </div>
        `
-       return view
-   }
-   , after_render: async () => {
-     //Search bar code
-    SearchBar.displaySearchBar("landing_search");
-    SearchBar.searchFunction();
+    return view
+  },
+  after_render: async () => {
+    // Search bar code
+    SearchBar.displaySearchBar('landing_search')
+    SearchBar.searchFunction()
 
-    mapboxgl.accessToken = 'pk.eyJ1IjoiYW5hZHYxOCIsImEiOiJja2NibWI1dmIyNjh4MzBvMDJzazJlNzI0In0.n6nqsasihr0Cmsik6AU3zQ';
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYW5hZHYxOCIsImEiOiJja2NibWI1dmIyNjh4MzBvMDJzazJlNzI0In0.n6nqsasihr0Cmsik6AU3zQ'
 
     var map = new mapboxgl.Map({
        container: document.getElementById("map"),
@@ -46,22 +46,14 @@ let Landing = {
     map.on('load', function () {
         map.addSource ('trees',{
             type: 'geojson',
-            data: 'https://api.urban-brussels.osoc.be/autocomplete?lang=fre&query=victor'
+            data: 'https://gis.urban.brussels/geoserver/ows?service=wfs&version=2.0.0&request=GetFeature&TypeName=BSO_DML_BESC:Inventaris_Irismonument&outputformat=application/json&cql_filter=ID_BATI_CMS=7517&srsname=EPSG:4326'
         });
-        map.addLayer({
-            id: 'trees-heat',
-            type: 'heatmap',
-            source: 'trees',
-            maxzoom: 15,
-            paint: {
-              'fill-color': '#ffffff',
-              'fill-opacity': 1
-}});
+
           map.addLayer({
             id: 'trees-point',
             type: 'circle',
             source: 'trees',
-            minzoom: 14,
+            minzoom: 1,
             paint: {
               // increase the radius of the circle as the zoom level and dbh value increases
               'circle-radius': {
@@ -75,12 +67,6 @@ let Landing = {
                 ]
               },
               'circle-stroke-color': 'black',
-              'circle-opacity': {
-                stops: [
-                  [14, 0],
-                  [15, 1]
-                ]
-              }
             }
           }, 'waterway-label');
 
@@ -138,8 +124,7 @@ map.on ('sourcedata', (event) => {
         }
       });
    }
+  }
 
 
-}
-
-export default Landing;
+export default Landing
