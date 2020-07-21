@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "urban-brussel",
   "version": "0.1.0",
   "private": true,
@@ -35,4 +36,42 @@
       "last 1 safari version"
     ]
   }
+=======
+  "name": "urban-brussels",
+  "version": "1.0.0",
+  "main": "main.js",
+  "dependencies": {
+    "regenerator-runtime": "^0.13.5"
+  },
+  "devDependencies": {
+    "eslint": "^7.4.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "parcel-bundler": "^1.12.4"
+  },
+  "scripts": {
+    "test": "eslint src/components/* src/main.js",
+    "fix": "eslint --fix src/components/* src/main.js",
+    "bundle": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oSoc20/urban-brussels.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oSoc20/urban-brussels/issues"
+  },
+  "homepage": "https://github.com/oSoc20/urban-brussels#readme",
+  "keywords": [],
+  "description": "",
+  "browserslist": [
+    "since 2017-06"
+  ]
+>>>>>>> 98be481b29f9b0773f23c3d1228815b07901bdd1
 }

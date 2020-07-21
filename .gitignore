@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -46,3 +47,8 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+=======
+node_modules
+dist
+.cache
+>>>>>>> 98be481b29f9b0773f23c3d1228815b07901bdd1
