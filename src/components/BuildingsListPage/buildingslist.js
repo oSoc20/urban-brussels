@@ -24,7 +24,7 @@ const buildingList = {
 
     // Send a request to the API is the data in local storage is empty
     // if (Object.entries(data).length === 0 && data.constructor === Object) {
-    if (data === 'undefined') {
+    if (typeof data === 'undefined' || data === null) {
       data = await Api.getData()
       window.localStorage.setItem('building_data', JSON.stringify(data))
     } else {

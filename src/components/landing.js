@@ -38,7 +38,6 @@ const Landing = {
 
     // Language switch
     const lang = document.getElementsByClassName('lang_select')
-    const langbtn = document.getElementsByClassName('dropbtn')
     for (let index = 0; index < lang.length; index++) {
       lang[index].addEventListener('click', () => {
         document.getElementById('dropbtn').innerHTML = lang[index].innerHTML

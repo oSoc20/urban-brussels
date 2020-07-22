@@ -1,4 +1,6 @@
 import Api from '../api.js'
+import searchIcon from '../../assets/icons/search-icon.png'
+import diceIcon from '../../assets/icons/d.png'
 
 /* Variable declarations */
 let search_text = ["Search", "Chercher", "Zoeken"];
@@ -13,8 +15,8 @@ const SearchBar = {
         <div class="search_ctn">
             <form class="searchbar_ctn" autocomplete="off">
                 <input id="search_bar" type="text" placeholder="`+ search_text[0] + `">
-                <button id="search_btn"><img src="/assets/icons/search-icon.png"/></button>
-                <button id="searchrandom_btn"><img id="dices_btn" src="/assets/icons/d.png"/></button>
+                <button id="search_btn"><img src="`+searchIcon+`"/></button>
+                <button id="searchrandom_btn"><img id="dices_btn" src="`+diceIcon+`"/></button>
             </form>
         </div>
         `;
