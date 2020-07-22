@@ -1,6 +1,5 @@
 import Api from '../api.js'
 import SearchBar from '../SearchBar/searchbar.js'
-import Pagination from './pagination.js'
 
 //Variables declaration
 let pagination;

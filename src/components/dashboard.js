@@ -1,6 +1,6 @@
 const Dashboard = {
-    render: async () => {
-      const view = /* html */`
+  render: async () => {
+    const view = /* html */`
               <section class="section">
                   <h1> Dashboard page </h1>
               </section>
@@ -38,12 +38,11 @@ const Dashboard = {
             <footer class="page-footer"></footer>
 </section>
           `
-      return view
-    },
-    after_render: async () => {
-    }
-  
+    return view
+  },
+  after_render: async () => {
   }
-  
-  export default Dashboard
-  
+
+}
+
+export default Dashboard

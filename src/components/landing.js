@@ -2,7 +2,7 @@ import SearchBar from './SearchBar/searchbar.js'
 
 const Landing = {
   render: async () => {
-    let view =  /*html*/`
+    const view = /* html */`
       <div id="map"></div>
       
       <div id="search_container"></div>
@@ -33,32 +33,32 @@ const Landing = {
     SearchBar.searchFunction()
 
     // Language switch
-    let lang = document.getElementsByClassName('lang_select');
-    let langbtn = document.getElementsByClassName('dropbtn');
+    const lang = document.getElementsByClassName('lang_select')
+    const langbtn = document.getElementsByClassName('dropbtn')
     for (let index = 0; index < lang.length; index++) {
-      lang[index].addEventListener("click", () => {
-        document.getElementById('dropbtn').innerHTML = lang[index].innerHTML;
-      })      
+      lang[index].addEventListener('click', () => {
+        document.getElementById('dropbtn').innerHTML = lang[index].innerHTML
+      })
     }
 
     mapboxgl.accessToken = 'pk.eyJ1IjoieWFubmFhIiwiYSI6ImNrY2JwdGl1bTI3Ym0yem8wdmMyd3NhNHEifQ.b2WEZ63ZaouutZ65wXpfxg'
 
     var map = new mapboxgl.Map({
-      container: document.getElementById("map"),
+      container: document.getElementById('map'),
       style: 'mapbox://styles/yannaa/ckcui6mpa0gqh1io64uoyg6nf', // stylesheet location
-      //style: 'mapbox://styles/mapbox/streets-v11',
+      // style: 'mapbox://styles/mapbox/streets-v11',
       center: [4.38128798, 50.84723317],
-      zoom: 15, // starting zoom
-    });
+      zoom: 15 // starting zoom
+    })
 
-    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
 
-    console.log(map);
+    console.log(map)
     map.on('load', function () {
       map.addSource('trees', {
         type: 'geojson',
         data: 'https://gis.urban.brussels/geoserver/ows?service=wfs&version=2.0.0&request=GetFeature&TypeName=BSO_DML_BESC:Inventaris_Irismonument&outputformat=application/json&cql_filter=ID_BATI_CMS=18426&srsname=EPSG:4326'
-      });
+      })
 
       map.addLayer({
         id: 'trees-point',
@@ -74,68 +74,66 @@ const Landing = {
               [{ zoom: 15, value: 1 }, 5],
               [{ zoom: 15, value: 62 }, 10],
               [{ zoom: 22, value: 1 }, 20],
-              [{ zoom: 22, value: 62 }, 50],
+              [{ zoom: 22, value: 62 }, 50]
             ]
           },
-          'circle-stroke-color': 'black',
+          'circle-stroke-color': 'black'
         }
-      }, 'waterway-label');
+      }, 'waterway-label')
+    })
 
-    });
-    
     map.on('sourcedata', (event) => {
       if (event.isSourceLoaded === true) {
-        map.querySourceFeatures("trees").forEach((feature) => {
+        map.querySourceFeatures('trees').forEach((feature) => {
           var popup = new mapboxgl.Popup({ closeOnClick: false })
             .setLngLat(feature.geometry.coordinates)
-            .setHTML(`<img src="${feature.properties["FIRSTIMAGE"]}">` + `<h1>${feature.properties["CITIES_NL"]}</h1>` + '<p>BE Central <br> Kantersteen 10/12, <br> 1000 Brussels </p>')
-            .addTo(map);
-        });
+            .setHTML(`<img src="${feature.properties.FIRSTIMAGE}">` + `<h1>${feature.properties.CITIES_NL}</h1>` + '<p>BE Central <br> Kantersteen 10/12, <br> 1000 Brussels </p>')
+            .addTo(map)
+        })
       }
     })
 
-    //Slideshow for Fun facts
+    // Slideshow for Fun facts
     $(document).ready(function () {
       $('#previous').on('click', function () {
         // Change to the previous image
-        $('#text_' + currentText).stop().fadeOut(1);
-        decreaseText();
-        $('#text_' + currentText).stop().fadeIn(1);
-      });
+        $('#text_' + currentText).stop().fadeOut(1)
+        decreaseText()
+        $('#text_' + currentText).stop().fadeIn(1)
+      })
       $('#next').on('click', function () {
         // Change to the next image
-        $('#text_' + currentText).stop().fadeOut(1);
-        increaseText();
-        $('div .inside-box:not(:nth-of-type(2))').show();
-        $('#text_' + currentText).stop().fadeIn(1);
+        $('#text_' + currentText).stop().fadeOut(1)
+        increaseText()
+        $('div .inside-box:not(:nth-of-type(2))').show()
+        $('#text_' + currentText).stop().fadeIn(1)
 
-        console.log(currentText);
-      });
+        console.log(currentText)
+      })
 
-      var currentText = 1;
-      var totalTexts = 3;
+      var currentText = 1
+      var totalTexts = 3
 
-      function increaseText() {
-        /*Increase currentImage by 1.
+      function increaseText () {
+        /* Increase currentImage by 1.
         * Resets to 1 if larger than totalImages
         */
-        ++currentText;
+        ++currentText
         if (currentText > totalTexts) {
-          currentText = 1;
+          currentText = 1
         }
       }
-      function decreaseText() {
+      function decreaseText () {
         /* Decrease currentImage by 1.
         * Resets to totalImages if smaller than 1
         */
-        --currentText;
+        --currentText
         if (currentText < 1) {
-          currentText = totalTexts;
+          currentText = totalTexts
         }
       }
-    });
+    })
   }
 }
-
 
 export default Landing
