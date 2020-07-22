@@ -626,7 +626,7 @@ const buildingList = {
               </div>
           </div>
         </div>
-        <a href="https://monument.heritage.brussels/nl/Jette/Capartlaan/7/24664" class="button button--dark" >Get to know more</a> 
+        <a href="${item[0].properties.URL_NL}" class="button button--dark" >Get to know more</a> 
         </div>
    
     `
