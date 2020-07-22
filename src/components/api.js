@@ -9,7 +9,7 @@ const Api = {
       }
     }
     try {
-      const response = await fetch('https://urban-brussels-api-dev.netlify.app/.netlify/functions/app/getInfo/byZipCode/1090', options)
+      const response = await fetch('https://gis.urban.brussels/geoserver/ows?service=wfs&version=2.0.0&request=GetFeature&TypeName=BSO_DML_BESC:Inventaris_Irismonument&outputformat=application/json&cql_filter=CITY%20=%20%271090%27&srsname=EPSG:4326', options)
       const json = await response.json()
       // console.log(json)
       return json
