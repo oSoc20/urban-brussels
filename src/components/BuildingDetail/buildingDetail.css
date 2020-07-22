@@ -102,6 +102,11 @@
   color: #AF447F;
 }
 
+.tag--small {
+  padding: 8px 20px;
+  font-size: 12px;
+}
+
 .tag__icon {
   margin-left: 4px;
 }
