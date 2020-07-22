@@ -2,8 +2,9 @@ import Navbar from './components/navbar.js'
 import Landing from './components/landing.js'
 import Map from './components/map.js'
 import Facts from './components/facts.js'
-import List from './components/BuildingsListPage/list.js'
 import Dashboard from './components/dashboard.js'
+import Detail from './components/BuildingDetail/buildingDetail'
+import List from './components/BuildingsListPage/buildingslist.js'
 
 import Utils from './utils.js'
 
@@ -13,19 +14,24 @@ const routes = {
   '/map': Map,
   '/facts': Facts,
   '/list': List,
-  '/dashboard': Dashboard
+  '/dashboard': Dashboard,
+  '/detail': Detail
 }
 
 // The router code. Takes a URL, checks against the list of supported routes and then renders the corresponding content page.
 const router = async () => {
   // Lazy load view element:
-  const header = null || document.getElementById('header_ctn')
+
+  // const header = null || document.getElementById('header_ctn')
+
   const content = null || document.getElementById('page_ctn')
   // const footer = null || document.getElementById('footer_ctn');
 
   // Render the Header and footer of the page
-  header.innerHTML = await Navbar.render()
-  await Navbar.after_render()
+
+  // header.innerHTML = await Navbar.render()
+  // await Navbar.after_render()
+
   // footer.innerHTML = await Bottombar.render();
   // await Bottombar.after_render();
 

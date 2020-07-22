@@ -1,37 +1,15 @@
-<<<<<<< HEAD
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.DS_Store
-
 # Dependency directories
 node_modules/
 
-# Optional npm cache directory
-.npm
-
 # Optional eslint cache
 .eslintcache
-
-# Yarn Integrity file
-.yarn-integrity
+.cache
 
 # dotenv environment variables file
 .env
 
 .vscode/
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
 
 # production
 /build
@@ -44,11 +22,3 @@ node_modules/
 .env.test.local
 .env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-=======
-node_modules
-dist
-.cache
->>>>>>> 98be481b29f9b0773f23c3d1228815b07901bdd1
