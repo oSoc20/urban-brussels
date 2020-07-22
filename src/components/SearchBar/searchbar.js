@@ -1,9 +1,8 @@
 import Api from '../api.js'
 
 /* Variable declarations */
-let search_text = "Type here to search";
+let search_text = ["Search", "Chercher", "Zoeken"];
 let tags_set = new Set();
-
 var arr = [];
 let resp;
 
@@ -13,7 +12,7 @@ const SearchBar = {
         document.getElementById(container_idname).innerHTML = /*html*/`
         <div class="search_ctn">
             <form class="searchbar_ctn" autocomplete="off">
-                <input id="search_bar" type="text" placeholder="`+ search_text + `">
+                <input id="search_bar" type="text" placeholder="`+ search_text[0] + `">
                 <button id="search_btn"><img src="/assets/icons/search-icon.png"/></button>
                 <button id="searchrandom_btn"><img id="dices_btn" src="/assets/icons/d.png"/></button>
             </form>

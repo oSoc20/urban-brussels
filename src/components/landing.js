@@ -20,8 +20,8 @@ const Landing = {
                 </div>
               </div>
               <div class="arrows_ff">
-              <i id="left_arr" class="fa fa-caret-left" style="font-size:24px;color:#81D88F"></i>
-              <i id="right_arr" class="fa fa-caret-right" style="font-size:24px;color:#81D88F"></i>
+              <i id="left_arr" class="fa fa-caret-left" style="font-size:24px;color:#81d8bf"></i>
+              <i id="right_arr" class="fa fa-caret-right" style="font-size:24px;color:#81d8bf"></i>
               </div>
         </div>
        `
@@ -32,13 +32,22 @@ const Landing = {
     SearchBar.displaySearchBar('search_container')
     SearchBar.searchFunction()
 
-    mapboxgl.accessToken = 'pk.eyJ1IjoiYW5hZHYxOCIsImEiOiJja2NibWI1dmIyNjh4MzBvMDJzazJlNzI0In0.n6nqsasihr0Cmsik6AU3zQ'
+    // Language switch
+    let lang = document.getElementsByClassName('lang_select');
+    let langbtn = document.getElementsByClassName('dropbtn');
+    for (let index = 0; index < lang.length; index++) {
+      lang[index].addEventListener("click", () => {
+        document.getElementById('dropbtn').innerHTML = lang[index].innerHTML;
+      })      
+    }
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoieWFubmFhIiwiYSI6ImNrY2JwdGl1bTI3Ym0yem8wdmMyd3NhNHEifQ.b2WEZ63ZaouutZ65wXpfxg'
 
     var map = new mapboxgl.Map({
       container: document.getElementById("map"),
-      //style: 'mapbox://styles/anadv18/ckcofi5sh06gk1ilj0xc7e0lg', // stylesheet location
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [4.34552806, 50.83076536],
+      style: 'mapbox://styles/yannaa/ckcui6mpa0gqh1io64uoyg6nf', // stylesheet location
+      //style: 'mapbox://styles/mapbox/streets-v11',
+      center: [4.38128798, 50.84723317],
       zoom: 15, // starting zoom
     });
 
@@ -48,7 +57,7 @@ const Landing = {
     map.on('load', function () {
       map.addSource('trees', {
         type: 'geojson',
-        data: 'https://gis.urban.brussels/geoserver/ows?service=wfs&version=2.0.0&request=GetFeature&TypeName=BSO_DML_BESC:Inventaris_Irismonument&outputformat=application/json&cql_filter=ID_BATI_CMS=7517&srsname=EPSG:4326'
+        data: 'https://gis.urban.brussels/geoserver/ows?service=wfs&version=2.0.0&request=GetFeature&TypeName=BSO_DML_BESC:Inventaris_Irismonument&outputformat=application/json&cql_filter=ID_BATI_CMS=18426&srsname=EPSG:4326'
       });
 
       map.addLayer({
@@ -73,6 +82,7 @@ const Landing = {
       }, 'waterway-label');
 
     });
+    
     map.on('sourcedata', (event) => {
       if (event.isSourceLoaded === true) {
         map.querySourceFeatures("trees").forEach((feature) => {
@@ -83,6 +93,7 @@ const Landing = {
         });
       }
     })
+
     //Slideshow for Fun facts
     $(document).ready(function () {
       $('#previous').on('click', function () {

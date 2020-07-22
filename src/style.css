@@ -140,6 +140,7 @@ background-color: #ddd;
   font-weight: lighter;
   border: none;
   color: white;
+  cursor: pointer;
 }
 
 #dash_text{
@@ -189,6 +190,48 @@ h4 {
 #left_arr{
   margin-right: 15px;
 }
+
+#dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  margin-right: 10px;
+  border-radius: 12px;
+  background-color: white;
+  color: #81d8bf;
+  border: 2px solid #81d8bf;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #b7b7b7;
+  min-width: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 12px;
+}
+
+.dropdown-content a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #81d8bf;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover #dropbtn {background-color: #ddd;}
 
 /*Mapbox popup*/
 
