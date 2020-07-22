@@ -50,6 +50,10 @@ const buildingList = {
     </section>
 
     <section class="section__list">
+    <div class="search-bar">
+      <input class=search-bar__input type="text" placeholder='Search' />
+      <div id="close" class="toggle"></div>
+    </div>
       <div class="section__list__title">
         <h1>Buildings</h1>
         <div class="pagination"></div>

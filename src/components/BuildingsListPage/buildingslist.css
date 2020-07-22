@@ -234,3 +234,26 @@ label:active:after {
 .is-not-visible {
   display: none;
 }
+
+.search-bar {
+  margin-bottom: 10px
+}
+
+.search-bar__input {
+  border: none;
+  background: #F5F5F5;
+  border-radius: 10px;
+  height: 35px;
+  width: 100%;
+  color: #333B56;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+
+
+
+
+
+
