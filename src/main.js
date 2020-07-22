@@ -4,7 +4,7 @@ import Map from './components/map.js'
 import Error404 from './components/error404.js'
 import Facts from './components/facts.js'
 import Detail from './components/BuildingDetail/buildingDetail'
-import List from './components/BuildingsListPage/list.js'
+import List from './components/BuildingsListPage/buildingslist.js'
 
 import Utils from './utils.js'
 
