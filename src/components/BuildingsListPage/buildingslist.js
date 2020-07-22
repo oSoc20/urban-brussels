@@ -2,6 +2,12 @@ import mapboxgl from 'mapbox-gl'
 import Api from '../api.js'
 import Pagination from '../BuildingsListPage/pagination'
 
+import styleIcon from '../../assets/icons/style-icon.svg'
+import typeIcon from '../../assets/icons/type-icon.svg'
+import architectIcon from '../../assets/icons/architect-icon.svg'
+import watchIcon from '../../assets/icons/eye-icon.svg'
+import backButton from '../../assets/icons/back-button.svg'
+
 let map
 let data
 let moveMap = true
@@ -9,6 +15,7 @@ let popup
 const itemsPerPage = 4
 let paginationBuildings
 let features = []
+let coordinates
 
 const buildingList = {
   render: async () => {
@@ -32,6 +39,16 @@ const buildingList = {
       <input type="checkbox" id="switch" checked /><label for="switch">Toggle</label>
     </div>
 
+    <img class="btn--back" src="${backButton}" alt="go back button">
+
+    <section class= "detail-popup">
+      <div class="detail-popup__container">
+
+        <div class="detail-popup__overflow">
+        </div>
+      </div>
+    </section>
+
     <section class="section__list">
       <div class="section__list__title">
         <h1>Buildings</h1>
@@ -54,7 +71,7 @@ const buildingList = {
 
     paginationBuildings.onPageChanged(buildingList.displayContent)
 
-    const coordinates = {
+    coordinates = {
       long: 4.34031002,
       lat: 50.88432209
     }
@@ -172,7 +189,8 @@ const buildingList = {
       })
 
       map.on('click', 'unclustered-point', function (e) {
-        console.log("click")
+        const selectedItem = e.features
+        buildingList.showDetail(selectedItem)
       })
 
       // Create a popup, but don't add it to the map yet.
@@ -222,6 +240,70 @@ const buildingList = {
         map.getCanvas().style.cursor = ''
         popup.remove()
       })
+    })
+
+    const size = 200
+
+    const pulsingDot = {
+      width: size,
+      height: size,
+      data: new Uint8Array(size * size * 4),
+
+      onAdd: function () {
+        const canvas = document.createElement('canvas')
+        canvas.width = this.width
+        canvas.height = this.height
+        this.context = canvas.getContext('2d')
+      },
+
+      render: function () {
+        const duration = 2000
+        const t = (performance.now() % duration) / duration
+
+        const radius = (size / 2) * 0.3
+        const outerRadius = (size / 2) * 0.7 * t + radius
+        const context = this.context
+
+        context.clearRect(0, 0, this.width, this.height)
+        context.beginPath()
+        context.arc(
+          this.width / 2,
+          this.height / 2,
+          outerRadius,
+          0,
+          Math.PI * 2
+        )
+        context.fillStyle = 'rgba(33, 33, 68,' + (1 - t) + ')'
+        context.fill()
+
+        context.beginPath()
+        context.arc(
+          this.width / 2,
+          this.height / 2,
+          radius,
+          0,
+          Math.PI * 2
+        )
+        context.fillStyle = 'rgba(33, 33, 68, 1)'
+        context.strokeStyle = 'white'
+        context.lineWidth = 2 + 4 * (1 - t)
+        context.fill()
+        context.stroke()
+
+        this.data = context.getImageData(
+          0,
+          0,
+          this.width,
+          this.height
+        ).data
+
+        map.triggerRepaint()
+        return true
+      }
+    }
+
+    map.on('load', function () {
+      map.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 })
     })
 
     const switchInput = document.querySelector('#switch')
@@ -320,6 +402,9 @@ const buildingList = {
       item.addEventListener('mouseenter', () => {
         buildingList.hoverHandlerBuilding(event, currentPage)
       })
+      item.addEventListener('click', () => {
+        buildingList.showDetail()
+      })
     })
 
     buildingListItems.forEach(item => {
@@ -406,8 +491,146 @@ const buildingList = {
           `
       }
     }
-    // console.log(html)
     return html
+  },
+
+  goBack: () => {
+    document.querySelector('.detail-popup').classList.remove('open')
+    document.querySelector('.section__list').classList.remove('is-not-visible')
+    document.querySelector('.switch').classList.remove('is-not-visible')
+    document.querySelector('#switch').checked = true
+    moveMap = true
+    document.querySelector('.map-building-list').classList.remove('map-building-list__detail')
+    document.querySelector('.btn--back').classList.remove('is-visible')
+    map.resize()
+    map.setLayoutProperty('clusters', 'visibility', 'visible')
+    map.setLayoutProperty('cluster-count', 'visibility', 'visible')
+    map.setLayoutProperty('unclustered-point', 'visibility', 'visible')
+    map.removeLayer('points')
+    map.removeSource('points')
+
+    map.easeTo({
+      center: [coordinates.long, coordinates.lat],
+      zoom: 12.71
+    })
+  },
+
+  showDetail: (item = [data.features[0]]) => {
+    document.querySelector('.detail-popup').classList.add('open')
+    document.querySelector('.section__list').classList.add('is-not-visible')
+    document.querySelector('.switch').classList.add('is-not-visible')
+    document.querySelector('.map-building-list').classList.add('map-building-list__detail')
+    document.querySelector('.btn--back').classList.add('is-visible')
+    document.querySelector('.btn--back').addEventListener('click', buildingList.goBack)
+    map.resize()
+    map.setLayoutProperty('clusters', 'visibility', 'none')
+    map.setLayoutProperty('cluster-count', 'visibility', 'none')
+    map.setLayoutProperty('unclustered-point', 'visibility', 'none')
+    popup.remove()
+
+    const coordinatesItem = {
+      long: item[0].geometry.coordinates[0],
+      lat: item[0].geometry.coordinates[1]
+    }
+    let centerMap
+
+    window.innerWidth > 880 ? centerMap = coordinatesItem.long - 0.0100 : centerMap = coordinatesItem.long
+
+    map.addSource('points', {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [coordinatesItem.long, coordinatesItem.lat]
+            }
+          }
+        ]
+      }
+    })
+    map.addLayer({
+      id: 'points',
+      type: 'symbol',
+      source: 'points',
+      layout: {
+        'icon-image': 'pulsing-dot'
+      }
+    })
+
+    map.easeTo({
+      center: [centerMap, coordinatesItem.lat],
+      zoom: 13
+    })
+
+    const detailSection = document.querySelector('.detail-popup__overflow');
+    detailSection.innerHTML = ''
+    console.log(item[0])
+    let html = `
+    <div class="detail-popup__row">
+        <div class="detail-popup__img-container">
+          <img class="detail-popup__img" src="${item[0].properties.FIRSTIMAGE}" alt="" />
+          <img class="watch__icon" src="${watchIcon}" alt="icon watch image">
+        </div>
+
+        <div class="detail-popup__address">`
+
+    if (item[0].properties.NOM_NL !== 'null' && item[0].properties.NOM_NL != null) {
+      html += `<h1 class="detail-popup__name">${item[0].properties.NOM_NL}</h1>`
+    }
+
+    html += `
+            <h2 class="detail-popup__address__street"> ${item[0].properties.STREET_NL} ${item[0].properties.NUMBER} 7 </h2>
+            <h2 class="detail-popup__address__municipality">${item[0].properties.CITIES_NL} ${item[0].properties.CITY}</h2>
+
+        </div>
+      </div>
+
+
+        <div class="detail-popup-info" >
+          <div class="detail-popup__tags-group">
+            <div class="tag__category">
+              <img class="tag__icon" src="${styleIcon}" alt="icon style tags">
+              <h3 class="tag__group-name">Styles</h3>
+              <div class="line line--style"></div>
+            </div>
+              <div class="detail-popup__tags">
+                  <div class="tag tag--style">Eclectisme</div>
+                  <div  class="tag tag--style">Eclectisme</div>
+                  <div  class="tag tag--style">Eclectisme</div>
+              </div>
+          </div>
+          <div class="detail-popup__tags-group">
+            <div class="tag__category">
+              <img class="tag__icon" src="${typeIcon}" alt="icon type tags">
+              <h3 class="tag__group-name">Types</h3>
+              <div class="line line--type"></div>
+            </div>
+              <div class="detail-popup__tags">
+                  <div  class="tag tag--type">Former farm</div>
+              </div>
+          </div>
+          <div class="detail-popup__tags-group">
+            <div class="tag__category">
+              <img class="tag__icon" src="${architectIcon}" alt="icon architect tags">
+              <h3 class="tag__group-name">Architects</h3>
+              <div class="line line--architect"></div>
+            </div> 
+              <div class="detail-popup__tags">
+                  <div class="tag-group-architect">
+                      <div class="tag tag--architect">R. Lambert</div>
+                      <div class="tag tag--architect">1916</div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <a href="https://monument.heritage.brussels/nl/Jette/Capartlaan/7/24664" class="button button--dark" >Get to know more</a> 
+        </div>
+   
+    `
+    detailSection.innerHTML = html
   }
 }
 

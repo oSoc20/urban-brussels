@@ -1,4 +1,4 @@
-.map-building-detail {
+ .map-building-detail {
   position: absolute;
   top: 0;
   right: 0;
@@ -9,11 +9,8 @@
 }
 
 
-.detail-popup.is-visible {
-  transform: none;
-}
-
 .detail-popup {
+  display: none;
   position: absolute;
   left: 80px;
   top: 80px;
@@ -21,12 +18,16 @@
   width: 29vw;
   min-width: 400px;
   background-color: white;
-  transform: translate(100%, 0);
+  /* transform: translate(100%, 0); */
   z-index: 2;
   transition: transform 0.4s ease, width 0.4s ease;
   box-shadow: 0px 3.3655px 3.3655px rgba(0, 0, 0, 0.1);
   height: fit-content;  
   border-radius: 15px 15px 0 0;
+}
+
+.open {
+  display: block;
 }
 
 
@@ -39,6 +40,8 @@
   border-radius: 10px;
   min-height: 300px;
   height: 20vw;
+  width: 240px;
+  object-fit: cover;
 }
 
 .tag__group-name{
@@ -76,10 +79,6 @@
   margin: 0 10px 15px 0
 }
 
-.tag--small {
-  padding: 8px 20px;
-  font-size: 12px;
-}
 
 .line {
   width: 100%;
@@ -145,10 +144,10 @@
   font-weight: 700;
 }
 
+
 .detail-popup__address__municipality {
   border-radius: 0 0 5px 5px;
 }
-
 
 .detail-popup__name {
   font-size: 32px;
@@ -272,4 +271,18 @@
     right: 10px;
     cursor: pointer;
   } 
+}
+
+
+.btn--back {
+  display: none;
+  top: 30px;
+  left: 30px;
+  z-index: 3;
+  cursor: pointer;
+  position: absolute;
+}
+
+.is-visible {
+  display: block;
 }

@@ -7,6 +7,15 @@
   width: calc(100vw - 590px);
 }
 
+.map-building-list__detail {
+  width: 100vw;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 0;
+}
+
 .section__list {
   position: absolute;
   background-color: white;
@@ -220,4 +229,8 @@ label:active:after {
 
 .is-hidden {
   visibility: hidden;
+}
+
+.is-not-visible {
+  display: none;
 }
