@@ -31,25 +31,30 @@ div .mapboxgl-popup-content p {
 }
 /*Fun Fact */
 .fun-fact-box {
-overflow: hidden;
-position: absolute;
-top: 300px;
-z-index: 2;
+top: 160px;
+z-index: 1;
 font-family: Arial,sans-serif;
-max-height: 50%;
-max-width: 30%;
+max-width: 28.1%;
 margin-left: 20px;  
-background-color: #f7f8f8;
-border-radius: 3px;
-flex-flow: column;
-border-radius: 25px;
+background-color: white;
+border-radius: 12px;
+position: relative;
+border: 2.5px solid #81d8bf;
 }
+
+#search_container{
+  top: 150px;
+  position: relative;
+  width: 450px;
+  margin-left: 20px; 
+  z-index: 2;
+}
+
 .inside-box {
 margin-left: 20px;
 margin-right: 20px;
-font-weight: lighter; 
 color: #222;
-font-size: 20px;
+font-size: 15px;
 border-radius: 25px;
 }
 .inside-text {
@@ -118,23 +123,45 @@ background-color: #ddd;
 /*Button Dashboard */
 .ButtonDashContainer {
     text-align: center;
-    user-select: none;
     position: relative;
     z-index: 2;
     right: 100px;
+    max-width: 400px;
+    float: right;
+    margin-right: 5px;
 }
+
 #clickDashboard{
+  width: 140px;
+  padding: 13px;
   float: right;
-  background-color: #81D88F;
-  border-radius: 25px;
-  font-weight: normal;
-  border:#81D88F;
-  box-shadow: 3px 3px	rgba(190, 233, 254, 0.5);
-}
-#clickDashboard h3 {
+  background-color: #81d8bf;
+  border-radius: 12px;
   font-weight: lighter;
+  border: none;
+  color: white;
+}
+
+#dash_text{
   font-size: 15px;
-  letter-spacing: 2.5px;
+  font-family: 'Lato', sans-serif;
+}
+
+#drop_lang{
+  width: 50px;
+}
+
+#lang_drop_content{
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  width: 100%;
+  box-shadow: 3px 3px	rgba(190, 233, 254, 0.5);
+  z-index: 2;
+}
+
+.ButtonDashContainer:hover .lang_drop_content {
+  display: block;
 }
 
 /* Dashboard styling */
@@ -149,51 +176,31 @@ top: 220px;
 }
 
 /* Language */
-.dropbtn {
-  float: right;
-  z-index: 3;
-  background-color: #81D88F;
-  border-radius: 25px;
-  font-weight: normal;
-  border:#81D88F;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  width: 100px;
-  box-shadow: 3px 3px	rgba(190, 233, 254, 0.5);
-
-}
-
-.dropdown {
-  float: right;
-  position: relative;
-  display: inline-block;
-  z-index: 2;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  width: 100%;
-  box-shadow: 3px 3px	rgba(190, 233, 254, 0.5);
-  z-index: 2;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {background-color: #ddd;}
-
-.dropdown:hover .dropdown-content {display: block;}
-
-.dropdown:hover .dropbtn {background-color: #3e8e41;}
-
 h4 {
   display: block;
-  font-weight: bold;
+}
+
+.arrows_ff{
+  text-align: right;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+#left_arr{
+  margin-right: 15px;
+}
+
+/*Mapbox popup*/
+
+.mapboxgl-popup-content {
+  font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+  padding: 0;
+}
+
+div .mapboxgl-popup-content {
+  width: 180px;
+}
+
+.mapboxgl-popup-content img {
+  width: 150px;
 }

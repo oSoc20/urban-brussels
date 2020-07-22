@@ -40,6 +40,22 @@ const Api = {
     }
   },
 
+  getAutocomplete: async (lang, query) => {
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    try {
+      const response = await fetch('https://api.urban-brussels.osoc.be/autocomplete?lang=' + lang + '&query=' + query, options)
+      const json = await response.json()
+      return json
+    } catch (err) {
+      console.log('Error getting documents', err)
+    }
+  },
+
   searchRandom: async (lang, limit) => {
     const options = {
       method: 'GET',
