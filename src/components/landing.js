@@ -1,4 +1,8 @@
 import SearchBar from './SearchBar/searchbar.js'
+import mapboxgl from 'mapbox-gl'
+
+let style = process.env.MAPBOX_STYLE;
+let token = process.env.MAPBOX_ACCESS_TOKEN;
 
 const Landing = {
   render: async () => {
@@ -41,11 +45,11 @@ const Landing = {
       })
     }
 
-    mapboxgl.accessToken = 'pk.eyJ1IjoieWFubmFhIiwiYSI6ImNrY2JwdGl1bTI3Ym0yem8wdmMyd3NhNHEifQ.b2WEZ63ZaouutZ65wXpfxg'
+    mapboxgl.accessToken = token;
 
     var map = new mapboxgl.Map({
       container: document.getElementById('map'),
-      style: 'mapbox://styles/yannaa/ckcui6mpa0gqh1io64uoyg6nf', // stylesheet location
+      style, // stylesheet location
       // style: 'mapbox://styles/mapbox/streets-v11',
       center: [4.38128798, 50.84723317],
       zoom: 15 // starting zoom
