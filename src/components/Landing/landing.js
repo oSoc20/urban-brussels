@@ -68,7 +68,6 @@ const Landing = {
     //     data: dataRandom
     //   })
 
-
     //   map.addLayer({
     //     id: 'randomBuildings',
     //     type: 'circle',

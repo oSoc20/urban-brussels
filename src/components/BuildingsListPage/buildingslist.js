@@ -13,7 +13,7 @@ let map
 let data = []
 let moveMap = true
 let popup
-const itemsPerPage = 4
+const itemsPerPage = 5
 let paginationBuildings
 let features = []
 let coordinates
@@ -52,7 +52,6 @@ const buildingList = {
     </section>
 
     <section class="section__list">
-    <div id="search_container"></div>
 
       <div class="section__list__title">
         <h1>Buildings</h1>
@@ -65,8 +64,8 @@ const buildingList = {
     return view
   },
   after_render: async () => {
-    SearchBar.displaySearchBar('search_container')
-    SearchBar.searchFunction()
+    // SearchBar.displaySearchBar('search_container')
+    // SearchBar.searchFunction()
 
     paginationBuildings = new Pagination(document.getElementsByClassName('pagination')[0], {
       currentPage: 1,
@@ -217,14 +216,14 @@ const buildingList = {
         const city = e.features[0].properties.city
         const postalCode = e.features[0].properties.zip_code
         const street = e.features[0].properties.street
-        // const number = e.features[0].properties.NUMBER
+        const number = e.features[0].properties.number
         const img = e.features[0].properties.image
 
         const str = `
         <div class="pop-up">
           <img class="pop-up__img" src="${img}" alt="">
           <div class="pop-up__address">
-            <p class="pop-up__info">${street}</p>
+            <p class="pop-up__info">${street} ${number} </p>
             <p class="pop-up__info">${postalCode} ${city}</p>
           </div>
         </div>
@@ -327,21 +326,21 @@ const buildingList = {
       popup.remove()
       const address = event.currentTarget.dataset.address
       for (let i = (currentPage - 1) * itemsPerPage; i < (currentPage * itemsPerPage) && i < data.features.length; i++) {
-        const addressData = `${data.features[i].properties.street} ${data.features[i].properties.zip_code} ${data.features[i].properties.city}`
+        const addressData = `${data.features[i].properties.street} ${data.features[i].properties.number} ${data.features[i].properties.zip_code} ${data.features[i].properties.city}`
         if (address === addressData) {
           const coordinates = data.features[i].geometry.coordinates.slice()
 
           const city = data.features[i].properties.city
           const postalCode = data.features[i].properties.zip_code
           const street = data.features[i].properties.street
-          // const number = data.features[i].properties.NUMBER
+          const number = data.features[i].properties.number
           const img = data.features[i].properties.image
 
           const str = `
           <div class="pop-up">
             <img class="pop-up__img" src="${img}" alt="">
             <div class="pop-up__address">
-              <p class="pop-up__info">${street}</p>
+              <p class="pop-up__info">${street} ${number}</p>
               <p class="pop-up__info">${postalCode} ${city}</p>
             </div>
           </div>
@@ -398,7 +397,16 @@ const buildingList = {
         buildingList.hoverHandlerBuilding(event, currentPage)
       })
       item.addEventListener('click', () => {
-        buildingList.showDetail()
+        const address = item.dataset.address
+        let currentAddress = ''
+        for (let i = 0; i < features.length; i++) {
+          // TODO REPLACE LATER BY REQUEST
+          const addressData = `${features[i].properties.street} ${features[i].properties.number} ${features[i].properties.zip_code} ${features[i].properties.city}`
+          if (address === addressData) {
+            currentAddress = features[i]
+          }
+        }
+        buildingList.showDetail([currentAddress])
       })
     })
 
@@ -417,19 +425,19 @@ const buildingList = {
       for (let i = (currentPage - 1) * itemsPerPage; i < (currentPage * itemsPerPage) && i < data.features.length; i++) {
         html += `
         
-        <li class="building-list__item" data-address="${data.features[i].properties.street} ${data.features[i].properties.zip_code} ${data.features[i].properties.city}">
+        <li class="building-list__item" data-address="${data.features[i].properties.street} ${data.features[i].properties.number} ${data.features[i].properties.zip_code} ${data.features[i].properties.city}">
             <div class="building-list__item__container">
               <div class="building__img" style="background-image: url('${data.features[i].properties.image}');">
               </div>
                 <div class="building__info">
                     <div class="building__tags">`
 
-        if (data.features[i].properties.style != null) {
-          html += `<div class="tag tag--style tag--small">${data.features[i].properties.style}</div>`
+        if (data.features[i].properties.styles != null) {
+          html += `<div class="tag tag--style tag--small">${data.features[i].properties.styles}</div>`
         }
-        // if (data.features[i].properties.typographies != null) {
-        //   html += `<div class="tag tag--type tag--small">${data.features[i].properties.typographies}</div>`
-        // }
+        if (data.features[i].properties.typographies != null) {
+          html += `<div class="tag tag--type tag--small">${data.features[i].properties.typographies}</div>`
+        }
 
         if (data.features[i].properties.intervenants != null) {
           html += `<div class="tag tag--architect tag--small">${data.features[i].properties.intervenants}</div>`
@@ -441,7 +449,7 @@ const buildingList = {
           html += ` <p class="building__name" >${data.features[i].properties.name}</p>`
         }
         html += `
-                    <p class="building__street">${data.features[i].properties.street} </p>
+                    <p class="building__street">${data.features[i].properties.street} ${data.features[i].properties.number} </p>
                     <p class="building__municipality"> ${data.features[i].properties.zip_code} ${data.features[i].properties.city}</p>
                 </div>
             </div>
@@ -451,20 +459,20 @@ const buildingList = {
     } else {
       for (let i = (currentPage - 1) * itemsPerPage; i < (currentPage * itemsPerPage) && i < features.length; i++) {
         html += `
-          <li class="building-list__item" data-address="${features[i].properties.street} ${features[i].properties.zip_code} ${features[i].properties.city}">
+          <li class="building-list__item" data-address="${features[i].properties.street} ${features[i].properties.number} ${features[i].properties.zip_code} ${features[i].properties.city}">
               <div class="building-list__item__container">
                 <div class="building__img" style="background-image: url('${features[i].properties.image}');">
                 </div>
                   <div class="building__info">
                       <div class="building__tags">`
 
-        if (features[i].properties.style != null && features[i].properties.style !== 'null') {
-          html += `<div class="tag tag--style tag--small">${features[i].properties.style}</div>`
+        if (features[i].properties.styles != null && features[i].properties.styles !== 'null') {
+          html += `<div class="tag tag--style tag--small">${features[i].properties.styles}</div>`
         }
 
-        // if (features[i].properties.typographies != null && features[i].properties.typographies !== 'null') {
-        //   html += `<div class="tag tag--type tag--small">${features[i].properties.typology}</div>`
-        // }
+        if (features[i].properties.typographies != null && features[i].properties.typographies !== 'null') {
+          html += `<div class="tag tag--type tag--small">${features[i].properties.typographies}</div>`
+        }
 
         if (features[i].properties.intervenants != null && features[i].properties.intervenants !== 'null') {
           html += `<div class="tag tag--architect tag--small">${features[i].properties.intervenants}</div>`
@@ -477,7 +485,7 @@ const buildingList = {
         }
 
         html += `
-           <p class="building__street">${features[i].properties.street} </p>
+           <p class="building__street">${features[i].properties.street} ${features[i].properties.number}</p>
             <p class="building__municipality"> ${features[i].properties.zip_code} ${features[i].properties.city}</p>
                   </div>
               </div>
@@ -512,11 +520,11 @@ const buildingList = {
 
     map.easeTo({
       center: [coordinates.long, coordinates.lat],
-      zoom: 12.71
+      zoom: 10.24
     })
   },
 
-  showDetail: (item = [data.features[0]]) => {
+  showDetail: (item) => {
     document.querySelector('.detail-popup').classList.add('open')
     document.querySelector('.section__list').classList.add('is-not-visible')
     document.querySelector('.switch').classList.add('is-not-visible')
@@ -582,54 +590,62 @@ const buildingList = {
     }
 
     html += `
-            <h2 class="detail-popup__address__street"> ${item[0].properties.street} 7 </h2>
+            <h2 class="detail-popup__address__street"> ${item[0].properties.street} ${item[0].properties.number} </h2>
             <h2 class="detail-popup__address__municipality">${item[0].properties.zip_code} ${item[0].properties.city}</h2>
-
         </div>
       </div>
+      <div class="detail-popup-info">`
 
 
-        <div class="detail-popup-info" >
-          <div class="detail-popup__tags-group">
-            <div class="tag__category">
-              <img class="tag__icon" src="${styleIcon}" alt="icon style tags">
-              <h3 class="tag__group-name">Styles</h3>
-              <div class="line line--style"></div>
-            </div>
-              <div class="detail-popup__tags">
-                  <div class="tag tag--style">Eclectisme</div>
-                  <div  class="tag tag--style">Eclectisme</div>
-                  <div  class="tag tag--style">Eclectisme</div>
-              </div>
+    if (item[0].properties.styles != null && item[0].properties.styles !== 'null') {
+      html += `
+        <div class="detail-popup__tags-group">
+          <div class="tag__category">
+           <img class="tag__icon" src="${styleIcon}" alt="icon style tags">
+           <h3 class="tag__group-name">Styles</h3>
+           <div class="line line--style"></div>
           </div>
-          <div class="detail-popup__tags-group">
+           <div class="detail-popup__tags">
+               <div class="tag tag--style">${item[0].properties.styles}</div>
+           </div>
+       </div> `
+    }
+
+    if (item[0].properties.typographies != null && item[0].properties.typographies !== 'null') {
+      html += `
+      <div class="detail-popup__tags-group">
             <div class="tag__category">
               <img class="tag__icon" src="${typeIcon}" alt="icon type tags">
               <h3 class="tag__group-name">Types</h3>
               <div class="line line--type"></div>
             </div>
               <div class="detail-popup__tags">
-                  <div  class="tag tag--type">Former farm</div>
+                  <div  class="tag tag--type">${item[0].properties.typographies}</div>
+            </div>
+        </div>`
+    }
+
+    if (item[0].properties.intervenants != null && item[0].properties.intervenants !== 'null') {
+      html += `
+        <div class="detail-popup__tags-group">
+          <div class="tag__category">
+            <img class="tag__icon" src="${architectIcon}" alt="icon architect tags">
+            <h3 class="tag__group-name">Architects</h3>
+            <div class="line line--architect"></div>
+          </div> 
+          <div class="detail-popup__tags">
+              <div class="tag-group-architect">
+                  <div class="tag tag--architect">${item[0].properties.intervenants}</div>
               </div>
           </div>
-          <div class="detail-popup__tags-group">
-            <div class="tag__category">
-              <img class="tag__icon" src="${architectIcon}" alt="icon architect tags">
-              <h3 class="tag__group-name">Architects</h3>
-              <div class="line line--architect"></div>
-            </div> 
-              <div class="detail-popup__tags">
-                  <div class="tag-group-architect">
-                      <div class="tag tag--architect">R. Lambert</div>
-                      <div class="tag tag--architect">1916</div>
-                  </div>
-              </div>
-          </div>
-        </div>
-        <a href="${item[0].properties.URL_NL}" class="button button--dark" >Get to know more</a> 
-        </div>
-   
-    `
+        </div>`
+    }
+
+    html += `
+       </div>
+        <a href="${item[0].properties.url}" class="button button--dark" >Get to know more</a> 
+      </div>`
+
     detailSection.innerHTML = html
   }
 
