@@ -56,41 +56,49 @@ const Landing = {
 
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
 
-    console.log(map)
     map.on('load', function () {
-      map.addSource('trees', {
+      map.addSource('randomBuildings', {
         type: 'geojson',
         data: 'https://gis.urban.brussels/geoserver/ows?service=wfs&version=2.0.0&request=GetFeature&TypeName=BSO_DML_BESC:Inventaris_Irismonument&outputformat=application/json&cql_filter=ID_BATI_CMS=18426&srsname=EPSG:4326'
       })
 
       map.addLayer({
-        id: 'trees-point',
+        id: 'randomBuildings',
         type: 'circle',
-        source: 'trees',
-        minzoom: 1,
+        source: 'randomBuildings',
         paint: {
-          // increase the radius of the circle as the zoom level and dbh value increases
           'circle-radius': {
-            property: 'dbh',
-            type: 'exponential',
+            base: 10,
             stops: [
-              [{ zoom: 15, value: 1 }, 5],
-              [{ zoom: 15, value: 62 }, 10],
-              [{ zoom: 22, value: 1 }, 20],
-              [{ zoom: 22, value: 62 }, 50]
+              [12, 10],
+              [22, 180]
             ]
           },
-          'circle-stroke-color': 'black'
+          'circle-color': '#2C3550',
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#fff'
         }
-      }, 'waterway-label')
+      })
     })
 
     map.on('sourcedata', (event) => {
       if (event.isSourceLoaded === true) {
-        map.querySourceFeatures('trees').forEach((feature) => {
-          var popup = new mapboxgl.Popup({ closeOnClick: false })
+        map.querySourceFeatures('randomBuildings').forEach((feature) => {
+          const str = `
+          <div class="pop-up--landing">
+          <div>
+            <div class="pop-up__img--landing" style="background-image: url('${feature.properties.FIRSTIMAGE}');">
+          </div>
+            <div class="pop-up__address--landing">
+              <p class="pop-up__info--landing">${feature.properties.STREET_NL} ${feature.properties.NUMBER}</p>
+              <p class="pop-up__info--landing"> ${feature.properties.CITY} ${feature.properties.CITIES_NL}</p>
+            </div>
+          </div>
+          `
+
+          new mapboxgl.Popup({ closeOnClick: false, closeButton: false })
             .setLngLat(feature.geometry.coordinates)
-            .setHTML(`<img src="${feature.properties.FIRSTIMAGE}">` + `<h1>${feature.properties.CITIES_NL}</h1>` + '<p>BE Central <br> Kantersteen 10/12, <br> 1000 Brussels </p>')
+            .setHTML(str)
             .addTo(map)
         })
       }
