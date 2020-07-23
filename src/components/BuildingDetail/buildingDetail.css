@@ -1,4 +1,4 @@
- .map-building-detail {
+.map-building-detail {
   position: absolute;
   top: 0;
   right: 0;
@@ -90,22 +90,31 @@
 .tag--style, .line--style {
   background-color: #F0F5FF;
   color: #618EEC;
+  stroke: #618EEC;
 }
 
 .tag--type, .line--type {
   background-color: #FDF5F2;
   color: #F58975;
+  stroke: #F58975;
 }
 
 .tag--architect, .line--architect {
   background-color: #FCF1F7;
   color: #AF447F;
+  stroke: #AF447F;
 }
 
 .tag--small {
   padding: 8px 20px;
   font-size: 12px;
 }
+
+.tag--no-margin {
+  margin: 0 3px;
+  cursor: pointer;
+}
+
 
 .tag__icon {
   margin-left: 4px;

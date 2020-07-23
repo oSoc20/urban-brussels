@@ -97,47 +97,6 @@ const Landing = {
         })
       }
     })
-
-    // Slideshow for Fun facts
-    $(document).ready(function () {
-      $('#previous').on('click', function () {
-        // Change to the previous image
-        $('#text_' + currentText).stop().fadeOut(1)
-        decreaseText()
-        $('#text_' + currentText).stop().fadeIn(1)
-      })
-      $('#next').on('click', function () {
-        // Change to the next image
-        $('#text_' + currentText).stop().fadeOut(1)
-        increaseText()
-        $('div .inside-box:not(:nth-of-type(2))').show()
-        $('#text_' + currentText).stop().fadeIn(1)
-
-        console.log(currentText)
-      })
-
-      var currentText = 1
-      var totalTexts = 3
-
-      function increaseText () {
-        /* Increase currentImage by 1.
-        * Resets to 1 if larger than totalImages
-        */
-        ++currentText
-        if (currentText > totalTexts) {
-          currentText = 1
-        }
-      }
-      function decreaseText () {
-        /* Decrease currentImage by 1.
-        * Resets to totalImages if smaller than 1
-        */
-        --currentText
-        if (currentText < 1) {
-          currentText = totalTexts
-        }
-      }
-    })
   }
 }
 
