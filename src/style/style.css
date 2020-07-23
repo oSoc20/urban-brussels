@@ -190,50 +190,17 @@ footer {
  *{
 font-family: 'Lato';
  }
-.grid-container {
-display: grid;
-grid-template-areas:
-  "header"
-  "main"
-  "footer";
-height: 100%;
-width: 100%;
-}
-/* Chart 1 STYLES PER CITY */
-.ct-chart {
-height: 100%;
-width: 100%;
-}
-.ct-chart .ct-series .ct-bar { 
-stroke: #FFB596; 
-stroke-width: 10px;
-}
-.ct-chart .ct-labels .ct-label {
-  color: black;
-}
+
+
 /* Main */
-.main-overview {
-grid-area: main;
-display: grid;
-grid-gap: 20px;
-padding: 10px;
-margin: 20px;
-background-color: #ffffff;
-}
-.item {
-padding: 20px;
-background-color: #FDFDFD;
-box-shadow: 0 8px 6px -6px rgb(148, 148, 148);
-border-radius: 15px;
-line-height: 10px;
-}
+
 #map_dashboard {
-float: right;
-height: 600px;
+height: 100%;
 grid-column-start: 2;
 grid-row-start: 1;
 grid-row-end: 4;
 }
+
 .dashboard_input{
 border-radius: 20px;
 border: none;
