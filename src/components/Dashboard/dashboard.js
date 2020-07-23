@@ -289,8 +289,14 @@ const Dashboard = {
       low: 0,
       showArea: true,
       showLine: false,
-      showPoint: false
+      showPoint: false,
+      axisX: {
+        labelInterpolationFnc: function(value, index) {
+          return index % 12 === 0 ? + value : null;
+        }
+      }
     });
+
   }
 }
 
