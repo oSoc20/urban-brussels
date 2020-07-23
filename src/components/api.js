@@ -73,8 +73,21 @@ const Api = {
 
   },
 
-  getStatistics: async () => {
-
+  getStats: async () => {
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    try {
+      const response = await fetch('https://api.urban-brussels.osoc.be/stats', options)
+      const json = await response.json()
+      console.log(json)
+      return json
+    } catch (err) {
+      console.log('Error getting documents', err)
+    }
   }
 
   // Add more functions

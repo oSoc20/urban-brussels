@@ -41,6 +41,32 @@ width: 100%;
 box-shadow: 3px 3px	rgba(190, 233, 254, 0.5);
 z-index: 2;
 }
+header,
+section,
+aside,
+footer {
+  margin: 0 1.5% 24px 1.5%;
+}
+#map {
+  width: 70%;
+  height: 70%;
+  position: absolute; 
+  top: 250px;
+  bottom: 10px;
+}
+ *{
+font-family: 'Lato';
+ }
+
+
+/* Main */
+
+#map_dashboard {
+height: 100%;
+grid-column-start: 2;
+grid-row-start: 1;
+grid-row-end: 4;
+}
 
 .ButtonDashContainer:hover .lang_drop_content {
   display: block;
