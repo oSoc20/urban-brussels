@@ -1,8 +1,8 @@
-import SearchBar from './SearchBar/searchbar.js'
+import SearchBar from '../SearchBar/searchbar.js'
 import mapboxgl from 'mapbox-gl'
-import arrowRight from '../assets/icons/arrow-icon.svg'
-import randomIcon from '../assets/icons/random-icon.svg'
-
+import arrowRight from '../../assets/icons/arrow-icon.svg'
+import randomIcon from '../../assets/icons/random-icon.svg'
+import Api from '../api.js'
 
 let style = process.env.MAPBOX_STYLE
 let token = process.env.MAPBOX_ACCESS_TOKEN
@@ -37,6 +37,8 @@ const Landing = {
     return view
   },
   after_render: async () => {
+    // const dataRandom = await Api.searchRandom('fr', '3')
+    // console.log(dataRandom)
     // Search bar code
     SearchBar.displaySearchBar('search_container')
     SearchBar.searchFunction()
@@ -63,50 +65,63 @@ const Landing = {
     map.on('load', function () {
       map.addSource('randomBuildings', {
         type: 'geojson',
-        data: 'https://gis.urban.brussels/geoserver/ows?service=wfs&version=2.0.0&request=GetFeature&TypeName=BSO_DML_BESC:Inventaris_Irismonument&outputformat=application/json&cql_filter=ID_BATI_CMS=18426&srsname=EPSG:4326'
+        data: dataRandom
       })
 
       map.addLayer({
-        id: 'randomBuildings',
+        id: 'buildingsJette',
         type: 'circle',
         source: 'randomBuildings',
+        filter: ['!', ['has', 'point_count']],
         paint: {
-          'circle-radius': {
-            base: 10,
-            stops: [
-              [12, 10],
-              [22, 180]
-            ]
-          },
-          'circle-color': '#2C3550',
+          'circle-color': '#212E44',
+          'circle-radius': 11,
           'circle-stroke-width': 2,
           'circle-stroke-color': '#fff'
         }
       })
+
+      // map.addLayer({
+      //   id: 'randomBuildings',
+      //   type: 'circle',
+      //   source: 'randomBuildings',
+      //   paint: {
+      //     'circle-radius': {
+      //       base: 10,
+      //       stops: [
+      //         [12, 10],
+      //         [22, 180]
+      //       ]
+      //     },
+      //     'circle-color': '#2C3550',
+      //     'circle-stroke-width': 2,
+      //     'circle-stroke-color': '#fff'
+      //   }
+      // })
     })
 
-    map.on('sourcedata', (event) => {
-      if (event.isSourceLoaded === true) {
-        map.querySourceFeatures('randomBuildings').forEach((feature) => {
-          const str = `
-          <div class="pop-up--landing">
-          <div>
-            <div class="pop-up__img--landing" style="background-image: url('${feature.properties.FIRSTIMAGE}');">
-          </div>
-            <div class="pop-up__address--landing">
-              <p class="pop-up__info--landing">${feature.properties.STREET_NL} ${feature.properties.NUMBER}</p>
-              <p class="pop-up__info--landing"> ${feature.properties.CITY} ${feature.properties.CITIES_NL}</p>
-            </div>
-          </div>
-          `
+    // map.on('sourcedata', (event) => {
+    //   if (event.isSourceLoaded === true) {
+    //     map.querySourceFeatures('randomBuildings').forEach((feature) => {
+    //       const str = `
+    //       <div class="pop-up--landing">
+    //       <div>
+    //         <div class="pop-up__img--landing" style="background-image: url('${feature.properties.FIRSTIMAGE}');">
+    //       </div>
+    //         <div class="pop-up__address--landing">
+    //           <p class="pop-up__info--landing">${feature.properties.STREET_NL} ${feature.properties.NUMBER}</p>
+    //           <p class="pop-up__info--landing"> ${feature.properties.CITY} ${feature.properties.CITIES_NL}</p>
+    //         </div>
+    //       </div>
+    //       `
 
-          new mapboxgl.Popup({ closeOnClick: false, closeButton: false })
-            .setLngLat(feature.geometry.coordinates)
-            .setHTML(str)
-            .addTo(map)
-        })
-      }
-    })
+    //       new mapboxgl.Popup({ closeOnClick: false, closeButton: false })
+    //         .setLngLat(feature.geometry.coordinates)
+    //         .setHTML(str)
+    //         .addTo(map)
+    //     })
+    //   }
+    // })
   }
 }
 

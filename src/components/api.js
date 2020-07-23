@@ -1,39 +1,18 @@
 const Api = {
 
   // Fetches buildings data from the API
-  getData: async () => {
+
+  searchData: async (json) => {
     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify(json)
     }
     try {
-      const response = await fetch('https://api.urban-brussels.osoc.be/search?lang=fr&zipcode=1090', options)
+      const response = await fetch('https://api.urban-brussels.osoc.be/search', options)
       const json = await response.json()
-      // console.log(json)
-      return json
-    } catch (err) {
-      console.log('Error getting documents', err)
-    }
-  },
-
-  searchData: async (lang, type, value, limit, offset) => {
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        lang: lang,
-        type: type,
-        value: value,
-        limit: limit,
-        offset: offset
-      }
-    }
-    try {
-      const response = await fetch('https://urban-brussels-api-dev.netlify.app/.netlify/functions/app/getInfo/search', options)
-      const json = await response.json()
-      // console.log(json)
       return json
     } catch (err) {
       console.log('Error getting documents', err)
@@ -60,13 +39,11 @@ const Api = {
     const options = {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
-        lang: lang,
-        limit: limit
+        'Content-Type': 'application/json'
       }
     }
     try {
-      const response = await fetch('https://urban-brussels-api-dev.netlify.app/.netlify/functions/app/getInfo/search/random', options)
+      const response = await fetch('https://api.urban-brussels.osoc.be/search/random?lang=' + lang + '&limit=' + limit, options)
       const json = await response.json()
       return json
     } catch (err) {

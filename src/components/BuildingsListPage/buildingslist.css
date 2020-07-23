@@ -71,16 +71,14 @@
 }
 
 .building-list__item__container {
-  padding: 0 25px;
+  padding: 30px  25px 0 25px;
+  margin: 0  0 30px 0;
 }
 
 .building__tags {
   flex-wrap: wrap;
 }
 
-.building-list__item__container {
-  margin: 30px 0;
-}
 
 .building__img {
   border-radius: 15px;
@@ -245,6 +243,14 @@ label:active:after {
   display: none;
 }
 
+
+.no-result {
+  font-size: 20px;
+  color: #212E44;
+  font-weight: 700;
+  margin:  25px;
+  line-height: 30px;
+}
 
 
 

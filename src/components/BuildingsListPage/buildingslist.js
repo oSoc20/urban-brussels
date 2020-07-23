@@ -17,22 +17,22 @@ const itemsPerPage = 4
 let paginationBuildings
 let features = []
 let coordinates
+let searchData
 
 const buildingList = {
   render: async () => {
     // Checks if data has already been stored in local storage and retrieve it
+
+    searchData = window.localStorage.getItem('search_data')
     data = window.localStorage.getItem('building_data')
-    // Send a request to the API is the data in local storage is empty
-    // if (Object.entries(data).length === 0 && data.constructor === Object) {
+
     if (data === 'undefined' || data === null) {
-      data = await Api.getData()
+      data = await Api.searchData(searchData)
       window.localStorage.setItem('building_data', JSON.stringify(data))
     } else {
       data = JSON.parse(data)
     }
     features = data.features
-    console.log(features)
-
     let view = /* html */`
 
     <div id="buildingListMap" class="map-building-list"></div>
@@ -79,8 +79,8 @@ const buildingList = {
     paginationBuildings.onPageChanged(buildingList.displayContent)
 
     coordinates = {
-      long: 4.34031002,
-      lat: 50.88432209
+      long: 4.4006,
+      lat: 50.8452
     }
 
     mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
@@ -88,7 +88,7 @@ const buildingList = {
       container: 'buildingListMap',
       style: process.env.MAPBOX_STYLE,
       center: [coordinates.long, coordinates.lat],
-      zoom: 12.71
+      zoom: 10.24
     })
 
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
@@ -217,14 +217,14 @@ const buildingList = {
         const city = e.features[0].properties.city
         const postalCode = e.features[0].properties.zip_code
         const street = e.features[0].properties.street
-        const number = e.features[0].properties.NUMBER
+        // const number = e.features[0].properties.NUMBER
         const img = e.features[0].properties.image
 
         const str = `
         <div class="pop-up">
           <img class="pop-up__img" src="${img}" alt="">
           <div class="pop-up__address">
-            <p class="pop-up__info">${street} ${number}</p>
+            <p class="pop-up__info">${street}</p>
             <p class="pop-up__info">${postalCode} ${city}</p>
           </div>
         </div>
@@ -327,21 +327,21 @@ const buildingList = {
       popup.remove()
       const address = event.currentTarget.dataset.address
       for (let i = (currentPage - 1) * itemsPerPage; i < (currentPage * itemsPerPage) && i < data.features.length; i++) {
-        const addressData = `${data.features[i].properties.street} ${data.features[i].properties.NUMBER} ${data.features[i].properties.zip_code} ${data.features[i].properties.city}`
+        const addressData = `${data.features[i].properties.street} ${data.features[i].properties.zip_code} ${data.features[i].properties.city}`
         if (address === addressData) {
           const coordinates = data.features[i].geometry.coordinates.slice()
 
           const city = data.features[i].properties.city
           const postalCode = data.features[i].properties.zip_code
           const street = data.features[i].properties.street
-          const number = data.features[i].properties.NUMBER
+          // const number = data.features[i].properties.NUMBER
           const img = data.features[i].properties.image
 
           const str = `
           <div class="pop-up">
             <img class="pop-up__img" src="${img}" alt="">
             <div class="pop-up__address">
-              <p class="pop-up__info">${street} ${number}</p>
+              <p class="pop-up__info">${street}</p>
               <p class="pop-up__info">${postalCode} ${city}</p>
             </div>
           </div>
@@ -364,14 +364,6 @@ const buildingList = {
     if (moveMap) {
       features = map.queryRenderedFeatures({ layers: ['hidden-locations'] })
       features.reverse()
-
-      if (features.length === 0) {
-        const listingEl = document.querySelector('.building-list')
-        listingEl.innerHTML = ''
-        const empty = document.createElement('p')
-        empty.textContent = 'No buildings found, drag the map to see more results'
-        listingEl.appendChild(empty)
-      }
 
       paginationBuildings = new Pagination(document.getElementsByClassName('pagination')[0], {
         currentPage: 1,
@@ -424,7 +416,8 @@ const buildingList = {
     if (!moveMap) {
       for (let i = (currentPage - 1) * itemsPerPage; i < (currentPage * itemsPerPage) && i < data.features.length; i++) {
         html += `
-        <li class="building-list__item" data-address="${data.features[i].properties.street} ${data.features[i].properties.NUMBER} ${data.features[i].properties.zip_code} ${data.features[i].properties.city}">
+        
+        <li class="building-list__item" data-address="${data.features[i].properties.street} ${data.features[i].properties.zip_code} ${data.features[i].properties.city}">
             <div class="building-list__item__container">
               <div class="building__img" style="background-image: url('${data.features[i].properties.image}');">
               </div>
@@ -434,12 +427,12 @@ const buildingList = {
         if (data.features[i].properties.style != null) {
           html += `<div class="tag tag--style tag--small">${data.features[i].properties.style}</div>`
         }
-        if (data.features[i].properties.typology != null) {
-          html += `<div class="tag tag--type tag--small">${data.features[i].properties.typology}</div>`
-        }
+        // if (data.features[i].properties.typographies != null) {
+        //   html += `<div class="tag tag--type tag--small">${data.features[i].properties.typographies}</div>`
+        // }
 
-        if (data.features[i].properties.INTERVENANTS != null) {
-          html += `<div class="tag tag--architect tag--small">${data.features[i].properties.INTERVENANTS}</div>`
+        if (data.features[i].properties.intervenants != null) {
+          html += `<div class="tag tag--architect tag--small">${data.features[i].properties.intervenants}</div>`
         }
 
         html += '</div>'
@@ -448,7 +441,7 @@ const buildingList = {
           html += ` <p class="building__name" >${data.features[i].properties.name}</p>`
         }
         html += `
-                    <p class="building__street">${data.features[i].properties.street} ${data.features[i].properties.NUMBER} </p>
+                    <p class="building__street">${data.features[i].properties.street} </p>
                     <p class="building__municipality"> ${data.features[i].properties.zip_code} ${data.features[i].properties.city}</p>
                 </div>
             </div>
@@ -458,7 +451,7 @@ const buildingList = {
     } else {
       for (let i = (currentPage - 1) * itemsPerPage; i < (currentPage * itemsPerPage) && i < features.length; i++) {
         html += `
-          <li class="building-list__item" data-address="${features[i].properties.street} ${features[i].properties.NUMBER} ${features[i].properties.zip_code} ${features[i].properties.city}">
+          <li class="building-list__item" data-address="${features[i].properties.street} ${features[i].properties.zip_code} ${features[i].properties.city}">
               <div class="building-list__item__container">
                 <div class="building__img" style="background-image: url('${features[i].properties.image}');">
                 </div>
@@ -469,12 +462,12 @@ const buildingList = {
           html += `<div class="tag tag--style tag--small">${features[i].properties.style}</div>`
         }
 
-        if (features[i].properties.typology != null && features[i].properties.typology !== 'null') {
-          html += `<div class="tag tag--type tag--small">${features[i].properties.typology}</div>`
-        }
+        // if (features[i].properties.typographies != null && features[i].properties.typographies !== 'null') {
+        //   html += `<div class="tag tag--type tag--small">${features[i].properties.typology}</div>`
+        // }
 
-        if (features[i].properties.INTERVENANTS != null && features[i].properties.INTERVENANTS !== 'null') {
-          html += `<div class="tag tag--architect tag--small">${features[i].properties.INTERVENANTS}</div>`
+        if (features[i].properties.intervenants != null && features[i].properties.intervenants !== 'null') {
+          html += `<div class="tag tag--architect tag--small">${features[i].properties.intervenants}</div>`
         }
 
         html += '</div>'
@@ -484,13 +477,20 @@ const buildingList = {
         }
 
         html += `
-           <p class="building__street">${features[i].properties.street} ${features[i].properties.NUMBER} </p>
+           <p class="building__street">${features[i].properties.street} </p>
             <p class="building__municipality"> ${features[i].properties.zip_code} ${features[i].properties.city}</p>
                   </div>
               </div>
           </li>
           `
       }
+    }
+
+    if (html === '') {
+      html = '<p class="no-result">No buildings found on this part of the map, drag the map to see more results.</p>'
+      document.querySelector('.pagination').classList.add('is-not-visible')
+    } else {
+      document.querySelector('.pagination').classList.remove('is-not-visible')
     }
     return html
   },
@@ -582,7 +582,7 @@ const buildingList = {
     }
 
     html += `
-            <h2 class="detail-popup__address__street"> ${item[0].properties.street} ${item[0].properties.NUMBER} 7 </h2>
+            <h2 class="detail-popup__address__street"> ${item[0].properties.street} 7 </h2>
             <h2 class="detail-popup__address__municipality">${item[0].properties.zip_code} ${item[0].properties.city}</h2>
 
         </div>
@@ -632,6 +632,7 @@ const buildingList = {
     `
     detailSection.innerHTML = html
   }
+
 }
 
 export default buildingList

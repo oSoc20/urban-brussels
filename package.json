@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "main.js",
   "dependencies": {
+    "api.js": "^0.0.5",
     "mapbox-gl": "^1.11.1",
     "pagination": "github:mayuska/pagination"
   },
