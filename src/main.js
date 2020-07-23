@@ -2,7 +2,7 @@ import Navbar from './components/navbar.js'
 import Landing from './components/landing.js'
 import Map from './components/map.js'
 import Facts from './components/facts.js'
-import Dashboard from './components/dashboard.js'
+import Dashboard from './components/Dashboard/dashboard.js'
 import Detail from './components/BuildingDetail/buildingDetail.js'
 import List from './components/BuildingsListPage/buildingslist.js'
 
