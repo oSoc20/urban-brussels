@@ -20,7 +20,7 @@ const Landing = {
       <div>
       <div class="search__container">
         <div id="search_container"></div>
-        <button class="btn btn--random" id="searchrandom_btn"><img id="dices_btn" src="${randomIcon}"/></button>
+        <button class="btn btn--random" id="searchrandom_btn" disabled><img id="dices_btn" src="${randomIcon}"/></button>
       </div>
 
         <div class="fun-fact__container">
