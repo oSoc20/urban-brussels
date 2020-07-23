@@ -1,33 +1,28 @@
 import SearchBar from './SearchBar/searchbar.js'
 import mapboxgl from 'mapbox-gl'
+import arrowRight from '../assets/icons/arrow-icon.svg'
 
-let style = process.env.MAPBOX_STYLE;
-let token = process.env.MAPBOX_ACCESS_TOKEN;
+let style = process.env.MAPBOX_STYLE
+let token = process.env.MAPBOX_ACCESS_TOKEN
+
 
 const Landing = {
   render: async () => {
     const view = /* html */`
-      <div id="map"></div>
+    <div id="map-landing-page" class="map-landing-page"></div>
       
-      <div id="search_container"></div>
-      <div class="fun-fact-box">
-          <div id="landing_search"></div>
-          <div class="inside-box">
-            <div class="inside-text" id="text_1">
-                  <h4 id="funFact1"> Did you know that <button type="button" id="buttonArchitect"> Victor Horta </button> built more than 100 buildings of <button type="button"id="buttonType"> Residential </button> and <button type="button" id="buttonStyle"> Art Nouveau </button>.</h4>
-              </div>
+    <div class="landing__container">
+      <div>
+        <div id="search_container"></div>
+        <div class="fun-fact__container">
+            <p class="fun-fact__txt"> Did you know that <span class="tag tag--architect tag--small tag--no-margin">Victor Horta</span> built more than 100 buildings of <span class="tag tag--type tag--small tag--no-margin">Residential</span> and <span class="tag tag--style tag--small tag--no-margin">Art Nouveau</span>.</p>
+            <div class="fun-fact__arrows">
+              <a class="arrowLeft"><img src="${arrowRight}" /></a>
+              <a class="arrowRight"><img src="${arrowRight}" /></a>
             </div>
-            <br>
-              <div class="inside-box">
-                <div class="inside-text" id="text_2">
-                  <h4>Did you know about <button type="button"id="buttonArchitect"> Architect </button> built 20 buildings of <button type="button" id="buttonType"> Type </button> and <button type="button" id="buttonStyle"> Style </button></h4>
-                </div>
-              </div>
-              <div class="arrows_ff">
-              <i id="left_arr" class="fa fa-caret-left" style="font-size:24px;color:#81d8bf"></i>
-              <i id="right_arr" class="fa fa-caret-right" style="font-size:24px;color:#81d8bf"></i>
-              </div>
         </div>
+      </div>
+    </div>
        `
     return view
   },
@@ -44,14 +39,13 @@ const Landing = {
       })
     }
 
-    mapboxgl.accessToken = token;
+    mapboxgl.accessToken = token
 
     var map = new mapboxgl.Map({
-      container: document.getElementById('map'),
-      style, // stylesheet location
-      // style: 'mapbox://styles/mapbox/streets-v11',
+      container: document.getElementById('map-landing-page'),
+      style,
       center: [4.38128798, 50.84723317],
-      zoom: 15 // starting zoom
+      zoom: 15
     })
 
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
