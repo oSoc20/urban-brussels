@@ -59,6 +59,7 @@ const Landing = {
 
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
 
+<<<<<<< HEAD
     const bounds = new mapboxgl.LngLatBounds()
 
     const dataRandom = await Api.searchRandom('fr', '3')
@@ -117,6 +118,55 @@ const Landing = {
         })
       }
     })
+=======
+    // map.on('load', function () {
+    //   map.addSource('randomBuildings', {
+    //     type: 'geojson',
+    //     data: dataRandom
+    //   })
+
+    //   map.addLayer({
+    //     id: 'randomBuildings',
+    //     type: 'circle',
+    //     source: 'randomBuildings',
+    //     paint: {
+    //       'circle-radius': {
+    //         base: 10,
+    //         stops: [
+    //           [12, 10],
+    //           [22, 180]
+    //         ]
+    //       },
+    //       'circle-color': '#2C3550',
+    //       'circle-stroke-width': 2,
+    //       'circle-stroke-color': '#fff'
+    //     }
+    //   })
+    // })
+
+    // map.on('sourcedata', (event) => {
+    //   if (event.isSourceLoaded === true) {
+    //     map.querySourceFeatures('randomBuildings').forEach((feature) => {
+    //       const str = `
+    //       <div class="pop-up--landing">
+    //       <div>
+    //         <div class="pop-up__img--landing" style="background-image: url('${feature.properties.FIRSTIMAGE}');">
+    //       </div>
+    //         <div class="pop-up__address--landing">
+    //           <p class="pop-up__info--landing">${feature.properties.STREET_NL} ${feature.properties.NUMBER}</p>
+    //           <p class="pop-up__info--landing"> ${feature.properties.CITY} ${feature.properties.CITIES_NL}</p>
+    //         </div>
+    //       </div>
+    //       `
+
+    //       new mapboxgl.Popup({ closeOnClick: false, closeButton: false })
+    //         .setLngLat(feature.geometry.coordinates)
+    //         .setHTML(str)
+    //         .addTo(map)
+    //     })
+    //   }
+    // })
+>>>>>>> ft_combine_pages
   }
 }
 
