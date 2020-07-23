@@ -1,3 +1,41 @@
-.ct-series-a .ct-bar {
+.main-overview {
+    grid-area: main;
+    display: grid;
+    grid-gap: 20px;
+    padding: 10px;
+    margin: 20px;
+    background-color: #ffffff;
+}
+.item {
+    padding: 20px;
+    background-color: #FDFDFD;
+    box-shadow: 0 8px 6px -6px rgb(148, 148, 148);
+    border-radius: 15px;
+    line-height: 10px;
+}
+
+/* GENERAL CHARTS */
+
+div[class^=ct-chart]{
+    height: 100%;
+    width: 100%;
+}
+
+div[class^=ct-chart] .ct-series .ct-bar{
+    stroke-width: 10px;
+}
+
+div[class^=ct-chart] .ct-labels .ct-label {
+    color: black;
+}
+
+/* Chart 1 BUILDINGS PER ARCHITECT */
+
+.ct-chart1 .ct-bar {
     stroke:#dfbdf3;
   }
+
+  /* Chart 2 STYLES PER CITY */
+.ct-chart2 .ct-series .ct-bar { 
+    stroke: #FFB596; 
+}
