@@ -1,5 +1,5 @@
 import Navbar from './components/navbar.js'
-import Landing from './components/landing/landing.js'
+import Landing from './components/Landing/landing.js'
 import Map from './components/map.js'
 import Facts from './components/facts.js'
 import Dashboard from './components/dashboard.js'
