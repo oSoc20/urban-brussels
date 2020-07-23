@@ -24,8 +24,8 @@ const Landing = {
                 </div>
               </div>
               <div class="arrows_ff">
-              <i id="left_arr" class="fa fa-caret-left" style="font-size:24px;color:#81d8bf"></i>
-              <i id="right_arr" class="fa fa-caret-right" style="font-size:24px;color:#81d8bf"></i>
+                <i id="left_arr" class="fa fa-caret-left" style="font-size:24px;color:#81d8bf"></i>
+                <i id="right_arr" class="fa fa-caret-right" style="font-size:24px;color:#81d8bf"></i>
               </div>
         </div>
        `

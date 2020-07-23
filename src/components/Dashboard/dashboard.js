@@ -8,18 +8,24 @@ const Dashboard = {
 <main class="main">
     <div class="main-overview">
         <div class="item">
-            <div class="ct-chart1" id="chart1">Buildings per architect</div>
+          <div class="chart_title">Buildings per architect</div>
+          <div class="ct-chart1" id="chart1"></div>
         </div>
         <div class="item">
-            <div class="ct-chart2" id="chart2">Buildings per style
-            </div>
+          <div class="chart_title">Buildings per style</div>
+          <div class="ct-chart2" id="chart2"></div>
         </div>
         <div class="item">
-            <div id="chart3">Buildings per typography</div>
+          <div class="chart_title">Buildings per typology</div>
+          <div class="ct-chart3" id="chart3"></div>
         </div>
         <div class="item" id="map_dashboard">
         </div>
     </div>
+    <div class="item">
+          <div class="chart_title">Buildings over time</div>
+          <div class="ct-chart4" id="chart4"></div>
+        </div>
 </main>
 <footer class="footer"></footer>
 </div>
@@ -152,17 +158,23 @@ const Dashboard = {
       });
     });
     map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
-
-    console.log(map);
-
+    
     //Get api data
     let data = await Api.getStats();
 
+    let styleArray = [];
+    let sValArray = [];
+
+    for (let index = 0; index < 10; index++) {
+      styleArray[index] = Object.keys(data.BuildingsPerStyle)[index];
+      sValArray[index] = Object.values(data.BuildingsPerStyle)[index];
+    }
+
     //BUILDINGS PER STYLE
     new Chartist.Bar('.ct-chart2', {
-      labels: Object.keys(data["stylesPerCity"][0]["styles"]),
+      labels: styleArray,
       series: [
-        Object.values(data["stylesPerCity"][0]["styles"])
+        sValArray
       ]
     }, {
       reverseData: true,
@@ -188,8 +200,6 @@ const Dashboard = {
     let architectArray = [];
     let valueArray = [];
 
-    //let arr = Object.entries(data.BuildingsPerIntervenant);
-
     for (let index = 0; index < 10; index++) {
       architectArray[index] = Object.keys(data.BuildingsPerIntervenant)[index];
       valueArray[index] = Object.values(data.BuildingsPerIntervenant)[index];
@@ -209,9 +219,44 @@ const Dashboard = {
       }
     });
 
+    //buildings per typology
+    let typologyArray = [];
+    let tValArray = [];
+
+    for (let index = 0; index < 10; index++) {
+      typologyArray[index] = Object.keys(data.BuildingsPerTypography)[index];
+      tValArray[index] = Object.values(data.BuildingsPerTypography)[index];
+    }
+
+    let tBar = new Chartist.Bar('.ct-chart3', {
+      labels: typologyArray,
+      series: [
+        tValArray
+      ]
+    }, {
+      reverseData: true,
+      horizontalBars: true,
+      showGrid: false,
+      axisY: {
+        offset: 200,
+        showLabel: true,
+      },
+    });
+
+    //Buildings over time (timeline)
+    let timeBar = new Chartist.Line('.ct-chart4', {
+      labels: Object.keys(data.BuildingsPerYear),
+      series: [
+        Object.values(data.BuildingsPerYear)
+      ]
+    }, {
+      low: 0,
+      showArea: true,
+      showLine: false,
+      showPoint: false
+    });
   }
-
-
 }
 
 export default Dashboard
+
