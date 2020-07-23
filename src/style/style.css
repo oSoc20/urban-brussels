@@ -1,8 +1,4 @@
   
-/* Landing page */
-#title{
-  text-align: center;
-}
 body {
   font-family: 'Lato', sans-serif;
 }
@@ -233,18 +229,3 @@ h4 {
 .dropdown:hover .dropdown-content {display: block;}
 
 .dropdown:hover #dropbtn {background-color: #ddd;}
-
-/*Mapbox popup*/
-
-.mapboxgl-popup-content {
-  font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
-  padding: 0;
-}
-
-div .mapboxgl-popup-content {
-  width: 180px;
-}
-
-.mapboxgl-popup-content img {
-  width: 150px;
-}
