@@ -1,9 +1,17 @@
-import mapboxgl from "mapbox-gl"
-import Api from '../api.js'
+import mapboxgl from "mapbox-gl";
+import Api from "../api.js";
+
+let map;
+let data;
+let moveMap = true;
+let popup;
+const itemsPerPage = 4;
+let features = [];
+let coordinates;
 
 const Dashboard = {
   render: async () => {
-    const view = /* html */`
+    const view = /* html */ `
 <div class="grid-container">
 <main class="main">
     <div class="main-overview">
@@ -23,32 +31,45 @@ const Dashboard = {
 </main>
 <footer class="footer"></footer>
 </div>
-          `
-    return view
+          `;
+    return view;
   },
   after_render: async () => {
-    mapboxgl.accessToken = 'pk.eyJ1IjoieWFubmFhIiwiYSI6ImNrY2JwdGl1bTI3Ym0yem8wdmMyd3NhNHEifQ.b2WEZ63ZaouutZ65wXpfxg';
+    coordinates = {
+      long: 4.34031002,
+      lat: 50.88432209,
+    };
+    let centerMap;
+
+    window.innerWidth > 880
+      ? (centerMap = coordinates.long - 0.02)
+      : (centerMap = coordinates.long);
+
+    mapboxgl.accessToken =
+      "pk.eyJ1IjoieWFubmFhIiwiYSI6ImNrY2JwdGl1bTI3Ym0yem8wdmMyd3NhNHEifQ.b2WEZ63ZaouutZ65wXpfxg";
 
     var map = new mapboxgl.Map({
       container: document.getElementById("map_dashboard"),
-      style: 'mapbox://styles/yannaa/ckcui6mpa0gqh1io64uoyg6nf', // stylesheet location
+      style: "mapbox://styles/yannaa/ckcui6mpa0gqh1io64uoyg6nf", // stylesheet location
       center: [4.3517, 50.8503],
       zoom: 12.71, // starting zoom
     });
-    map.on('load', function () {
+    map.on("load", function () {
       // Add a new source from our GeoJSON data and
       // set the 'cluster' option to true. GL-JS will
       // add the point_count property to your source data.
-      map.addSource('buildings', {
-        type: 'geojson',
+      map.addSource("buildings", {
+        type: "geojson",
         // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
         // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
-        data: "https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson",
+        data:
+          "https://gis.urban.brussels/geoserver/ows?service=wfs&version=2.0.0&request=GetFeature&TypeName=BSO_DML_BESC:Inventaris_Irismonument&outputformat=application/json&cql_filter=CITY%20=%20%271090%27&srsname=EPSG:4326",
         cluster: true,
         clusterMaxZoom: 14, // Max zoom to cluster points on
         clusterRadius: 50, // Radius of each cluster when clustering points (defaults to 50)
       });
 
+      //ADDING CLUSTER STARTS FROM HERE
       map.addLayer({
         id: "clusters",
         type: "circle",
@@ -58,36 +79,39 @@ const Dashboard = {
           //   * Blue, 20px circles when point count is less than 100
           //   * Yellow, 30px circles when point count is between 100 and 750
           //   * Pink, 40px circles when point count is greater than or equal to 750
-          'circle-color': [
-            'step',
-            ['get', 'point_count'],
-            '#CC8F9A',
+          "circle-color": [
+            "step",
+            ["get", "point_count"],
+            "#8F9BCC",
             100,
-            '#91475D',
+            "#476291",
             750,
-            '#91475D'
+            "#212E44",
           ],
-          'circle-radius': [
-            'step',
-            ['get', 'point_count'],
+          "circle-radius": [
+            "step",
+            ["get", "point_count"],
             20,
             100,
             30,
             750,
-            40
-          ]
-        }
+            40,
+          ],
+        },
       });
 
       map.addLayer({
-        id: 'cluster-count',
-        type: 'symbol',
-        source: 'buildings',
-        filter: ['has', 'point_count'],
+        id: "cluster-count",
+        type: "symbol",
+        source: "buildings",
+        filter: ["has", "point_count"],
         layout: {
           "text-field": "{point_count_abbreviated}",
           "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
           "text-size": 12,
+        },
+        paint: {
+          "text-color": "#ffffff",
         },
       });
 
@@ -97,10 +121,27 @@ const Dashboard = {
         source: "buildings",
         filter: ["!", ["has", "point_count"]],
         paint: {
-          "circle-color": "#11b4da",
-          "circle-radius": 4,
-          "circle-stroke-width": 1,
+          "circle-color": "#212E44",
+          "circle-radius": 11,
+          "circle-stroke-width": 2,
           "circle-stroke-color": "#fff",
+        },
+      });
+
+      map.addSource("unclustered-locations", {
+        type: "geojson",
+        data: data,
+        cluster: false,
+        clusterMaxZoom: 14,
+        clusterRadius: 50,
+      });
+
+      map.addLayer({
+        id: "hidden-locations",
+        type: "circle",
+        source: "unclustered-locations",
+        paint: {
+          "circle-radius": 0,
         },
       });
 
@@ -110,20 +151,19 @@ const Dashboard = {
           layers: ["clusters"],
         });
         var clusterId = features[0].properties.cluster_id;
-        map.getSource('buildings').getClusterExpansionZoom(
-          clusterId,
-          function (err, zoom) {
+        map
+          .getSource("buildings")
+          .getClusterExpansionZoom(clusterId, function (err, zoom) {
             if (err) return;
 
             map.easeTo({
               center: features[0].geometry.coordinates,
-              zoom: zoom
+              zoom: zoom,
             });
-          }
-        );
+          });
       });
       //CHANGE PROPERTY.
-      map.on('click', 'unclustered-point', function (e) {
+      map.on("click", "unclustered-point", function (e) {
         var coordinates = e.features[0].geometry.coordinates.slice();
         var mag = e.features[0].properties.mag;
         var houses;
@@ -159,29 +199,33 @@ const Dashboard = {
     let data = await Api.getStats();
 
     //BUILDINGS PER STYLE
-    new Chartist.Bar('.ct-chart2', {
-      labels: Object.keys(data["stylesPerCity"][0]["styles"]),
-      series: [
-        Object.values(data["stylesPerCity"][0]["styles"])
-      ]
-    }, {
-      reverseData: true,
-      horizontalBars: true,
-      axisY: {
-        offset: 200,
-        showLabel: true,
+    new Chartist.Bar(
+      ".ct-chart2",
+      {
+        labels: Object.keys(data["stylesPerCity"][0]["styles"]),
+        series: [Object.values(data["stylesPerCity"][0]["styles"])],
       },
-      chartPadding: {
-        top: 15,
-        right: 15,
-        bottom: 5,
-        left: 10
-      },
-    }
-      , ['screen and (max-width: 480px)', {
+      {
         reverseData: true,
-        horizontalBars: true
-      }]
+        horizontalBars: true,
+        axisY: {
+          offset: 200,
+          showLabel: true,
+        },
+        chartPadding: {
+          top: 15,
+          right: 15,
+          bottom: 5,
+          left: 10,
+        },
+      },
+      [
+        "screen and (max-width: 480px)",
+        {
+          reverseData: true,
+          horizontalBars: true,
+        },
+      ]
     );
 
     //buildings per architect
@@ -195,23 +239,22 @@ const Dashboard = {
       valueArray[index] = Object.values(data.BuildingsPerIntervenant)[index];
     }
 
-    let bar = new Chartist.Bar('.ct-chart1', {
-      labels: architectArray,
-      series: [
-        valueArray
-      ]
-    }, {
-      reverseData: true,
-      horizontalBars: true,
-      axisY: {
-        offset: 200,
-        showLabel: true,
+    let bar = new Chartist.Bar(
+      ".ct-chart1",
+      {
+        labels: architectArray,
+        series: [valueArray],
+      },
+      {
+        reverseData: true,
+        horizontalBars: true,
+        axisY: {
+          offset: 200,
+          showLabel: true,
+        },
       }
-    });
+    );
+  },
+};
 
-  }
-
-
-}
-
-export default Dashboard
+export default Dashboard;
