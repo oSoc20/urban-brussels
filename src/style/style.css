@@ -1,5 +1,4 @@
-  
-/* Landing page */
+  /* Landing page */
 #title{
   text-align: center;
 }
@@ -50,7 +49,6 @@ border: 2.5px solid #81d8bf;
   margin-left: 20px; 
   z-index: 2;
 }
-
 .inside-box {
 margin-left: 20px;
 margin-right: 20px;
@@ -176,7 +174,76 @@ position: absolute;
 left: 570px;
 top: 220px;
 }
-
+header,
+section,
+aside,
+footer {
+  margin: 0 1.5% 24px 1.5%;
+}
+#map {
+  width: 70%;
+  height: 70%;
+  position: absolute; 
+  top: 250px;
+  bottom: 10px;
+}
+ *{
+font-family: 'Lato';
+ }
+.grid-container {
+display: grid;
+grid-template-areas:
+  "header"
+  "main"
+  "footer";
+height: 100%;
+width: 100%;
+}
+/* Chart 1 STYLES PER CITY */
+.ct-chart {
+height: 100%;
+width: 100%;
+}
+.ct-chart .ct-series .ct-bar { 
+stroke: #FFB596; 
+stroke-width: 10px;
+}
+.ct-chart .ct-labels .ct-label {
+  color: black;
+}
+/* Main */
+.main-overview {
+grid-area: main;
+display: grid;
+grid-gap: 20px;
+padding: 10px;
+margin: 20px;
+background-color: #ffffff;
+}
+.item {
+padding: 20px;
+background-color: #FDFDFD;
+box-shadow: 0 8px 6px -6px rgb(148, 148, 148);
+border-radius: 15px;
+line-height: 10px;
+}
+#map_dashboard {
+float: right;
+height: 600px;
+grid-column-start: 2;
+grid-row-start: 1;
+grid-row-end: 4;
+}
+.dashboard_input{
+border-radius: 20px;
+border: none;
+position: relative;
+top: 20px;
+height: 40px;
+width: 300px;
+outline: none;
+background-color: #FDFDFD;
+}
 /* Language */
 h4 {
   display: block;
