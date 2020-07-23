@@ -19,10 +19,7 @@ const SearchBar = {
         <div class="search_ctn">
             <form class="searchbar_ctn" autocomplete="off">
                 <input id="search_bar" type="text" placeholder="${search_text[0]}" />
-                <div class="search_buttons">
-                    <button class="btn btn--search" id="search_btn"><img src="${searchIcon}"/></button>
-                    <button class="btn btn--random" id="searchrandom_btn"><img id="dices_btn" src="${randomIcon}"/></button>
-                </div>
+                <button class="btn btn--search" id="search_btn"><img src="${searchIcon}"/></button>
             </form>
             <div class="selected-items">
             </div>

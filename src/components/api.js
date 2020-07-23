@@ -3,13 +3,13 @@ const Api = {
   // Fetches buildings data from the API
   getData: async () => {
     const options = {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       }
     }
     try {
-      const response = await fetch('https://gis.urban.brussels/geoserver/ows?service=wfs&version=2.0.0&request=GetFeature&TypeName=BSO_DML_BESC:Inventaris_Irismonument&outputformat=application/json&cql_filter=CITY%20=%20%271090%27&srsname=EPSG:4326', options)
+      const response = await fetch('https://api.urban-brussels.osoc.be/search?lang=fr&zipcode=1090', options)
       const json = await response.json()
       // console.log(json)
       return json

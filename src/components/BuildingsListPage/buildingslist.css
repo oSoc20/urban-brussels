@@ -151,7 +151,7 @@ div .mapboxgl-popup-content {
   position: fixed;
   z-index: 3;
   padding: 7px 15px 7px 25px;
-  right: 40px;
+  right: calc(100vw - 840px);  
   top: 40px;
   box-shadow: 0px 3.3655px 3.3655px rgba(0, 0, 0, 0.04);
 }
@@ -245,21 +245,6 @@ label:active:after {
   display: none;
 }
 
-.search-bar {
-  margin-bottom: 10px
-}
-
-.search-bar__input {
-  border: none;
-  background: #F5F5F5;
-  border-radius: 10px;
-  height: 35px;
-  width: 100%;
-  color: #333B56;
-  padding: 10px;
-  font-size: 15px;
-  font-weight: 500;
-}
 
 
 

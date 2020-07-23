@@ -1,6 +1,7 @@
 import mapboxgl from 'mapbox-gl'
 import Api from '../api.js'
 import Pagination from '../BuildingsListPage/pagination'
+import SearchBar from '../SearchBar/searchbar.js'
 
 import styleIcon from '../../assets/icons/style-icon.svg'
 import typeIcon from '../../assets/icons/type-icon.svg'
@@ -9,7 +10,7 @@ import watchIcon from '../../assets/icons/eye-icon.svg'
 import backButton from '../../assets/icons/back-button.svg'
 
 let map
-let data
+let data = []
 let moveMap = true
 let popup
 const itemsPerPage = 4
@@ -21,16 +22,17 @@ const buildingList = {
   render: async () => {
     // Checks if data has already been stored in local storage and retrieve it
     data = window.localStorage.getItem('building_data')
-
     // Send a request to the API is the data in local storage is empty
     // if (Object.entries(data).length === 0 && data.constructor === Object) {
-    if (typeof data === 'undefined' || data === null) {
+    if (data === 'undefined' || data === null) {
       data = await Api.getData()
       window.localStorage.setItem('building_data', JSON.stringify(data))
     } else {
       data = JSON.parse(data)
     }
     features = data.features
+    console.log(features)
+
     let view = /* html */`
 
     <div id="buildingListMap" class="map-building-list"></div>
@@ -50,10 +52,8 @@ const buildingList = {
     </section>
 
     <section class="section__list">
-    <div class="search-bar">
-      <input class=search-bar__input type="text" placeholder='Search' />
-      <div id="close" class="toggle"></div>
-    </div>
+    <div id="search_container"></div>
+
       <div class="section__list__title">
         <h1>Buildings</h1>
         <div class="pagination"></div>
@@ -65,6 +65,9 @@ const buildingList = {
     return view
   },
   after_render: async () => {
+    SearchBar.displaySearchBar('search_container')
+    SearchBar.searchFunction()
+
     paginationBuildings = new Pagination(document.getElementsByClassName('pagination')[0], {
       currentPage: 1,
       totalItems: data.features.length,
@@ -79,15 +82,12 @@ const buildingList = {
       long: 4.34031002,
       lat: 50.88432209
     }
-    let centerMap
-
-    window.innerWidth > 880 ? centerMap = coordinates.long - 0.0200 : centerMap = coordinates.long
 
     mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
     map = new mapboxgl.Map({
       container: 'buildingListMap',
       style: process.env.MAPBOX_STYLE,
-      center: [centerMap, coordinates.lat],
+      center: [coordinates.long, coordinates.lat],
       zoom: 12.71
     })
 
@@ -197,7 +197,6 @@ const buildingList = {
         buildingList.showDetail(selectedItem)
       })
 
-      // Create a popup, but don't add it to the map yet.
       popup = new mapboxgl.Popup({
         closeButton: false,
         closeOnClick: false,
@@ -215,11 +214,11 @@ const buildingList = {
 
         const coordinates = e.features[0].geometry.coordinates.slice()
 
-        const city = e.features[0].properties.CITIES_NL
-        const postalCode = e.features[0].properties.CITY
-        const street = e.features[0].properties.STREET_NL
+        const city = e.features[0].properties.city
+        const postalCode = e.features[0].properties.zip_code
+        const street = e.features[0].properties.street
         const number = e.features[0].properties.NUMBER
-        const img = e.features[0].properties.FIRSTIMAGE
+        const img = e.features[0].properties.image
 
         const str = `
         <div class="pop-up">
@@ -328,15 +327,15 @@ const buildingList = {
       popup.remove()
       const address = event.currentTarget.dataset.address
       for (let i = (currentPage - 1) * itemsPerPage; i < (currentPage * itemsPerPage) && i < data.features.length; i++) {
-        const addressData = `${data.features[i].properties.STREET_NL} ${data.features[i].properties.NUMBER} ${data.features[i].properties.CITY} ${data.features[i].properties.CITIES_NL}`
+        const addressData = `${data.features[i].properties.street} ${data.features[i].properties.NUMBER} ${data.features[i].properties.zip_code} ${data.features[i].properties.city}`
         if (address === addressData) {
           const coordinates = data.features[i].geometry.coordinates.slice()
 
-          const city = data.features[i].properties.CITIES_NL
-          const postalCode = data.features[i].properties.CITY
-          const street = data.features[i].properties.STREET_NL
+          const city = data.features[i].properties.city
+          const postalCode = data.features[i].properties.zip_code
+          const street = data.features[i].properties.street
           const number = data.features[i].properties.NUMBER
-          const img = data.features[i].properties.FIRSTIMAGE
+          const img = data.features[i].properties.image
 
           const str = `
           <div class="pop-up">
@@ -425,19 +424,18 @@ const buildingList = {
     if (!moveMap) {
       for (let i = (currentPage - 1) * itemsPerPage; i < (currentPage * itemsPerPage) && i < data.features.length; i++) {
         html += `
-        <li class="building-list__item" data-address="${data.features[i].properties.STREET_NL} ${data.features[i].properties.NUMBER} ${data.features[i].properties.CITY} ${data.features[i].properties.CITIES_NL}">
+        <li class="building-list__item" data-address="${data.features[i].properties.street} ${data.features[i].properties.NUMBER} ${data.features[i].properties.zip_code} ${data.features[i].properties.city}">
             <div class="building-list__item__container">
-              <div class="building__img" style="background-image: url('${data.features[i].properties.FIRSTIMAGE}');">
+              <div class="building__img" style="background-image: url('${data.features[i].properties.image}');">
               </div>
                 <div class="building__info">
                     <div class="building__tags">`
 
-        if (data.features[i].properties.STYLE_NL != null) {
-          html += `<div class="tag tag--style tag--small">${data.features[i].properties.STYLE_NL}</div>`
+        if (data.features[i].properties.style != null) {
+          html += `<div class="tag tag--style tag--small">${data.features[i].properties.style}</div>`
         }
-
-        if (data.features[i].properties.TYPO != null) {
-          html += `<div class="tag tag--type tag--small">${data.features[i].properties.TYPO}</div>`
+        if (data.features[i].properties.typology != null) {
+          html += `<div class="tag tag--type tag--small">${data.features[i].properties.typology}</div>`
         }
 
         if (data.features[i].properties.INTERVENANTS != null) {
@@ -446,12 +444,12 @@ const buildingList = {
 
         html += '</div>'
 
-        if (data.features[i].properties.NOM_NL != null) {
-          html += ` <p class="building__name" >${data.features[i].properties.NOM_NL}</p>`
+        if (data.features[i].properties.name != null) {
+          html += ` <p class="building__name" >${data.features[i].properties.name}</p>`
         }
         html += `
-                    <p class="building__street">${data.features[i].properties.STREET_NL} ${data.features[i].properties.NUMBER} </p>
-                    <p class="building__municipality"> ${data.features[i].properties.CITY} ${data.features[i].properties.CITIES_NL}</p>
+                    <p class="building__street">${data.features[i].properties.street} ${data.features[i].properties.NUMBER} </p>
+                    <p class="building__municipality"> ${data.features[i].properties.zip_code} ${data.features[i].properties.city}</p>
                 </div>
             </div>
         </li>
@@ -460,35 +458,34 @@ const buildingList = {
     } else {
       for (let i = (currentPage - 1) * itemsPerPage; i < (currentPage * itemsPerPage) && i < features.length; i++) {
         html += `
-          <li class="building-list__item" data-address="${features[i].properties.STREET_NL} ${features[i].properties.NUMBER} ${features[i].properties.CITY} ${features[i].properties.CITIES_NL}">
+          <li class="building-list__item" data-address="${features[i].properties.street} ${features[i].properties.NUMBER} ${features[i].properties.zip_code} ${features[i].properties.city}">
               <div class="building-list__item__container">
-                <div class="building__img" style="background-image: url('${features[i].properties.FIRSTIMAGE}');">
+                <div class="building__img" style="background-image: url('${features[i].properties.image}');">
                 </div>
                   <div class="building__info">
                       <div class="building__tags">`
 
-
-        if (features[i].properties.STYLE_NL !== 'null' && features[i].properties.STYLE_NL !== null) {
-          html += `<div class="tag tag--style tag--small">${features[i].properties.STYLE_NL}</div>`
+        if (features[i].properties.style != null && features[i].properties.style !== 'null') {
+          html += `<div class="tag tag--style tag--small">${features[i].properties.style}</div>`
         }
 
-        if (features[i].properties.TYPO !== 'null' && features[i].properties.TYPO != null) {
-          html += `<div class="tag tag--type tag--small">${features[i].properties.TYPO}</div>`
+        if (features[i].properties.typology != null && features[i].properties.typology !== 'null') {
+          html += `<div class="tag tag--type tag--small">${features[i].properties.typology}</div>`
         }
 
-        if (features[i].properties.INTERVENANTS !== 'null' && features[i].properties.INTERVENANTS != null) {
+        if (features[i].properties.INTERVENANTS != null && features[i].properties.INTERVENANTS !== 'null') {
           html += `<div class="tag tag--architect tag--small">${features[i].properties.INTERVENANTS}</div>`
         }
 
         html += '</div>'
 
-        if (features[i].properties.NOM_NL !== 'null' && features[i].properties.NOM_NL != null) {
-          html += ` <p class="building__name" >${features[i].properties.NOM_NL}</p>`
+        if (features[i].properties.name != null && features[i].properties.name !== 'null') {
+          html += ` <p class="building__name" >${features[i].properties.name}</p>`
         }
 
         html += `
-           <p class="building__street">${features[i].properties.STREET_NL} ${features[i].properties.NUMBER} </p>
-            <p class="building__municipality"> ${features[i].properties.CITY} ${features[i].properties.CITIES_NL}</p>
+           <p class="building__street">${features[i].properties.street} ${features[i].properties.NUMBER} </p>
+            <p class="building__municipality"> ${features[i].properties.zip_code} ${features[i].properties.city}</p>
                   </div>
               </div>
           </li>
@@ -569,25 +566,24 @@ const buildingList = {
       zoom: 13
     })
 
-    const detailSection = document.querySelector('.detail-popup__overflow');
+    const detailSection = document.querySelector('.detail-popup__overflow')
     detailSection.innerHTML = ''
-    console.log(item[0])
     let html = `
     <div class="detail-popup__row">
         <div class="detail-popup__img-container">
-          <img class="detail-popup__img" src="${item[0].properties.FIRSTIMAGE}" alt="" />
+          <img class="detail-popup__img" src="${item[0].properties.image}" alt="" />
           <img class="watch__icon" src="${watchIcon}" alt="icon watch image">
         </div>
 
         <div class="detail-popup__address">`
 
-    if (item[0].properties.NOM_NL !== 'null' && item[0].properties.NOM_NL != null) {
-      html += `<h1 class="detail-popup__name">${item[0].properties.NOM_NL}</h1>`
+    if (item[0].properties.name != null && item[0].properties.name !== 'null') {
+      html += `<h1 class="detail-popup__name">${item[0].properties.name}</h1>`
     }
 
     html += `
-            <h2 class="detail-popup__address__street"> ${item[0].properties.STREET_NL} ${item[0].properties.NUMBER} 7 </h2>
-            <h2 class="detail-popup__address__municipality">${item[0].properties.CITIES_NL} ${item[0].properties.CITY}</h2>
+            <h2 class="detail-popup__address__street"> ${item[0].properties.street} ${item[0].properties.NUMBER} 7 </h2>
+            <h2 class="detail-popup__address__municipality">${item[0].properties.zip_code} ${item[0].properties.city}</h2>
 
         </div>
       </div>

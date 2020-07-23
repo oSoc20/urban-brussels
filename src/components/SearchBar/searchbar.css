@@ -2,7 +2,7 @@
 
 /* SEARCHBAR */
 
-.search_buttons {
+.search__container {
   display: flex;
 }
 
@@ -17,7 +17,6 @@
 }
 
 .btn--search {
-  margin-right: 15px;
   margin-left: -10px;
 }
 
@@ -25,6 +24,10 @@
   width: 80px;
   border: 2px solid #81D8BF;
   background-color: white;
+  margin-left: 20px;
+}
+.btn--random:focus, .btn--search:focus {
+  outline: none;
 }
 
 .btn--search img {
@@ -41,7 +44,7 @@
 
 .searchbar_ctn {
   display: flex;
-  width: fit-content;
+  width: 100%;
   position: relative;
 }
 
@@ -49,7 +52,7 @@
   border: none;
   padding: 10px 20px;
   font-size: 17px;
-  width: 325px;
+  width: 100%;
   background-color: #F5F5F5;
   border-radius: 10px 0 0 10px;
 }

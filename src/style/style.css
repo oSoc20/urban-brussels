@@ -2,7 +2,7 @@ body {
   font-family: 'Lato', sans-serif;
 }
 
-.ButtonDashContainer {
+.ButtonDashContainer, #clickDashboard {
   text-align: center;
   position: relative;
   z-index: 2;
@@ -10,7 +10,7 @@ body {
   max-width: 400px;
   float: right;
   margin-right: 5px;
-  top: 30px;
+  top: 40px;
 }
 
 #clickDashboard{
