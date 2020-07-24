@@ -1,7 +1,5 @@
 const Utils = { 
-    // --------------------------------
-    //  Parse a url and break it into resource, id and verb
-    // --------------------------------
+    // Parse a url and break it into resource, id and verb
     parseRequestURL : () => {
 
         let url = location.hash.slice(1).toLowerCase() || '/';

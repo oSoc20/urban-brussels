@@ -1,12 +1,19 @@
+/**
+ * Modules imports
+ */
 import SearchBar from '../SearchBar/searchbar.js'
 import mapboxgl from 'mapbox-gl'
 import arrowRight from '../../assets/icons/arrow-icon.svg'
 import randomIcon from '../../assets/icons/random-icon.svg'
 import Api from '../api.js'
 
+/**
+ * Variable declarations
+ */
 const style = process.env.MAPBOX_STYLE
 const token = process.env.MAPBOX_ACCESS_TOKEN
 
+// Rendering of the landing/home page
 const Landing = {
   render: async () => {
     const view = /* html */`
@@ -35,7 +42,9 @@ const Landing = {
        `
     return view
   },
+  // Behavior after rendering
   after_render: async () => {
+
     // Search bar code
     SearchBar.displaySearchBar('search_container')
     SearchBar.searchFunction()
@@ -48,6 +57,7 @@ const Landing = {
       })
     }
 
+    // Map
     mapboxgl.accessToken = token
 
     var map = new mapboxgl.Map({
@@ -61,11 +71,13 @@ const Landing = {
 
     const bounds = new mapboxgl.LngLatBounds()
 
+    // Retrieves random building
     const dataRandom = await Api.searchRandom('fr', '3')
     dataRandom.features.forEach((feature) => {
       bounds.extend(feature.geometry.coordinates)
     })
 
+    // Map load
     map.on('load', function () {
       map.addSource('randomBuildings', {
         type: 'geojson',
@@ -91,6 +103,7 @@ const Landing = {
       })
     })
 
+    // Map data
     map.on('sourcedata', (event) => {
       if (event.isSourceLoaded === true) {
         map.querySourceFeatures('randomBuildings').forEach((feature) => {

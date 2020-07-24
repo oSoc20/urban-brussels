@@ -1,24 +1,20 @@
-import Navbar from './components/navbar.js'
+import Navbar from './components/Navbar/navbar.js'
 import Landing from './components/Landing/landing.js'
-import Map from './components/map.js'
-import Facts from './components/facts.js'
 import Dashboard from './components/Dashboard/dashboard.js'
 import Detail from './components/BuildingDetail/buildingDetail.js'
-import List from './components/BuildingsListPage/buildingslist.js'
+import List from './components/BuildingsList/buildingslist.js'
 
 import Utils from './utils.js'
 
-// List of supported routes. Any url other than these routes will throw a 404 error
+// List of supported routes. Any url other than these routes will redirect to the home page
 const routes = {
   '/': Landing,
-  '/map': Map,
-  '/facts': Facts,
   '/list': List,
   '/dashboard': Dashboard,
   '/detail': Detail
 }
 
-// The router code. Takes a URL, checks against the list of supported routes and then renders the corresponding content page.
+// The router code. Takes a URL, checks the list of supported routes and then renders the corresponding content page.
 const router = async () => {
   // Lazy load view element:
 
@@ -42,8 +38,8 @@ const router = async () => {
   const parsedURL = (request.resource ? '/' + request.resource : '/') + (request.id ? '/:id' : '') + (request.verb ? '/' + request.verb : '')
 
   // Get the page from our hash of supported routes.
-  // If the parsed URL is not in our list of supported routes, select the 404 page instead
-  const page = routes[parsedURL] ? routes[parsedURL] : Error404
+  // If the parsed URL is not in our list of supported routes, select the landing page instead
+  const page = routes[parsedURL] ? routes[parsedURL] : Landing
   content.innerHTML = await page.render()
   await page.after_render()
 }

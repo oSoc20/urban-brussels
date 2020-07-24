@@ -1,6 +1,9 @@
 const Api = {
 
-  // Fetches buildings data from the API
+  /**
+   * Fetches buildings data depending on search
+   * json: the tags and keywords chosen by the user
+   */
 
   searchData: async (json) => {
     const options = {
@@ -19,6 +22,13 @@ const Api = {
     }
   },
 
+  /**
+   * Fetches data for autocomplete
+   * lang: the language the data should be returned
+   * query: the user's search
+   */
+
+
   getAutocomplete: async (lang, query) => {
     const options = {
       method: 'GET',
@@ -35,6 +45,12 @@ const Api = {
     }
   },
 
+  /**
+   * Fetches random buildings data
+   * lang: the language the data should be returned
+   * limit: the number of results that will be returned
+   */
+
   searchRandom: async (lang, limit) => {
     const options = {
       method: 'GET',
@@ -50,6 +66,33 @@ const Api = {
       console.log('Error getting documents', err)
     }
   },
+
+  /**
+   * Fetches stats about the dataset
+   */
+
+  getStats: async () => {
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    try {
+      const response = await fetch('https://api.urban-brussels.osoc.be/stats', options)
+      const json = await response.json()
+      console.log(json)
+      return json
+    } catch (err) {
+      console.log('Error getting documents', err)
+    }
+  },
+
+  /**
+   * Fetches fun facts about the dataset
+   * lang: the language the data should be returned
+   * limit: the number of results that will be returned
+   */
 
   searchFunFacts: async (lang, limit) => {
     const options = {
@@ -68,28 +111,7 @@ const Api = {
       console.log('Error getting documents', err)
     }
   },
-
-  getInfo: async () => {
-
-  },
-
-  getStats: async () => {
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-    try {
-      const response = await fetch('https://api.urban-brussels.osoc.be/stats', options)
-      const json = await response.json()
-      console.log(json)
-      return json
-    } catch (err) {
-      console.log('Error getting documents', err)
-    }
-  }
-
+  
   // Add more functions
 }
 

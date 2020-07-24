@@ -1,6 +1,6 @@
 import mapboxgl from 'mapbox-gl'
 import Api from '../api.js'
-import Pagination from '../BuildingsListPage/pagination'
+import Pagination from './pagination'
 import SearchBar from '../SearchBar/searchbar.js'
 
 import styleIcon from '../../assets/icons/style-icon.svg'

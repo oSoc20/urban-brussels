@@ -1,12 +1,16 @@
+/**
+ * Modules imports
+ */
 import Api from '../api.js'
 import searchIcon from '../../assets/icons/search-icon.svg'
 
 import styleIcon from '../../assets/icons/style-icon.svg'
 import typeIcon from '../../assets/icons/type-icon.svg'
 import architectIcon from '../../assets/icons/architect-icon.svg'
-import buildingList from '../BuildingsListPage/buildingslist.js'
 
-/* Variable declarations */
+/**
+ * Variables declarations
+ */
 let search_text = ["Search", "Chercher", "Zoeken"]
 let tags_set = {
   'zip code': [],
@@ -17,12 +21,13 @@ let tags_set = {
   street: []
 }
 let obj = {}
-let resp
+let resp;
 let val;
-let search_div
-let inp
-let noSearchItem = true
+let search_div;
+let inp;
+let noSearchItem = true;
 
+// Rendering of the search bar
 const SearchBar = {
   displaySearchBar: (container_idname) => {
     document.getElementById(container_idname).innerHTML = /* html */`
@@ -38,12 +43,13 @@ const SearchBar = {
   },
 
   searchFunction: () => {
-    search_div = document.getElementsByClassName('selected-items')
-    const search = document.getElementById('search_btn')
+    search_div = document.getElementsByClassName('selected-items');
+    inp = document.getElementById('search_bar');
 
-    inp = document.getElementById('search_bar')
-    var currentFocus
-    /* execute a function when someone writes in the text field: */
+    const search = document.getElementById('search_btn');
+    let currentFocus;
+
+    // Execute when an input is typed in the search field
     inp.addEventListener('input', async function (e) {
       var a
       val = this.value
@@ -66,17 +72,20 @@ const SearchBar = {
         SearchBar.addItemsToObj(resp.intervenants, obj.intervenants)
       }
 
-      /* close any already open lists of autocompleted values */
+      // Close any already open lists of autocompleted values
       SearchBar.closeAllLists(inp)
       if (!val) { return false }
       currentFocus = -1
-      /* create a DIV element that will contain the items (values): */
+
+      // Create a div element that will contain the items (values)
       a = document.createElement('DIV')
       a.setAttribute('id', this.id + 'autocomplete-list')
       a.setAttribute('class', 'autocomplete-items')
-      /* append the DIV element as a child of the autocomplete container: */
+
+      // Append the div element as a child of the autocomplete container
       this.parentNode.appendChild(a)
-      /* for each item in the array... */
+
+      // For each item in the array:
       SearchBar.addItemsToList(a, obj.zipCodes, 'Zip code')
       SearchBar.addItemsToList(a, obj.cities, 'City')
       SearchBar.addItemsToList(a, obj.streets, 'Street')
@@ -84,34 +93,12 @@ const SearchBar = {
       SearchBar.addItemsToList(a, obj.styles, 'Style', styleIcon, 'search--style', 'tag--style')
       SearchBar.addItemsToList(a, obj.typos, 'Type', typeIcon, 'search--type', 'tag--type')
     })
-    /* execute a function presses a key on the keyboard: */
-    inp.addEventListener('keydown', function (e) {
-      var x = document.getElementById(this.id + 'autocomplete-list')
-      if (x) x = x.getElementsByTagName('div')
-      if (e.keyCode === 40) {
-        /* If the arrow DOWN key is pressed,
-         increase the currentFocus variable: */
-        currentFocus++
-        /* and and make the current item more visible: */
-        SearchBar.addActive(x, currentFocus)
-      } else if (e.keyCode === 38) { // up
-        /* If the arrow UP key is pressed,
-        decrease the currentFocus variable: */
-        currentFocus--
-        /* and and make the current item more visible: */
-        SearchBar.addActive(x)
-      } else if (e.keyCode === 13) {
-        /* If the ENTER key is pressed, prevent the form from being submitted, */
-        e.preventDefault()
-        if (currentFocus > -1) {
-          /* and simulate a click on the "active" item: */
-          if (x) x[currentFocus].click()
-        }
-      }
-    })
 
+    // When search button is clicked
     search.addEventListener('click', async (e) => {
       e.preventDefault()
+
+      // JSON body that will be sent 
       const send = {
         lang: 'fr',
         strict: false,
@@ -122,17 +109,6 @@ const SearchBar = {
         intervenants: tags_set.architect,
         streets: tags_set.street
       }
-
-      // const send = {
-      //   lang: 'fr',
-      //   strict: false,
-      //   zipcode: null,
-      //   city: null,
-      //   typology: null,
-      //   style: null,
-      //   architects: null,
-      //   streets: null
-      // }
 
       // TOT DELETE WHEN MULTIPLE VALUES ARE POSSIBLE
       if (tags_set['zip code'].length !== 0) {
@@ -172,27 +148,24 @@ const SearchBar = {
     })
   },
 
+  //Classify an item as "active"
   addActive: (x, currentFocus) => {
-    /* a function to classify an item as "active": */
     if (!x) return false
-    /* start by removing the "active" class on all items: */
     SearchBar.removeActive(x)
     if (currentFocus >= x.length) currentFocus = 0
     if (currentFocus < 0) currentFocus = (x.length - 1)
-    /* add class "autocomplete-active": */
     x[currentFocus].classList.add('autocomplete-active')
   },
 
+  // Remove "active" class from all autocomplete items
   removeActive: (x) => {
-    /* a function to remove the "active" class from all autocomplete items: */
     for (var i = 0; i < x.length; i++) {
       x[i].classList.remove('autocomplete-active')
     }
   },
 
+  // Close all autocomplete list in the document except the ones in argument
   closeAllLists: (elmnt, inp) => {
-    /* close all autocomplete lists in the document,
-        except the one passed as an argument: */
     var x = document.getElementsByClassName('autocomplete-items')
     for (var i = 0; i < x.length; i++) {
       if (elmnt !== x[i] && elmnt !== inp) {
@@ -201,6 +174,7 @@ const SearchBar = {
     }
   },
 
+  // Add items to the object
   addItemsToObj: (arr, objArr) => {
     if (arr.length !== 0) {
       for (let i = 0; i < arr.length; i++) {
@@ -209,16 +183,15 @@ const SearchBar = {
     }
   },
 
+  //Add items to the autocomplete list
   addItemsToList: (a, arr, name, icon = '', Nameclass = '', tagClass = '') => {
     if (arr) {
     for (let i = 0; i < arr.length; i++) {
-      /* check if the item starts with the same letters as the text field value: */
+      // Check if searched string is included in the item
         if (arr[i].toUpperCase().includes(val.toUpperCase())) {
-        /* create a DIV element for each matching element */
           const b = document.createElement('DIV')
           let className = ''
-
-
+          
           if (Nameclass !== '') {
             const img = document.createElement('IMG')
             img.className = 'search-icon'
@@ -229,23 +202,19 @@ const SearchBar = {
           }
 
           b.className = className
-          /* make the matching letters bold: */
-          let j = arr[i].indexOf(val)
+
           // b.innerHTML = "<strong>" + arr[i].substr(j, val.length) + "</strong>";
           b.innerHTML += name + ': ' + arr[i]
-          /* insert a input field that will hold the current array item's value: */
           b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>"
-          /* execute a function when someone clicks on the item value (DIV element): */
+
+          // Execute  when someone clicks on an item of the autocomplete list
           b.addEventListener('click', function (e) {
-            /* insert the value for the autocomplete text field: */
             // inp.value = this.getElementsByTagName("input")[0].value;
             const value = this.getElementsByTagName('input')[0].value
-            /* close the list of autocompleted values,
-            (or any other open lists of autocompleted values: */
+
             SearchBar.closeAllLists(inp)
 
             // Add tag
-
             if (!tags_set[name.toLowerCase()].includes(value)) {
               const tag = document.createElement('button')
               let className = ''
