@@ -1,5 +1,15 @@
+/**
+ * Modules import
+ */
 import mapboxgl from "mapbox-gl";
 import Api from "../api.js";
+import Chart from './charts.js'
+
+/**
+ * Variable declarations
+ */
+const style = process.env.MAPBOX_STYLE
+const token = process.env.MAPBOX_ACCESS_TOKEN
 
 let map;
 let data;
@@ -51,12 +61,11 @@ const Dashboard = {
       ? (centerMap = coordinates.long - 0.02)
       : (centerMap = coordinates.long);
 
-    mapboxgl.accessToken =
-      "pk.eyJ1IjoieWFubmFhIiwiYSI6ImNrY2JwdGl1bTI3Ym0yem8wdmMyd3NhNHEifQ.b2WEZ63ZaouutZ65wXpfxg";
+    mapboxgl.accessToken = token;
 
     var map = new mapboxgl.Map({
       container: document.getElementById("map_dashboard"),
-      style: "mapbox://styles/yannaa/ckcui6mpa0gqh1io64uoyg6nf", // stylesheet location
+      style, // stylesheet location
       center: [4.3517, 50.8503],
       zoom: 12.71, // starting zoom
     });
@@ -199,104 +208,39 @@ const Dashboard = {
     });
     map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
     
-    //Get api data
+    // Retrieve stats data
     let data = await Api.getStats();
 
+    // Declare labels and series arrays
     let styleArray = [];
     let sValArray = [];
-
-    for (let index = 0; index < 10; index++) {
-      styleArray[index] = Object.keys(data.BuildingsPerStyle)[index];
-      sValArray[index] = Object.values(data.BuildingsPerStyle)[index];
-    }
-
-    //BUILDINGS PER STYLE
-    new Chartist.Bar('.ct-chart2', {
-      labels: styleArray,
-      series: [
-        sValArray
-      ]
-    }, {
-      reverseData: true,
-      horizontalBars: true,
-      axisY: {
-        offset: 200,
-        showLabel: true,
-      },
-      chartPadding: {
-        top: 15,
-        right: 15,
-        bottom: 5,
-        left: 10
-      }
-    });
-
-    //buildings per architect
     let architectArray = [];
-    let valueArray = [];
-
-    for (let index = 0; index < 10; index++) {
-      architectArray[index] = Object.keys(data.BuildingsPerIntervenant)[index];
-      valueArray[index] = Object.values(data.BuildingsPerIntervenant)[index];
-    }
-
-    let bar = new Chartist.Bar(
-      ".ct-chart1",
-      {
-        labels: architectArray,
-        series: [valueArray],
-      },
-      {
-        reverseData: true,
-        horizontalBars: true,
-        axisY: {
-          offset: 200,
-          showLabel: true,
-        },
-      });
-
-    //buildings per typology
+    let aValArray = [];
     let typologyArray = [];
     let tValArray = [];
 
+    // Store top 10 in arrays
     for (let index = 0; index < 10; index++) {
+      styleArray[index] = Object.keys(data.BuildingsPerStyle)[index];
+      sValArray[index] = Object.values(data.BuildingsPerStyle)[index];
+      architectArray[index] = Object.keys(data.BuildingsPerIntervenant)[index];
+      aValArray[index] = Object.values(data.BuildingsPerIntervenant)[index];
       typologyArray[index] = Object.keys(data.BuildingsPerTypography)[index];
       tValArray[index] = Object.values(data.BuildingsPerTypography)[index];
     }
 
-    let tBar = new Chartist.Bar('.ct-chart3', {
-      labels: typologyArray,
-      series: [
-        tValArray
-      ]
-    }, {
-      reverseData: true,
-      horizontalBars: true,
-      showGrid: false,
-      axisY: {
-        offset: 200,
-        showLabel: true,
-      },
-    });
+    // Buildings per architect
+    Chart.createHBarChart('.ct-chart1', architectArray, aValArray);
 
+    // Buildings per style
+    Chart.createHBarChart('.ct-chart2', styleArray, sValArray);
+
+    // Buildings per typology
+    Chart.createHBarChart('.ct-chart3', typologyArray, tValArray);
+    
     //Buildings over time (timeline)
-    let timeBar = new Chartist.Line('.ct-chart4', {
-      labels: Object.keys(data.BuildingsPerYear),
-      series: [
-        Object.values(data.BuildingsPerYear)
-      ]
-    }, {
-      low: 0,
-      showArea: true,
-      showLine: false,
-      showPoint: false,
-      axisX: {
-        labelInterpolationFnc: function(value, index) {
-          return index % 12 === 0 ? + value : null;
-        }
-      }
-    });
-
+    Chart.createTimeline('.ct-chart4', Object.keys(data.BuildingsPerYear), Object.values(data.BuildingsPerYear))
+    
   }
 }
 

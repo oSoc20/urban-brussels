@@ -17,6 +17,13 @@ const Navbar = {
     return view
   },
   after_render: async () => {
+    // Language switch
+    const lang = document.getElementsByClassName('lang_select')
+    for (let index = 0; index < lang.length; index++) {
+      lang[index].addEventListener('click', () => {
+        document.getElementById('dropbtn').innerHTML = lang[index].innerHTML
+      })
+    }
   }
 
 }

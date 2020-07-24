@@ -49,14 +49,6 @@ const Landing = {
     SearchBar.displaySearchBar('search_container')
     SearchBar.searchFunction()
 
-    // Language switch
-    const lang = document.getElementsByClassName('lang_select')
-    for (let index = 0; index < lang.length; index++) {
-      lang[index].addEventListener('click', () => {
-        document.getElementById('dropbtn').innerHTML = lang[index].innerHTML
-      })
-    }
-
     // Map
     mapboxgl.accessToken = token
 
