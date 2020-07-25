@@ -12,7 +12,7 @@ const pagination = function (paginationWrapper, data) {
   const size = Math.ceil(data.totalItems / itemsPerPage)
 
   if (typeof (data.onInit) === 'function') {
-    events.on('init', data.onInit);
+    events.on('init', data.onInit)
   }
   if (typeof (data.onPageChanged) === 'function') {
     events.on('pageChanged', data.onPageChanged)

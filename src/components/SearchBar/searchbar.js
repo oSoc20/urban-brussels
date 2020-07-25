@@ -7,8 +7,8 @@ import architectIcon from '../../assets/icons/architect-icon.svg'
 import buildingList from '../BuildingsListPage/buildingslist.js'
 
 /* Variable declarations */
-let search_text = ["Search", "Chercher", "Zoeken"]
-let tags_set = {
+const search_text = ['Search', 'Chercher', 'Zoeken']
+const tags_set = {
   'zip code': [],
   city: [],
   type: [],
@@ -18,7 +18,7 @@ let tags_set = {
 }
 let obj = {}
 let resp
-let val;
+let val
 let search_div
 let inp
 let noSearchItem = true
@@ -211,13 +211,12 @@ const SearchBar = {
 
   addItemsToList: (a, arr, name, icon = '', Nameclass = '', tagClass = '') => {
     if (arr) {
-    for (let i = 0; i < arr.length; i++) {
+      for (let i = 0; i < arr.length; i++) {
       /* check if the item starts with the same letters as the text field value: */
         if (arr[i].toUpperCase().includes(val.toUpperCase())) {
         /* create a DIV element for each matching element */
           const b = document.createElement('DIV')
           let className = ''
-
 
           if (Nameclass !== '') {
             const img = document.createElement('IMG')
@@ -230,7 +229,7 @@ const SearchBar = {
 
           b.className = className
           /* make the matching letters bold: */
-          let j = arr[i].indexOf(val)
+          const j = arr[i].indexOf(val)
           // b.innerHTML = "<strong>" + arr[i].substr(j, val.length) + "</strong>";
           b.innerHTML += name + ': ' + arr[i]
           /* insert a input field that will hold the current array item's value: */
@@ -297,7 +296,7 @@ const SearchBar = {
           a.appendChild(b)
         }
       }
-    } 
+    }
   }
 
   // storeList: async (list) => {

@@ -1,8 +1,8 @@
 import SearchBar from './SearchBar/searchbar.js'
 import mapboxgl from 'mapbox-gl'
 
-let style = process.env.MAPBOX_STYLE;
-let token = process.env.MAPBOX_ACCESS_TOKEN;
+const style = process.env.MAPBOX_STYLE
+const token = process.env.MAPBOX_ACCESS_TOKEN
 
 const Landing = {
   render: async () => {
@@ -44,7 +44,7 @@ const Landing = {
       })
     }
 
-    mapboxgl.accessToken = token;
+    mapboxgl.accessToken = token
 
     var map = new mapboxgl.Map({
       container: document.getElementById('map'),

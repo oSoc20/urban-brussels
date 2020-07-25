@@ -1,13 +1,13 @@
-import mapboxgl from "mapbox-gl";
-import Api from "../api.js";
+import mapboxgl from 'mapbox-gl'
+import Api from '../api.js'
 
-let map;
-let data;
-let moveMap = true;
-let popup;
-const itemsPerPage = 4;
-let features = [];
-let coordinates;
+let map
+let data
+const moveMap = true
+let popup
+const itemsPerPage = 4
+const features = []
+let coordinates
 
 const Dashboard = {
   render: async () => {
@@ -37,180 +37,180 @@ const Dashboard = {
 </main>
 <footer class="footer"></footer>
 </div>
-          `;
-    return view;
+          `
+    return view
   },
   after_render: async () => {
     coordinates = {
       long: 4.34031002,
-      lat: 50.88432209,
-    };
-    let centerMap;
+      lat: 50.88432209
+    }
+    let centerMap
 
     window.innerWidth > 880
       ? (centerMap = coordinates.long - 0.02)
-      : (centerMap = coordinates.long);
+      : (centerMap = coordinates.long)
 
     mapboxgl.accessToken =
-      "pk.eyJ1IjoieWFubmFhIiwiYSI6ImNrY2JwdGl1bTI3Ym0yem8wdmMyd3NhNHEifQ.b2WEZ63ZaouutZ65wXpfxg";
+      'pk.eyJ1IjoieWFubmFhIiwiYSI6ImNrY2JwdGl1bTI3Ym0yem8wdmMyd3NhNHEifQ.b2WEZ63ZaouutZ65wXpfxg'
 
     var map = new mapboxgl.Map({
-      container: document.getElementById("map_dashboard"),
-      style: "mapbox://styles/yannaa/ckcui6mpa0gqh1io64uoyg6nf", // stylesheet location
+      container: document.getElementById('map_dashboard'),
+      style: 'mapbox://styles/yannaa/ckcui6mpa0gqh1io64uoyg6nf', // stylesheet location
       center: [4.3517, 50.8503],
-      zoom: 12.71, // starting zoom
-    });
-    map.on("load", function () {
+      zoom: 12.71 // starting zoom
+    })
+    map.on('load', function () {
       // Add a new source from our GeoJSON data and
       // set the 'cluster' option to true. GL-JS will
       // add the point_count property to your source data.
-      map.addSource("buildings", {
-        type: "geojson",
+      map.addSource('buildings', {
+        type: 'geojson',
         // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
         // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
         data:
-          "https://gis.urban.brussels/geoserver/ows?service=wfs&version=2.0.0&request=GetFeature&TypeName=BSO_DML_BESC:Inventaris_Irismonument&outputformat=application/json&cql_filter=CITY%20=%20%271090%27&srsname=EPSG:4326",
+          'https://gis.urban.brussels/geoserver/ows?service=wfs&version=2.0.0&request=GetFeature&TypeName=BSO_DML_BESC:Inventaris_Irismonument&outputformat=application/json&cql_filter=CITY%20=%20%271090%27&srsname=EPSG:4326',
         cluster: true,
         clusterMaxZoom: 14, // Max zoom to cluster points on
-        clusterRadius: 50, // Radius of each cluster when clustering points (defaults to 50)
-      });
+        clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+      })
 
-      //ADDING CLUSTER STARTS FROM HERE
+      // ADDING CLUSTER STARTS FROM HERE
       map.addLayer({
-        id: "clusters",
-        type: "circle",
-        source: "buildings",
-        filter: ["has", "point_count"],
+        id: 'clusters',
+        type: 'circle',
+        source: 'buildings',
+        filter: ['has', 'point_count'],
         paint: {
           //   * Blue, 20px circles when point count is less than 100
           //   * Yellow, 30px circles when point count is between 100 and 750
           //   * Pink, 40px circles when point count is greater than or equal to 750
-          "circle-color": [
-            "step",
-            ["get", "point_count"],
-            "#8F9BCC",
+          'circle-color': [
+            'step',
+            ['get', 'point_count'],
+            '#8F9BCC',
             100,
-            "#476291",
+            '#476291',
             750,
-            "#212E44",
+            '#212E44'
           ],
-          "circle-radius": [
-            "step",
-            ["get", "point_count"],
+          'circle-radius': [
+            'step',
+            ['get', 'point_count'],
             20,
             100,
             30,
             750,
-            40,
-          ],
-        },
-      });
+            40
+          ]
+        }
+      })
 
       map.addLayer({
-        id: "cluster-count",
-        type: "symbol",
-        source: "buildings",
-        filter: ["has", "point_count"],
+        id: 'cluster-count',
+        type: 'symbol',
+        source: 'buildings',
+        filter: ['has', 'point_count'],
         layout: {
-          "text-field": "{point_count_abbreviated}",
-          "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-          "text-size": 12,
+          'text-field': '{point_count_abbreviated}',
+          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+          'text-size': 12
         },
         paint: {
-          "text-color": "#ffffff",
-        },
-      });
+          'text-color': '#ffffff'
+        }
+      })
 
       map.addLayer({
-        id: "unclustered-point",
-        type: "circle",
-        source: "buildings",
-        filter: ["!", ["has", "point_count"]],
+        id: 'unclustered-point',
+        type: 'circle',
+        source: 'buildings',
+        filter: ['!', ['has', 'point_count']],
         paint: {
-          "circle-color": "#212E44",
-          "circle-radius": 11,
-          "circle-stroke-width": 2,
-          "circle-stroke-color": "#fff",
-        },
-      });
+          'circle-color': '#212E44',
+          'circle-radius': 11,
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#fff'
+        }
+      })
 
-      map.addSource("unclustered-locations", {
-        type: "geojson",
+      map.addSource('unclustered-locations', {
+        type: 'geojson',
         data: data,
         cluster: false,
         clusterMaxZoom: 14,
-        clusterRadius: 50,
-      });
+        clusterRadius: 50
+      })
 
       map.addLayer({
-        id: "hidden-locations",
-        type: "circle",
-        source: "unclustered-locations",
+        id: 'hidden-locations',
+        type: 'circle',
+        source: 'unclustered-locations',
         paint: {
-          "circle-radius": 0,
-        },
-      });
+          'circle-radius': 0
+        }
+      })
 
       // inspect a cluster on click
-      map.on("click", "clusters", function (e) {
+      map.on('click', 'clusters', function (e) {
         var features = map.queryRenderedFeatures(e.point, {
-          layers: ["clusters"],
-        });
-        var clusterId = features[0].properties.cluster_id;
+          layers: ['clusters']
+        })
+        var clusterId = features[0].properties.cluster_id
         map
-          .getSource("buildings")
+          .getSource('buildings')
           .getClusterExpansionZoom(clusterId, function (err, zoom) {
-            if (err) return;
+            if (err) return
 
             map.easeTo({
               center: features[0].geometry.coordinates,
-              zoom: zoom,
-            });
-          });
-      });
-      //CHANGE PROPERTY.
-      map.on("click", "unclustered-point", function (e) {
-        var coordinates = e.features[0].geometry.coordinates.slice();
-        var mag = e.features[0].properties.mag;
-        var houses;
+              zoom: zoom
+            })
+          })
+      })
+      // CHANGE PROPERTY.
+      map.on('click', 'unclustered-point', function (e) {
+        var coordinates = e.features[0].geometry.coordinates.slice()
+        var mag = e.features[0].properties.mag
+        var houses
 
         if (e.features[0].properties.houses === 1) {
-          houses = "yes";
+          houses = 'yes'
         } else {
-          houses = "no";
+          houses = 'no'
         }
-        //CHANGE coordinates
+        // CHANGE coordinates
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
         }
 
         new mapboxgl.Popup()
-          .setLngLat(coordinates) //COORDINATES TO DO
-          .setHTML("magnitude: " + mag + "<br>Was there a tsunami?: " + houses)
-          .addTo(map);
-      });
+          .setLngLat(coordinates) // COORDINATES TO DO
+          .setHTML('magnitude: ' + mag + '<br>Was there a tsunami?: ' + houses)
+          .addTo(map)
+      })
 
-      map.on("mouseenter", "clusters", function () {
-        map.getCanvas().style.cursor = "pointer";
-      });
-      map.on("mouseleave", "clusters", function () {
-        map.getCanvas().style.cursor = "";
-      });
-    });
-    map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
-    
-    //Get api data
-    let data = await Api.getStats();
+      map.on('mouseenter', 'clusters', function () {
+        map.getCanvas().style.cursor = 'pointer'
+      })
+      map.on('mouseleave', 'clusters', function () {
+        map.getCanvas().style.cursor = ''
+      })
+    })
+    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
 
-    let styleArray = [];
-    let sValArray = [];
+    // Get api data
+    const data = await Api.getStats()
+
+    const styleArray = []
+    const sValArray = []
 
     for (let index = 0; index < 10; index++) {
-      styleArray[index] = Object.keys(data.BuildingsPerStyle)[index];
-      sValArray[index] = Object.values(data.BuildingsPerStyle)[index];
+      styleArray[index] = Object.keys(data.BuildingsPerStyle)[index]
+      sValArray[index] = Object.values(data.BuildingsPerStyle)[index]
     }
 
-    //BUILDINGS PER STYLE
+    // BUILDINGS PER STYLE
     new Chartist.Bar('.ct-chart2', {
       labels: styleArray,
       series: [
@@ -221,7 +221,7 @@ const Dashboard = {
       horizontalBars: true,
       axisY: {
         offset: 200,
-        showLabel: true,
+        showLabel: true
       },
       chartPadding: {
         top: 15,
@@ -229,42 +229,42 @@ const Dashboard = {
         bottom: 5,
         left: 10
       }
-    });
+    })
 
-    //buildings per architect
-    let architectArray = [];
-    let valueArray = [];
+    // buildings per architect
+    const architectArray = []
+    const valueArray = []
 
     for (let index = 0; index < 10; index++) {
-      architectArray[index] = Object.keys(data.BuildingsPerIntervenant)[index];
-      valueArray[index] = Object.values(data.BuildingsPerIntervenant)[index];
+      architectArray[index] = Object.keys(data.BuildingsPerIntervenant)[index]
+      valueArray[index] = Object.values(data.BuildingsPerIntervenant)[index]
     }
 
-    let bar = new Chartist.Bar(
-      ".ct-chart1",
+    const bar = new Chartist.Bar(
+      '.ct-chart1',
       {
         labels: architectArray,
-        series: [valueArray],
+        series: [valueArray]
       },
       {
         reverseData: true,
         horizontalBars: true,
         axisY: {
           offset: 200,
-          showLabel: true,
-        },
-      });
+          showLabel: true
+        }
+      })
 
-    //buildings per typology
-    let typologyArray = [];
-    let tValArray = [];
+    // buildings per typology
+    const typologyArray = []
+    const tValArray = []
 
     for (let index = 0; index < 10; index++) {
-      typologyArray[index] = Object.keys(data.BuildingsPerTypography)[index];
-      tValArray[index] = Object.values(data.BuildingsPerTypography)[index];
+      typologyArray[index] = Object.keys(data.BuildingsPerTypography)[index]
+      tValArray[index] = Object.values(data.BuildingsPerTypography)[index]
     }
 
-    let tBar = new Chartist.Bar('.ct-chart3', {
+    const tBar = new Chartist.Bar('.ct-chart3', {
       labels: typologyArray,
       series: [
         tValArray
@@ -275,12 +275,12 @@ const Dashboard = {
       showGrid: false,
       axisY: {
         offset: 200,
-        showLabel: true,
-      },
-    });
+        showLabel: true
+      }
+    })
 
-    //Buildings over time (timeline)
-    let timeBar = new Chartist.Line('.ct-chart4', {
+    // Buildings over time (timeline)
+    const timeBar = new Chartist.Line('.ct-chart4', {
       labels: Object.keys(data.BuildingsPerYear),
       series: [
         Object.values(data.BuildingsPerYear)
@@ -291,14 +291,12 @@ const Dashboard = {
       showLine: false,
       showPoint: false,
       axisX: {
-        labelInterpolationFnc: function(value, index) {
-          return index % 12 === 0 ? + value : null;
+        labelInterpolationFnc: function (value, index) {
+          return index % 12 === 0 ? +value : null
         }
       }
-    });
-
+    })
   }
 }
 
 export default Dashboard
-

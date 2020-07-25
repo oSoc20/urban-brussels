@@ -596,7 +596,6 @@ const buildingList = {
       </div>
       <div class="detail-popup-info">`
 
-
     if (item[0].properties.styles != null && item[0].properties.styles !== 'null') {
       html += `
         <div class="detail-popup__tags-group">
