@@ -11,8 +11,8 @@ import architectIcon from '../../assets/icons/architect-icon.svg'
 /**
  * Variables declarations
  */
-let search_text = ["Search", "Chercher", "Zoeken"]
-let tags_set = {
+const search_text = ['Search', 'Chercher', 'Zoeken']
+const tags_set = {
   'zip code': [],
   city: [],
   type: [],
@@ -43,11 +43,11 @@ const SearchBar = {
   },
 
   searchFunction: () => {
-    search_div = document.getElementsByClassName('selected-items');
-    inp = document.getElementById('search_bar');
+    search_div = document.getElementsByClassName('selected-items')
+    inp = document.getElementById('search_bar')
 
-    const search = document.getElementById('search_btn');
-    let currentFocus;
+    const search = document.getElementById('search_btn')
+    let currentFocus
 
     // Execute when an input is typed in the search field
     inp.addEventListener('input', async function (e) {
@@ -98,7 +98,7 @@ const SearchBar = {
     search.addEventListener('click', async (e) => {
       e.preventDefault()
 
-      // JSON body that will be sent 
+      // JSON body that will be sent
       const send = {
         lang: 'fr',
         strict: false,
@@ -148,7 +148,7 @@ const SearchBar = {
     })
   },
 
-  //Classify an item as "active"
+  // Classify an item as "active"
   addActive: (x, currentFocus) => {
     if (!x) return false
     SearchBar.removeActive(x)
@@ -183,15 +183,15 @@ const SearchBar = {
     }
   },
 
-  //Add items to the autocomplete list
+  // Add items to the autocomplete list
   addItemsToList: (a, arr, name, icon = '', Nameclass = '', tagClass = '') => {
     if (arr) {
-    for (let i = 0; i < arr.length; i++) {
+      for (let i = 0; i < arr.length; i++) {
       // Check if searched string is included in the item
         if (arr[i].toUpperCase().includes(val.toUpperCase())) {
           const b = document.createElement('DIV')
           let className = ''
-          
+
           if (Nameclass !== '') {
             const img = document.createElement('IMG')
             img.className = 'search-icon'

@@ -1,8 +1,8 @@
 /**
  * Modules import
  */
-import mapboxgl from "mapbox-gl";
-import Api from "../api.js";
+import mapboxgl from 'mapbox-gl'
+import Api from '../api.js'
 import Chart from './charts.js'
 
 /**
@@ -61,10 +61,10 @@ const Dashboard = {
       ? (centerMap = coordinates.long - 0.02)
       : (centerMap = coordinates.long)
 
-    mapboxgl.accessToken = token;
+    mapboxgl.accessToken = token
 
     var map = new mapboxgl.Map({
-      container: document.getElementById("map_dashboard"),
+      container: document.getElementById('map_dashboard'),
       style, // stylesheet location
       center: [4.3517, 50.8503],
       zoom: 12.71 // starting zoom
@@ -209,38 +209,37 @@ const Dashboard = {
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
 
     // Retrieve stats data
-    let data = await Api.getStats();
+    const data = await Api.getStats()
 
     // Declare labels and series arrays
-    let styleArray = [];
-    let sValArray = [];
-    let architectArray = [];
-    let aValArray = [];
-    let typologyArray = [];
-    let tValArray = [];
+    const styleArray = []
+    const sValArray = []
+    const architectArray = []
+    const aValArray = []
+    const typologyArray = []
+    const tValArray = []
 
     // Store top 10 in arrays
     for (let index = 0; index < 10; index++) {
-      styleArray[index] = Object.keys(data.BuildingsPerStyle)[index];
-      sValArray[index] = Object.values(data.BuildingsPerStyle)[index];
-      architectArray[index] = Object.keys(data.BuildingsPerIntervenant)[index];
-      aValArray[index] = Object.values(data.BuildingsPerIntervenant)[index];
-      typologyArray[index] = Object.keys(data.BuildingsPerTypography)[index];
-      tValArray[index] = Object.values(data.BuildingsPerTypography)[index];
+      styleArray[index] = Object.keys(data.BuildingsPerStyle)[index]
+      sValArray[index] = Object.values(data.BuildingsPerStyle)[index]
+      architectArray[index] = Object.keys(data.BuildingsPerIntervenant)[index]
+      aValArray[index] = Object.values(data.BuildingsPerIntervenant)[index]
+      typologyArray[index] = Object.keys(data.BuildingsPerTypography)[index]
+      tValArray[index] = Object.values(data.BuildingsPerTypography)[index]
     }
 
     // Buildings per architect
-    Chart.createHBarChart('.ct-chart1', architectArray, aValArray);
+    Chart.createHBarChart('.ct-chart1', architectArray, aValArray)
 
     // Buildings per style
-    Chart.createHBarChart('.ct-chart2', styleArray, sValArray);
+    Chart.createHBarChart('.ct-chart2', styleArray, sValArray)
 
     // Buildings per typology
-    Chart.createHBarChart('.ct-chart3', typologyArray, tValArray);
-    
-    //Buildings over time (timeline)
+    Chart.createHBarChart('.ct-chart3', typologyArray, tValArray)
+
+    // Buildings over time (timeline)
     Chart.createTimeline('.ct-chart4', Object.keys(data.BuildingsPerYear), Object.values(data.BuildingsPerYear))
-    
   }
 }
 

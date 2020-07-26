@@ -44,7 +44,6 @@ const Landing = {
   },
   // Behavior after rendering
   after_render: async () => {
-
     // Search bar code
     SearchBar.displaySearchBar('search_container')
     SearchBar.searchFunction()
