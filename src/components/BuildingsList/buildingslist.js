@@ -1,7 +1,6 @@
 import mapboxgl from 'mapbox-gl'
 import Api from '../api.js'
-import Pagination from './pagination'
-import SearchBar from '../SearchBar/searchbar.js'
+import Pagination from '../Pagination/pagination'
 
 import styleIcon from '../../assets/icons/style-icon.svg'
 import typeIcon from '../../assets/icons/type-icon.svg'
@@ -14,7 +13,6 @@ let data = []
 let moveMap = true
 let popup
 const itemsPerPage = 5
-let paginationBuildings
 let features = []
 let coordinates
 let searchData
@@ -64,18 +62,7 @@ const buildingList = {
     return view
   },
   after_render: async () => {
-    // SearchBar.displaySearchBar('search_container')
-    // SearchBar.searchFunction()
-
-    paginationBuildings = new Pagination(document.getElementsByClassName('pagination')[0], {
-      currentPage: 1,
-      totalItems: data.features.length,
-      itemsPerPage: itemsPerPage,
-      stepNum: 1,
-      onInit: buildingList.displayContent
-    })
-
-    paginationBuildings.onPageChanged(buildingList.displayContent)
+    buildingList.initPagination()
 
     coordinates = {
       long: 4.4006,
@@ -364,29 +351,14 @@ const buildingList = {
       features = map.queryRenderedFeatures({ layers: ['hidden-locations'] })
       features.reverse()
 
-      paginationBuildings = new Pagination(document.getElementsByClassName('pagination')[0], {
-        currentPage: 1,
-        totalItems: features.length,
-        itemsPerPage: itemsPerPage,
-        stepNum: 1,
-        onInit: buildingList.displayContent
-      })
-
-      paginationBuildings.onPageChanged(buildingList.displayContent)
+      buildingList.initPagination()
     }
   },
 
   renderFullList: (map) => {
     if (!moveMap) {
-      paginationBuildings = new Pagination(document.getElementsByClassName('pagination')[0], {
-        currentPage: 1,
-        totalItems: data.features.length,
-        itemsPerPage: itemsPerPage,
-        stepNum: 1,
-        onInit: buildingList.displayContent
-      })
-
-      paginationBuildings.onPageChanged(buildingList.displayContent)
+      features = data.features
+      buildingList.initPagination()
     }
   },
   displayContent: (currentPage) => {
@@ -646,6 +618,16 @@ const buildingList = {
       </div>`
 
     detailSection.innerHTML = html
+  },
+  initPagination: () => {
+    Pagination.init(document.getElementsByClassName('pagination')[0], {
+      currentPage: 1,
+      totalItems: features.length,
+      itemsPerPage: itemsPerPage,
+      stepNum: 1
+    })
+
+    Pagination.onPageChanged(buildingList.displayContent)
   }
 
 }
