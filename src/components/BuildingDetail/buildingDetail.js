@@ -1,207 +1,101 @@
-import mapboxgl from 'mapbox-gl'
 import styleIcon from '../../assets/icons/style-icon.svg'
 import typeIcon from '../../assets/icons/type-icon.svg'
 import architectIcon from '../../assets/icons/architect-icon.svg'
 import watchIcon from '../../assets/icons/eye-icon.svg'
+import buildingList from '../BuildingsList/buildingslist'
+import mapDetail from './map'
 
-const DetailBuilding = {
-  render: async () => {
-    const view = /* html */`
-    <div id="mapContainer" class="map-building-detail"></div>
+const detail = {
+  showDetail: (map, item, popupHover) => {
+    detail.toggleClasses()
+    detail.toggleMapLayers(map, 'none')
+    popupHover.remove()
 
-    <section class= "detail-popup  is-visible">
-    <div class="detail-popup__container">
-
-      <div class="detail-popup__overflow">
- 
-      <div class="detail-popup__row">
+    mapDetail.init(map, item)
+    const detailSection = document.querySelector('.detail-popup__overflow')
+    detailSection.innerHTML = ''
+    const building = item[0].properties
+    let html = `
+    <div class="detail-popup__row">
         <div class="detail-popup__img-container">
-          <img class="detail-popup__img" src=https://monument.heritage.brussels/medias/500/buildings/10900023/10900023_0007_P01.jpg alt="" />
+          <img class="detail-popup__img" src="${building.image}" alt="" />
           <img class="watch__icon" src="${watchIcon}" alt="icon watch image">
         </div>
 
-        <div class="detail-popup__address">
-            <h1 class="detail-popup__name">The name of the building</h1>
+        <div class="detail-popup__address">`
 
-            <h2 class="detail-popup__address__street"> Capartlaan 7 </h2>
-            <h2 class="detail-popup__address__municipality">1090 Jette</h2>
+    if (building.name != null && building.name !== 'null') {
+      html += `<h1 class="detail-popup__name">${building.name}</h1>`
+    }
 
+    html += `
+            <h2 class="detail-popup__address__street"> ${building.street} ${building.number} </h2>
+            <h2 class="detail-popup__address__municipality">${building.zip_code} ${building.city}</h2>
         </div>
       </div>
+      <div class="detail-popup-info">`
 
+    html += detail.showTags(building.styles, styleIcon, 'style', 'Styles')
+    html += detail.showTags(building.typographies, typeIcon, 'type', 'Types')
+    html += detail.showTags(building.intervenants, architectIcon, 'architect', 'Architects')
 
-        <div class="detail-popup-info" >
-          <div class="detail-popup__tags-group">
-            <div class="tag__category">
-              <img class="tag__icon" src="${styleIcon}" alt="icon style tags">
-              <h3 class="tag__group-name">Styles</h3>
-              <div class="line line--style"></div>
-            </div>
-              <div class="detail-popup__tags">
-                  <div class="tag tag--style">Eclectisme</div>
-                  <div  class="tag tag--style">Eclectisme</div>
-                  <div  class="tag tag--style">Eclectisme</div>
-              </div>
-          </div>
-          <div class="detail-popup__tags-group">
-            <div class="tag__category">
-              <img class="tag__icon" src="${typeIcon}" alt="icon type tags">
-              <h3 class="tag__group-name">Types</h3>
-              <div class="line line--type"></div>
-            </div>
-              <div class="detail-popup__tags">
-                  <div  class="tag tag--type">Former farm</div>
-              </div>
-          </div>
-          <div class="detail-popup__tags-group">
-            <div class="tag__category">
-              <img class="tag__icon" src="${architectIcon}" alt="icon architect tags">
-              <h3 class="tag__group-name">Architects</h3>
-              <div class="line line--architect"></div>
-            </div> 
-              <div class="detail-popup__tags">
-                  <div class="tag-group-architect">
-                      <div class="tag tag--architect">R. Lambert</div>
-                      <div class="tag tag--architect">1916</div>
-                  </div>
-              </div>
-          </div>
-        </div>
-        <a href="https://monument.heritage.brussels/nl/Jette/Capartlaan/7/24664" class="button button--dark" >Get to know more</a> 
-        </div>
-   
-    </div>
-  </section>
-  
-  <div class="img-modal">
-    <span class="btn-close">&times;</span>
-    <div class="img-modal__content">
-      <img class="img-model__img" src="https://monument.heritage.brussels/medias/500/buildings/10900023/10900023_0007_P01.jpg">
-  </div>    
+    html += `
+       </div>
+        <a href="${building.url}" class="button button--dark" >Get to know more</a> 
+      </div>`
 
-          `
-    return view
+    detailSection.innerHTML = html
   },
-  after_render: async () => {
-    const coordinates = {
-      long: 4.32120602,
-      lat: 50.88532209
+
+  toggleClasses: () => {
+    document.querySelector('.detail-popup').classList.toggle('open')
+    document.querySelector('.section__list').classList.toggle('is-not-visible')
+    document.querySelector('.switch').classList.toggle('is-not-visible')
+    document.querySelector('.map-building-list').classList.toggle('map-building-list__detail')
+    const btnBack = document.querySelector('.btn--back')
+    btnBack.classList.toggle('is-visible')
+    if (btnBack.classList.contains('is-visible')) {
+      btnBack.addEventListener('click', buildingList.goBack)
     }
-    let centerMap
+  },
 
-    window.innerWidth > 880 ? centerMap = coordinates.long - 0.0200 : centerMap = coordinates.long
+  toggleMapLayers: (map, toggle) => {
+    map.resize()
+    map.setLayoutProperty('clusters', 'visibility', toggle)
+    map.setLayoutProperty('cluster-count', 'visibility', toggle)
+    map.setLayoutProperty('unclustered-point', 'visibility', toggle)
+  },
 
-    mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
-    const map = new mapboxgl.Map({
-      container: 'mapContainer',
-      style: process.env.MAPBOX_STYLE,
-      center: [centerMap, coordinates.lat],
-      zoom: 12.71
+  showTags: (item, icon, name, namePlural) => {
+    let html = ''
+    if (item != null && item !== 'null') {
+      html += `
+        <div class="detail-popup__tags-group">
+            <div class="tag__category">
+              <img class="tag__icon" src="${icon}" alt="icon ${name} tags">
+              <h3 class="tag__group-name">${namePlural}</h3>
+              <div class="line line--${name}"></div>
+            </div>
+              <div class="detail-popup__tags">
+                  <div  class="tag tag--${name}">${item}</div>
+            </div>
+        </div>`
+    }
+    return html
+  },
+
+  goBack: (map) => {
+    detail.toggleClasses()
+    document.querySelector('#switch').checked = true
+    detail.toggleMapLayers(map, 'visible')
+    map.removeLayer('points')
+    map.removeSource('points')
+
+    map.easeTo({
+      center: [4.4006, 50.8452],
+      zoom: 10.24
     })
-
-    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
-
-    const size = 200
-
-    const pulsingDot = {
-      width: size,
-      height: size,
-      data: new Uint8Array(size * size * 4),
-
-      onAdd: function () {
-        const canvas = document.createElement('canvas')
-        canvas.width = this.width
-        canvas.height = this.height
-        this.context = canvas.getContext('2d')
-      },
-
-      render: function () {
-        const duration = 2000
-        const t = (performance.now() % duration) / duration
-
-        const radius = (size / 2) * 0.3
-        const outerRadius = (size / 2) * 0.7 * t + radius
-        const context = this.context
-
-        context.clearRect(0, 0, this.width, this.height)
-        context.beginPath()
-        context.arc(
-          this.width / 2,
-          this.height / 2,
-          outerRadius,
-          0,
-          Math.PI * 2
-        )
-        context.fillStyle = 'rgba(33, 33, 68,' + (1 - t) + ')'
-        context.fill()
-
-        context.beginPath()
-        context.arc(
-          this.width / 2,
-          this.height / 2,
-          radius,
-          0,
-          Math.PI * 2
-        )
-        context.fillStyle = 'rgba(33, 33, 68, 1)'
-        context.strokeStyle = 'white'
-        context.lineWidth = 2 + 4 * (1 - t)
-        context.fill()
-        context.stroke()
-
-        this.data = context.getImageData(
-          0,
-          0,
-          this.width,
-          this.height
-        ).data
-
-        map.triggerRepaint()
-        return true
-      }
-    }
-
-    map.on('load', function () {
-      map.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 })
-      map.addSource('points', {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [
-            {
-              type: 'Feature',
-              geometry: {
-                type: 'Point',
-                coordinates: [coordinates.long, coordinates.lat]
-              }
-            }
-          ]
-        }
-      })
-      map.addLayer({
-        id: 'points',
-        type: 'symbol',
-        source: 'points',
-        layout: {
-          'icon-image': 'pulsing-dot'
-        }
-      })
-    })
-    const clickHandlerWatchImg = () => {
-      document.querySelector('.img-modal').style.display = 'block'
-      document.querySelector('body').style.overflow = 'hidden'
-    }
-
-    const clickHandlerCloseImg = () => {
-      document.querySelector('.img-modal').style.display = 'none'
-      document.querySelector('body').style.overflow = 'auto'
-    }
-
-    const watchButton = document.querySelector('.watch__icon')
-    const closeButton = document.querySelector('.btn-close')
-    watchButton.addEventListener('click', clickHandlerWatchImg)
-    closeButton.addEventListener('click', clickHandlerCloseImg)
   }
 }
 
-export default DetailBuilding
+export default detail

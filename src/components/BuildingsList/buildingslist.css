@@ -20,7 +20,6 @@
   position: absolute;
   background-color: white;
   z-index: 2;
-  /* box-shadow: 0px 3.3655px 3.3655px rgba(0, 0, 0, 0.1); */
   height: auto;
   padding: 30px;
 }
@@ -64,8 +63,6 @@
   box-shadow: inset 530px 0 0 rgba(44, 53, 80, .03)
 }
 
-
-
 .building-list__item__container, .building__tags {
   display: flex;
 }
@@ -78,7 +75,6 @@
 .building__tags {
   flex-wrap: wrap;
 }
-
 
 .building__img {
   border-radius: 15px;
@@ -101,7 +97,6 @@
   font-size: 17px;
   margin-bottom: 7px;
 }
-
 
 .pop-up {
   display: flex;
