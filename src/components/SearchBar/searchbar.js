@@ -21,11 +21,11 @@ let tags_set = {
   street: []
 }
 let obj = {}
-let resp;
-let val;
-let search_div;
-let inp;
-let noSearchItem = true;
+let resp
+let val
+let search_div
+let inp
+let noSearchItem = true
 
 // Rendering of the search bar
 const SearchBar = {
@@ -202,7 +202,6 @@ const SearchBar = {
           }
 
           b.className = className
-
           // b.innerHTML = "<strong>" + arr[i].substr(j, val.length) + "</strong>";
           b.innerHTML += name + ': ' + arr[i]
           b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>"
@@ -266,7 +265,7 @@ const SearchBar = {
           a.appendChild(b)
         }
       }
-    } 
+    }
   }
 
   // storeList: async (list) => {
