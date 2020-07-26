@@ -28,7 +28,6 @@ const Api = {
    * query: the user's search
    */
 
-
   getAutocomplete: async (lang, query) => {
     const options = {
       method: 'GET',
@@ -110,8 +109,8 @@ const Api = {
     } catch (err) {
       console.log('Error getting documents', err)
     }
-  },
-  
+  }
+
   // Add more functions
 }
 
