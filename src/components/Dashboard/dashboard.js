@@ -51,16 +51,6 @@ const Dashboard = {
     return view
   },
   after_render: async () => {
-    coordinates = {
-      long: 4.34031002,
-      lat: 50.88432209
-    }
-    let centerMap
-
-    window.innerWidth > 880
-      ? (centerMap = coordinates.long - 0.02)
-      : (centerMap = coordinates.long)
-
     mapboxgl.accessToken = token
 
     var map = new mapboxgl.Map({

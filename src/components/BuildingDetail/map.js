@@ -5,9 +5,6 @@ const map = {
       long: item[0].geometry.coordinates[0],
       lat: item[0].geometry.coordinates[1]
     }
-    let centerMap
-
-    window.innerWidth > 880 ? centerMap = coordinatesItem.long - 0.0100 : centerMap = coordinatesItem.long
 
     map.addSource('points', {
       type: 'geojson',
@@ -34,7 +31,7 @@ const map = {
     })
 
     map.easeTo({
-      center: [centerMap, coordinatesItem.lat],
+      center: [coordinatesItem.long, coordinatesItem.lat],
       zoom: 13
     })
   }
