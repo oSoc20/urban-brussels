@@ -20,7 +20,7 @@ const Landing = {
     const view = /* html */`
     <div id="map-landing-page" class="map-landing-page"></div>
 
-    <button id="clickDashboard" onClick="window.location.href='/#/Dashboard';">
+    <button id="clickDashboard" onClick="window.location.href='/#/dashboard';">
     <span id="dash_text">Dashboard</span>
     </button>
 
