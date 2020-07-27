@@ -69,3 +69,34 @@
     transform: rotate(180deg);
     margin-right: 10px;
 }
+/* Layers dropdown button */
+#menu {
+    background: #fff;
+    position: absolute;
+    z-index: 1;
+    top: 400px;
+    right: 50px;
+    border-radius: 3px;
+    width: 120px;
+    border: 1px solid rgba(0,0,0,0.4);
+    font-family: 'Open Sans', sans-serif;
+}
+#menu a {
+    font-size: 13px;
+    color: #404040;
+    display: block;
+    margin: 0;
+    padding: 0;
+    padding: 10px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+    text-align: center;
+}
+.dropbtn {
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+}
+.dropbtn:hover, .dropbtn:f
