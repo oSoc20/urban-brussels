@@ -136,7 +136,7 @@ const Landing = {
     })
 
     // Map load
-    map.on('load', function () {
+    map.once('load', function () {
       map.addSource('randomBuildings', {
         type: 'geojson',
         data: dataRandom
@@ -163,7 +163,7 @@ const Landing = {
 
     // Map data
     map.on('sourcedata', (event) => {
-      if (event.isSourceLoaded === true) {
+      if (event.sourceId === 'randomBuildings' && event.isSourceLoaded === true) {
         map.querySourceFeatures('randomBuildings').forEach((feature) => {
           const str = `
           <div class="pop-up--landing">
