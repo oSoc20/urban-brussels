@@ -3,10 +3,11 @@ import Api from '../api.js'
 import styleIcon from '../../assets/icons/style-icon.svg'
 import typeIcon from '../../assets/icons/type-icon.svg'
 import architectIcon from '../../assets/icons/architect-icon.svg'
+import Landing from '../Landing/landing.js'
 
 /**  Variables declarations */
 const searchText = ['Search', 'Chercher', 'Zoeken']
-let tags = {
+const tags = {
   zipcodeArr: [],
   cityArr: [],
   typeArr: [],
@@ -16,7 +17,9 @@ let tags = {
 }
 
 let obj = {}
-let resp, inputValue, searchDiv, input
+let resp, inputValue, searchDiv, input, callbackFunction
+let prevTagsTotalIndex = 0
+let prevTagsIndex = 0
 
 // Rendering of the search bar
 const SearchBar = {
@@ -31,7 +34,8 @@ const SearchBar = {
         </div>`
   },
 
-  searchFunction: () => {
+  searchFunction: (callback) => {
+    callbackFunction = callback
     searchDiv = document.getElementsByClassName('selected-items')
     input = document.getElementById('search_bar')
     SearchBar.getSearchedTag()
@@ -44,8 +48,15 @@ const SearchBar = {
     let searchData = window.localStorage.getItem('search_data')
     if (typeof searchData !== 'undefined' || searchData !== null) {
       searchData = JSON.parse(searchData)
+      for (const item in searchData) {
+        prevTagsTotalIndex += searchData[item].length
+        if (item === 'zipcode' && searchData[item].length >= 4) {
+          prevTagsTotalIndex -= 3
+        }
+      }
+      prevTagsTotalIndex -= 2
 
-      SearchBar.addTag(searchData.zipcode, 'Zip code')
+      SearchBar.addTag(searchData.zipcode, 'Zipcode')
       SearchBar.addTag(searchData.cities, 'City')
       SearchBar.addTag(searchData.streets, 'Street')
       SearchBar.addTag(searchData.intervenants, 'Architect', 'search--architect', 'tag--architect')
@@ -54,10 +65,18 @@ const SearchBar = {
     }
   },
   addTag: (array, name, Nameclass = '', tagClass = '') => {
-    if (array.length !== 0) {
-      array.forEach(item => {
-        SearchBar.selectTagFromList(item, name, Nameclass, tagClass)
-      })
+    if (Array.isArray(array)) {
+      if (array.length !== 0) {
+        array.forEach(item => {
+          prevTagsIndex++
+          SearchBar.selectTagFromList(item, name, Nameclass, tagClass)
+        })
+      }
+    } else {
+      if (array !== '') {
+        prevTagsIndex++
+        SearchBar.selectTagFromList(array, name, Nameclass, tagClass)
+      }
     }
   },
 
@@ -68,8 +87,7 @@ const SearchBar = {
     if (!inputValue) {
       return false
     }
-
-    if (inputValue.length === 2) {
+    if (inputValue.length === 2 && inputValue[1] !== ' ') {
       obj = {
         zipCodes: [],
         cities: [],
@@ -94,7 +112,7 @@ const SearchBar = {
     // Append the div element as a child of the autocomplete container
     e.target.parentNode.appendChild(divEl)
     // For each item in the array:
-    SearchBar.addItemsToList(divEl, obj.zipCodes, 'Zip code')
+    SearchBar.addItemsToList(divEl, obj.zipCodes, 'Zipcode')
     SearchBar.addItemsToList(divEl, obj.cities, 'City')
     SearchBar.addItemsToList(divEl, obj.streets, 'Street')
     SearchBar.addItemsToList(divEl, obj.intervenants, 'Architect', architectIcon, 'search--architect', 'tag--architect')
@@ -182,7 +200,9 @@ const SearchBar = {
         usedTags.forEach(item => item.addEventListener('click', SearchBar.clickHandlerTag))
       }
       input.value = ''
-      SearchBar.updateList()
+      if (prevTagsIndex === prevTagsTotalIndex) {
+        SearchBar.updateList()
+      }
     }
   },
   clickHandlerTag: (e) => {
@@ -197,27 +217,21 @@ const SearchBar = {
     const index = tags[name.toLowerCase() + 'Arr'].indexOf(value)
     if (index > -1) {
       tags[name.toLowerCase() + 'Arr'].splice(index, 1)
-      SearchBar.updateList()
+      let count = 0
+      for (const item in tags) {
+        count += tags[item].length
+      }
+      if (count === 0) {
+        Landing.emptyLocalStorage()
+        window.location.href = '/#'
+      } else {
+        SearchBar.updateList()
+      }
     }
   },
 
   updateList: async () => {
-    const send = {
-      lang: 'fr',
-      zipcode: '',
-      cities: tags.cityArr,
-      typologies: tags.typeArr,
-      styles: tags.styleArr,
-      intervenants: tags.architectArr,
-      streets: tags.streetArr
-    }
-    const data = await Api.searchData(send)
-    console.log(data)
-
-    window.localStorage.removeItem('building_data')
-    window.localStorage.removeItem('search_data')
-    window.localStorage.setItem('search_data', JSON.stringify(send))
-    window.localStorage.setItem('building_data', JSON.stringify(data))
+    callbackFunction(tags)
   }
 }
 

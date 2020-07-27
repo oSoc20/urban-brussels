@@ -65,7 +65,7 @@ const buildingList = {
   after_render: async () => {
     if (!randomBuildingClicked) {
       SearchBar.displaySearchBar('search_container')
-      SearchBar.searchFunction()
+      SearchBar.searchFunction(buildingList.SearchBarCalback)
 
       buildingList.initPagination()
       map = clusteredMap.init(data)
@@ -96,6 +96,41 @@ const buildingList = {
       })
     }
     pulsingDot.init(map)
+  },
+  SearchBarCalback: async (tags) => {
+    const send = {
+      lang: 'fr',
+      zipcode: '',
+      cities: tags.cityArr,
+      typologies: tags.typeArr,
+      styles: tags.styleArr,
+      intervenants: tags.architectArr,
+      streets: tags.streetArr
+    }
+
+    if (tags.zipcodeArr.length > 0) {
+      send.zipcode = tags.zipcodeArr[0]
+    }
+    data = await Api.searchData(send)
+    features = data.features
+    buildingList.initPagination()
+    buildingList.displayContent(1)
+
+    const mapSource = map.getSource('buildings')
+    const mapSourceHidden = map.getSource('unclustered-locations')
+    if (mapSource !== undefined) {
+      mapSource.setData(data)
+      mapSourceHidden.setData(data)
+      map.easeTo({
+        center: [4.4006, 50.8452],
+        zoom: 10.24
+      })
+    }
+
+    window.localStorage.removeItem('building_data')
+    window.localStorage.removeItem('search_data')
+    window.localStorage.setItem('search_data', JSON.stringify(send))
+    window.localStorage.setItem('building_data', JSON.stringify(data))
   },
 
   initPagination: () => {

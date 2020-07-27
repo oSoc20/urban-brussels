@@ -2,6 +2,7 @@
  * Modules imports
  */
 import SearchBar from './searchbar.js'
+import mainSearchBar from '../SearchBar/searchbar'
 import mapboxgl from 'mapbox-gl'
 import arrowRight from '../../assets/icons/arrow-icon.svg'
 import Api from '../api.js'
@@ -61,8 +62,9 @@ const Landing = {
   },
   // Behavior after rendering
   after_render: async () => {
+    Landing.emptyLocalStorage()
     // Search bar code
-    SearchBar.displaySearchBar('search_container')
+    mainSearchBar.displaySearchBar('search_container')
     SearchBar.searchFunction()
 
     document.querySelector('#searchrandom_btn').addEventListener('click', Landing.clickHandlerRandomBtn)
@@ -204,6 +206,9 @@ const Landing = {
     } else if (e.currentTarget.classList.contains('tag--architect')) {
       console.log('architect')
     }
+  },
+  emptyLocalStorage: () => {
+    window.localStorage.clear()
   }
 }
 

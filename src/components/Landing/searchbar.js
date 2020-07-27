@@ -2,6 +2,7 @@
  * Modules imports
  */
 import Api from '../api.js'
+import mainSearchBar from '../SearchBar/searchbar'
 
 import styleIcon from '../../assets/icons/style-icon.svg'
 import typeIcon from '../../assets/icons/type-icon.svg'
@@ -10,7 +11,6 @@ import architectIcon from '../../assets/icons/architect-icon.svg'
 /**
  * Variables declarations
  */
-const searchText = ['Search', 'Chercher', 'Zoeken']
 const tags = {
   zipcodeArr: [],
   cityArr: [],
@@ -20,93 +20,63 @@ const tags = {
   streetArr: []
 }
 let obj = {}
-let resp, val, inp
+let resp, inputValue, input
 
 // Rendering of the search bar
 const SearchBar = {
-  displaySearchBar: (container) => {
-    document.getElementById(container).innerHTML = /* html */`
-        <div class="search_ctn">
-            <form class="searchbar_ctn" autocomplete="off">
-                <input id="search_bar" type="text" placeholder="${searchText[0]}" />
-            </form>
-            <div class="selected-items">
-            </div>
-        </div>`
-  },
-
-  searchFunction: () => {
-    inp = document.getElementById('search_bar')
+  searchFunction: (callback) => {
+    input = document.getElementById('search_bar')
     // Execute when an input is typed in the search field
-    inp.addEventListener('input', async function (e) {
-      var a
-      val = this.value
-
-      if (val.length === 2) {
-        obj = {
-          zipCodes: [],
-          cities: [],
-          streets: [],
-          typos: [],
-          styles: [],
-          intervenants: []
-        }
-        resp = await Api.getAutocomplete('fr', val)
-        SearchBar.addItemsToObj(resp.zipCodes, obj.zipCodes)
-        SearchBar.addItemsToObj(resp.cities, obj.cities)
-        SearchBar.addItemsToObj(resp.streets, obj.streets)
-        SearchBar.addItemsToObj(resp.typos, obj.typos)
-        SearchBar.addItemsToObj(resp.styles, obj.styles)
-        SearchBar.addItemsToObj(resp.intervenants, obj.intervenants)
-      }
-
-      // Close any already open lists of autocompleted values
-      SearchBar.closeAllLists(inp)
-      if (!val) { return false }
-
-      // Create a div element that will contain the items (values)
-      a = document.createElement('DIV')
-      a.setAttribute('id', this.id + 'autocomplete-list')
-      a.setAttribute('class', 'autocomplete-items')
-
-      // Append the div element as a child of the autocomplete container
-      this.parentNode.appendChild(a)
-
-      SearchBar.addItemsToList(a, obj.zipCodes, 'Zip code')
-      SearchBar.addItemsToList(a, obj.cities, 'City')
-      SearchBar.addItemsToList(a, obj.streets, 'Street')
-      SearchBar.addItemsToList(a, obj.intervenants, 'Architect', architectIcon, 'search--architect')
-      SearchBar.addItemsToList(a, obj.styles, 'Style', styleIcon, 'search--style')
-      SearchBar.addItemsToList(a, obj.typos, 'Type', typeIcon, 'search--type')
-    })
+    input.addEventListener('input', SearchBar.inputHandler)
   },
 
-  // Close all autocomplete list in the document except the ones in argument
-  closeAllLists: (elmnt, inp) => {
-    var x = document.getElementsByClassName('autocomplete-items')
-    for (var i = 0; i < x.length; i++) {
-      if (elmnt !== x[i] && elmnt !== inp) {
-        x[i].parentNode.removeChild(x[i])
-      }
+  inputHandler: async (e) => {
+    inputValue = e.currentTarget.value
+    // Close any already open lists of autocompleted values
+    mainSearchBar.closeAllLists()
+    if (!inputValue) {
+      return false
     }
-  },
+    if (inputValue.length === 2 && inputValue[1] !== ' ') {
+      obj = {
+        zipCodes: [],
+        cities: [],
+        streets: [],
+        typos: [],
+        styles: [],
+        intervenants: []
+      }
+      resp = await Api.getAutocomplete('fr', inputValue)
+      mainSearchBar.addItemsToObj(resp.zipCodes, obj.zipCodes)
+      mainSearchBar.addItemsToObj(resp.cities, obj.cities)
+      mainSearchBar.addItemsToObj(resp.streets, obj.streets)
+      mainSearchBar.addItemsToObj(resp.typos, obj.typos)
+      mainSearchBar.addItemsToObj(resp.styles, obj.styles)
+      mainSearchBar.addItemsToObj(resp.intervenants, obj.intervenants)
+    }
 
-  // Add items to the object
-  addItemsToObj: (arr, objArr) => {
-    if (arr.length !== 0) {
-      for (let i = 0; i < arr.length; i++) {
-        objArr.push(arr[i].name)
-      }
-    }
+    // Create a div element that will contain the items (values)
+    const divEl = document.createElement('DIV')
+    divEl.setAttribute('class', 'autocomplete-items')
+
+    // Append the div element as a child of the autocomplete container
+    e.target.parentNode.appendChild(divEl)
+    // For each item in the array:
+    SearchBar.addItemsToList(divEl, obj.zipCodes, 'Zipcode')
+    SearchBar.addItemsToList(divEl, obj.cities, 'City')
+    SearchBar.addItemsToList(divEl, obj.streets, 'Street')
+    SearchBar.addItemsToList(divEl, obj.intervenants, 'Architect', architectIcon, 'search--architect')
+    SearchBar.addItemsToList(divEl, obj.styles, 'Style', styleIcon, 'search--style')
+    SearchBar.addItemsToList(divEl, obj.typos, 'Type', typeIcon, 'search--type')
   },
 
   // Add items to the autocomplete list
-  addItemsToList: (a, arr, name, icon = '', Nameclass = '') => {
-    if (arr) {
-      for (let i = 0; i < arr.length; i++) {
-      // Check if searched string is included in the item
-        if (arr[i].toUpperCase().includes(val.toUpperCase())) {
-          const b = document.createElement('DIV')
+  addItemsToList: (divEl, array, name, icon = '', Nameclass = '') => {
+    if (array) {
+      for (let i = 0; i < array.length; i++) {
+        // Check if searched string is included in the item
+        if (array[i].toUpperCase().includes(inputValue.toUpperCase())) {
+          const divTag = document.createElement('DIV')
           let className = ''
 
           if (Nameclass !== '') {
@@ -115,17 +85,17 @@ const SearchBar = {
             className = Nameclass
             img.setAttribute('src', icon)
             img.setAttribute('alt', 'icon')
-            b.appendChild(img)
+            divTag.appendChild(img)
           }
 
-          b.className = className
-          b.innerHTML += name + ': ' + arr[i]
-          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>"
+          divTag.className = className
+          divTag.innerHTML += name + ': ' + array[i]
+          divTag.innerHTML += "<input type='hidden' value='" + array[i] + "'>"
 
           // Execute  when someone clicks on an item of the autocomplete list
-          b.addEventListener('click', function () {
-            const value = this.getElementsByTagName('input')[0].value
-            SearchBar.closeAllLists(inp)
+          divTag.addEventListener('click', (e) => {
+            const value = e.currentTarget.getElementsByTagName('input')[0].value
+            mainSearchBar.closeAllLists(input)
             if (name === 'Zip code') {
               tags.zipcodeArr.push(value)
             } else {
@@ -133,7 +103,8 @@ const SearchBar = {
             }
             SearchBar.goToList()
           })
-          a.appendChild(b)
+
+          divEl.appendChild(divTag)
         }
       }
     }
