@@ -104,7 +104,7 @@ const SearchBar = {
         strict: false,
         zipcode: '',
         cities: tags_set.city,
-        typographies: tags_set.type,
+        typologies: tags_set.type,
         styles: tags_set.style,
         intervenants: tags_set.architect,
         streets: tags_set.street
@@ -136,7 +136,6 @@ const SearchBar = {
       // }
 
       const data = await Api.searchData(send)
-      console.log(data)
 
       window.localStorage.removeItem('building_data')
       window.localStorage.removeItem('search_data')
@@ -239,18 +238,18 @@ const SearchBar = {
               const tags = document.getElementsByClassName('tag')
               for (let i = 0; i < tags.length; i++) {
                 tags[i].addEventListener('click', () => {
-                  noSearchItem = true
+                  // noSearchItem = true
                   tags[i].style.display = 'none'
                   const index = tags_set[name.toLowerCase()].indexOf(value)
                   if (index > -1) {
                     tags_set[name.toLowerCase()].splice(index, 1)
                   }
 
-                  for (const o in tags_set) {
-                    if (tags_set[o].length !== 0) {
-                      noSearchItem = false
-                    }
-                  }
+                  // for (const o in tags_set) {
+                  //   if (tags_set[o].length !== 0) {
+                  //     noSearchItem = false
+                  //   }
+                  // }
 
                   // if (noSearchItem) {
                   //   if (window.location.hash === '#/list') {
@@ -267,15 +266,6 @@ const SearchBar = {
       }
     }
   }
-
-  // storeList: async (list) => {
-  //   console.log(list.length)
-  //   for (let i = 0; i < list.length; i++) {
-  //     arr.push(list.intervenants[i].name + ' (Architect)')
-  //     console.log(list.intervenants[i].name)
-  //   }
-  //   console.log(arr)
-  // }
 }
 
 export default SearchBar

@@ -5,11 +5,15 @@ import watchIcon from '../../assets/icons/eye-icon.svg'
 import buildingList from '../BuildingsList/buildingslist'
 import mapDetail from './map'
 
+let randomClicked
 const detail = {
-  showDetail: (map, item, popupHover) => {
+  showDetail: (map, item, popup, randomBuildingClicked = false) => {
+    randomClicked = randomBuildingClicked
     detail.toggleClasses()
-    detail.toggleMapLayers(map, 'none')
-    popupHover.remove()
+    if (!randomClicked) {
+      popup.remove()
+      detail.toggleMapLayers(map, 'none')
+    }
 
     mapDetail.init(map, item)
     const detailSection = document.querySelector('.detail-popup__overflow')
@@ -48,10 +52,12 @@ const detail = {
   },
 
   toggleClasses: () => {
+    if (!randomClicked) {
+      document.querySelector('.section__list').classList.toggle('is-not-visible')
+      document.querySelector('.switch').classList.toggle('is-not-visible')
+      document.querySelector('.map-building-list').classList.toggle('map-building-list__detail')
+    }
     document.querySelector('.detail-popup').classList.toggle('open')
-    document.querySelector('.section__list').classList.toggle('is-not-visible')
-    document.querySelector('.switch').classList.toggle('is-not-visible')
-    document.querySelector('.map-building-list').classList.toggle('map-building-list__detail')
     const btnBack = document.querySelector('.btn--back')
     btnBack.classList.toggle('is-visible')
     if (btnBack.classList.contains('is-visible')) {

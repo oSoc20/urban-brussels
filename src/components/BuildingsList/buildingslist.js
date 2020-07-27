@@ -12,66 +12,83 @@ let data = []
 let features = []
 const itemsPerPage = 5
 let moveMap = true
+let randomBuildingClicked = false
+let randomBuilding = []
 
 const buildingList = {
   render: async () => {
-    data = window.localStorage.getItem('building_data')
-    if (typeof data === 'undefined' || data === null) {
-      searchData = window.localStorage.getItem('search_data')
-      data = await Api.searchData(searchData)
-      window.localStorage.setItem('building_data', JSON.stringify(data))
+    randomBuilding = JSON.parse(window.localStorage.getItem('random_building_data'))
+    if (typeof randomBuilding === 'undefined' || randomBuilding === null) {
+      randomBuildingClicked = false
+      data = window.localStorage.getItem('building_data')
+      if (typeof data === 'undefined' || data === null) {
+        searchData = window.localStorage.getItem('search_data')
+        data = await Api.searchData(searchData)
+        window.localStorage.setItem('building_data', JSON.stringify(data))
+      } else {
+        data = JSON.parse(data)
+      }
+      features = data.features
     } else {
-      data = JSON.parse(data)
+      randomBuildingClicked = true
     }
-    features = data.features
 
-    const view = /* html */`
-
-    <div id="buildingListMap" class="map-building-list"></div>
-    <div class="switch">
-      <p>Search as I move the map </p>
-      <input type="checkbox" id="switch" checked /><label for="switch">Toggle</label>
-    </div>
+    let view = /* html */`
+    <div id="buildingListMap" class="map-building-list ${randomBuildingClicked ? 'map-building-list__detail' : ''}"></div>
     <img class="btn--back" src="${backButton}" alt="go back button">
-    <section class= "detail-popup">
+          <section class= "detail-popup">
       <div class="detail-popup__container">
         <div class="detail-popup__overflow"></div>
       </div>
-    </section>
-    <section class="section__list">
+      </section>`
+
+    if (!randomBuildingClicked) {
+      view += `
+      <div class="switch">
+        <p>Search as I move the map </p>
+        <input type="checkbox" id="switch" checked /><label for="switch">Toggle</label>
+      </div>
+      <section class="section__list">
       <div class="section__list__title">
         <h1>Buildings</h1>
         <div class="pagination"></div>
       </div>
         <ul class="building-list"></ul>
-    </section>`
+      </section>`
+    }
     return view
   },
   after_render: async () => {
-    buildingList.initPagination()
-    map = clusteredMap.init(data)
-    popup = popupBuilding.init(map)
+    if (!randomBuildingClicked) {
+      buildingList.initPagination()
+      map = clusteredMap.init(data)
+      popup = popupBuilding.init(map)
+      map.on('moveend', () => {
+        buildingList.getBuildingsFromMap(map)
+      })
+
+      map.on('click', 'unclustered-point', function (e) {
+        const selectedItem = e.features
+        buildingDetail.showDetail(map, selectedItem, popup)
+      })
+
+      const switchInput = document.querySelector('#switch')
+
+      switchInput.addEventListener('change', () => {
+        moveMap = !moveMap
+        buildingList.getBuildingsFromMap(map)
+        if (!moveMap) {
+          features = data.features
+          buildingList.initPagination()
+        }
+      })
+    } else {
+      map = clusteredMap.init()
+      map.on('load', () => {
+        buildingDetail.showDetail(map, randomBuilding, null, randomBuildingClicked)
+      })
+    }
     pulsingDot.init(map)
-
-    map.on('moveend', () => {
-      buildingList.getBuildingsFromMap(map)
-    })
-
-    map.on('click', 'unclustered-point', function (e) {
-      const selectedItem = e.features
-      buildingDetail.showDetail(map, selectedItem, popup)
-    })
-
-    const switchInput = document.querySelector('#switch')
-
-    switchInput.addEventListener('change', () => {
-      moveMap = !moveMap
-      buildingList.getBuildingsFromMap(map)
-      if (!moveMap) {
-        features = data.features
-        buildingList.initPagination()
-      }
-    })
   },
 
   initPagination: () => {
@@ -160,7 +177,12 @@ const buildingList = {
 
   goBack: () => {
     moveMap = true
-    buildingDetail.goBack(map)
+    if (randomBuildingClicked) {
+      window.localStorage.removeItem('random_building_data')
+      window.location.href = '/#'
+    } else {
+      buildingDetail.goBack(map)
+    }
   }
 }
 

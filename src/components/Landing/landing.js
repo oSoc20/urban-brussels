@@ -27,7 +27,7 @@ const Landing = {
       <div>
       <div class="search__container">
         <div id="search_container"></div>
-        <button class="btn btn--random" id="searchrandom_btn" disabled><img id="dices_btn" src="${randomIcon}"/></button>
+        <button class="btn btn--random" id="searchrandom_btn"><img id="dices_btn" src="${randomIcon}"/></button>
       </div>
 
         <div class="fun-fact__container">
@@ -47,6 +47,8 @@ const Landing = {
     // Search bar code
     SearchBar.displaySearchBar('search_container')
     SearchBar.searchFunction()
+
+    document.querySelector('#searchrandom_btn').addEventListener('click', Landing.clickHandlerRandomBtn)
 
     // Map
     mapboxgl.accessToken = token
@@ -121,6 +123,12 @@ const Landing = {
         })
       }
     })
+  },
+  clickHandlerRandomBtn: async () => {
+    const dataRandom = await Api.searchRandom('fr', '1')
+    window.localStorage.removeItem('random_building_data')
+    window.localStorage.setItem('random_building_data', JSON.stringify(dataRandom.features))
+    window.location.href = '/#/list'
   }
 }
 
