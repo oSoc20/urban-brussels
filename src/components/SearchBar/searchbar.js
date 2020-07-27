@@ -157,15 +157,6 @@ const SearchBar = {
       //   send.streets = tagsSet.street[0]
       // }
 
-<<<<<<< HEAD
-      const data = await Api.searchData(send);
-      window.localStorage.removeItem("building_data");
-      window.localStorage.removeItem("search_data");
-      window.localStorage.setItem("search_data", JSON.stringify(send));
-      window.localStorage.setItem("building_data", JSON.stringify(data));
-      if (window.location.hash !== "#/list") {
-        window.location.href = "/#/list";
-=======
       const data = await Api.searchData(send)
 
       window.localStorage.removeItem('building_data')
@@ -174,7 +165,6 @@ const SearchBar = {
       window.localStorage.setItem('building_data', JSON.stringify(data))
       if (window.location.hash !== '#/list') {
         window.location.href = '/#/list'
->>>>>>> e2c848ea213ba2855cf5d630ae4e95b035b3b9fe
       }
     })
   },
