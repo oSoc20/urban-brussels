@@ -11,7 +11,7 @@ import Api from '../api.js'
  */
 const style = process.env.MAPBOX_STYLE
 const token = process.env.MAPBOX_ACCESS_TOKEN
-let language = 'fr';
+let language = 'fr'
 let funFactsCounter = 0
 
 // Rendering of the landing/home page
@@ -70,6 +70,16 @@ const Landing = {
     let prev = document.getElementsByClassName('arrowLeft')[0]
     let next = document.getElementsByClassName('arrowRight')[0]
     let ff = document.getElementsByClassName('fun-fact__txt')[0]
+    const send = {
+      lang: "fr",
+      strict: false,
+      zipcode: "",
+      cities: [],
+      typologies: [],
+      styles: [],
+      intervenants: [],
+      streets: [],
+    };
 
     let resp = await Api.getFunFacts(language, 50)
     let funFacts = resp.facts;
@@ -77,8 +87,29 @@ const Landing = {
     ff.innerHTML = funFacts[0]
     let tags = document.getElementsByClassName('tag')
       for (let index = 0; index < tags.length; index++) {
-        tags[index].addEventListener('click', () => {
-          //Redirect to building list page
+        tags[index].addEventListener('click', async () => {
+          let str = tags[index].className;
+          let pos1 = str.indexOf("-");
+          let pos2 = str.indexOf(" ", pos1 + 1)
+          let sub = str.substring(pos1 + 2, pos2)
+          switch (sub){
+            case 'type':
+              send.typologies.push(tags[index].innerHTML);
+              break;
+            case 'style':
+              send.styles.push(tags[index].innerHTML);
+              break;
+            case 'architect':
+              send.intervenants.push(tags[index].innerHTML);
+              break;
+          }
+          console.log(send)
+          const data = await Api.searchData(send);
+          window.localStorage.removeItem("building_data");
+          window.localStorage.removeItem("search_data");
+          window.localStorage.setItem("search_data", JSON.stringify(send));
+          window.localStorage.setItem("building_data", JSON.stringify(data));
+          window.location.href = "/#/list";
         })
       }
 
@@ -100,15 +131,36 @@ const Landing = {
       ff.innerHTML = funFacts[funFactsCounter]
       let tags = document.getElementsByClassName('tag')
       for (let index = 0; index < tags.length; index++) {
-        tags[index].addEventListener('click', () => {
-          //Redirect to building list page
+        tags[index].addEventListener('click', async () => {
+          let str = tags[index].className;
+          let pos1 = str.indexOf("-");
+          let pos2 = str.indexOf(" ", pos1 + 1)
+          let sub = str.substring(pos1 + 2, pos2)
+          switch (sub){
+            case 'type':
+              send.typologies.push(tags[index].innerHTML);
+              break;
+            case 'style':
+              send.styles.push(tags[index].innerHTML);
+              break;
+            case 'architect':
+              send.intervenants.push(tags[index].innerHTML);
+              break;
+          }
+          console.log(send)
+          const data = await Api.searchData(send);
+          window.localStorage.removeItem("building_data");
+          window.localStorage.removeItem("search_data");
+          window.localStorage.setItem("search_data", JSON.stringify(send));
+          window.localStorage.setItem("building_data", JSON.stringify(data));
+          window.location.href = "/#/list";
         })
       }
       if (funFactsCounter > 0){
         prev.style.display = 'inline';
       }
       if (funFactsCounter > funFacts.length/2){
-        let tmp = await Api.getFunFacts(language, 50)
+        let tmp = await Api.getFunFacts(language, 25)
         funFacts = funFacts.concat(tmp.facts)
       }
       if (funFactsCounter === funFacts.length-1){
