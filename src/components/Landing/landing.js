@@ -67,50 +67,6 @@ const Landing = {
 
     document.querySelector('#searchrandom_btn').addEventListener('click', Landing.clickHandlerRandomBtn)
     // Fun facts
-    const prev = document.getElementsByClassName('arrowLeft')[0]
-    const next = document.getElementsByClassName('arrowRight')[0]
-    const ff = document.getElementsByClassName('fun-fact__txt')[0]
-
-    const resp = await Api.getFunFacts(language, 50)
-    let funFacts = resp.facts
-
-    ff.innerHTML = funFacts[0]
-    Landing.getTags()
-
-    if (funFactsCounter === 0) {
-      prev.style.display = 'none'
-    }
-
-    prev.addEventListener('click', () => {
-      funFactsCounter--
-      ff.innerHTML = funFacts[funFactsCounter]
-      if (funFactsCounter <= 0) {
-        prev.style.display = 'none'
-      }
-      Landing.getTags()
-    })
-
-    next.addEventListener('click', async () => {
-      funFactsCounter++
-      ff.innerHTML = funFacts[funFactsCounter]
-      const tags = document.getElementsByClassName('tag')
-      for (let index = 0; index < tags.length; index++) {
-        tags[index].addEventListener('click', () => {
-          // Redirect to building list page
-        })
-      }
-      if (funFactsCounter > 0) {
-        prev.style.display = 'inline'
-      }
-      if (funFactsCounter > funFacts.length / 2) {
-        const tmp = await Api.getFunFacts(language, 50)
-        funFacts = funFacts.concat(tmp.facts)
-      }
-      if (funFactsCounter === funFacts.length - 1) {
-        next.style.display = 'none'
-      }
-      Landing.getTags()
-    })
 
     // Map
     mapboxgl.accessToken = token
@@ -184,6 +140,50 @@ const Landing = {
           padding: { top: 25, bottom: 25, left: 25, right: 25 }
         })
       }
+    })
+    const prev = document.getElementsByClassName('arrowLeft')[0]
+    const next = document.getElementsByClassName('arrowRight')[0]
+    const ff = document.getElementsByClassName('fun-fact__txt')[0]
+
+    const resp = await Api.getFunFacts(language, 50)
+    let funFacts = resp.facts
+
+    ff.innerHTML = funFacts[0]
+    Landing.getTags()
+
+    if (funFactsCounter === 0) {
+      prev.style.display = 'none'
+    }
+
+    prev.addEventListener('click', () => {
+      funFactsCounter--
+      ff.innerHTML = funFacts[funFactsCounter]
+      if (funFactsCounter <= 0) {
+        prev.style.display = 'none'
+      }
+      Landing.getTags()
+    })
+
+    next.addEventListener('click', async () => {
+      funFactsCounter++
+      ff.innerHTML = funFacts[funFactsCounter]
+      const tags = document.getElementsByClassName('tag')
+      for (let index = 0; index < tags.length; index++) {
+        tags[index].addEventListener('click', () => {
+          // Redirect to building list page
+        })
+      }
+      if (funFactsCounter > 0) {
+        prev.style.display = 'inline'
+      }
+      if (funFactsCounter > funFacts.length / 2) {
+        const tmp = await Api.getFunFacts(language, 50)
+        funFacts = funFacts.concat(tmp.facts)
+      }
+      if (funFactsCounter === funFacts.length - 1) {
+        next.style.display = 'none'
+      }
+      Landing.getTags()
     })
   },
   clickHandlerRandomBtn: async () => {

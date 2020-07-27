@@ -153,6 +153,7 @@ const SearchBar = {
       // Add tag
       if (!tags[name.toLowerCase() + 'Arr'].includes(value)) {
         const tag = document.createElement('button')
+        tag.dataset.name = name
         let className = ''
 
         if (Nameclass !== '') {
@@ -178,26 +179,29 @@ const SearchBar = {
 
         // Close tags
         const usedTags = document.querySelectorAll('.tag')
-        usedTags.forEach(item => item.addEventListener('click', () => SearchBar.closeTag(item, value, name)))
+        usedTags.forEach(item => item.addEventListener('click', SearchBar.clickHandlerTag))
       }
       input.value = ''
       SearchBar.updateList()
     }
   },
+  clickHandlerTag: (e) => {
+    const txt = e.currentTarget.childNodes[2].data
+    const index = txt.indexOf(':')
+    SearchBar.closeTag(e.currentTarget, txt.substr(index + 2))
+  },
 
-  closeTag: (item, value, name) => {
+  closeTag: (item, value) => {
+    const name = item.dataset.name
     item.style.display = 'none'
-    console.log(value)
     const index = tags[name.toLowerCase() + 'Arr'].indexOf(value)
     if (index > -1) {
       tags[name.toLowerCase() + 'Arr'].splice(index, 1)
-      console.log(tags)
+      SearchBar.updateList()
     }
-    SearchBar.updateList()
   },
 
   updateList: async () => {
-    console.log('updateList')
     const send = {
       lang: 'fr',
       zipcode: '',
