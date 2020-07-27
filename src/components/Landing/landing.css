@@ -48,17 +48,16 @@
     padding: 20px;
     border-radius: 15px;
     margin: 30px 0 30px 0;
+    display: flex;
+    flex-direction: column;
+    max-width: 550px;
 }
   
 .fun-fact__txt {
     font-size: 17px;
     line-height: 40px;
-    width: 470px;
-}
-  
-.fun-fact__container {
-    display: flex;
-    flex-direction: column;
+    width: 100%;
+    height: 150px;
 }
   
 .fun-fact__arrows {
