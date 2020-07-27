@@ -154,15 +154,80 @@ const Landing = {
     const prev = document.getElementsByClassName('arrowLeft')[0]
     const next = document.getElementsByClassName('arrowRight')[0]
     const ff = document.getElementsByClassName('fun-fact__txt')[0]
+    const send = {
+      lang: 'fr',
+      strict: false,
+      zipcode: '',
+      cities: [],
+      typologies: [],
+      styles: [],
+      intervenants: [],
+      streets: []
+    }
 
-    const resp = await Api.getFunFacts(language, 50)
+    const resp = await Api.getFunFacts(language, 15)
     let funFacts = resp.facts
 
     ff.innerHTML = funFacts[0]
-    const tags = document.getElementsByClassName('tag')
+    let tags = document.getElementsByClassName('tag')
+    for (let index = 0; index < tags.length; index++) {
+      tags[index].addEventListener('click', async () => {
+        const str = tags[index].className
+        const pos1 = str.indexOf('-')
+        const pos2 = str.indexOf(' ', pos1 + 1)
+        const sub = str.substring(pos1 + 2, pos2)
+        switch (sub) {
+          case 'type':
+            send.typologies.push(tags[index].innerHTML)
+            break
+          case 'style':
+            send.styles.push(tags[index].innerHTML)
+            break
+          case 'architect':
+            send.intervenants.push(tags[index].innerHTML)
+            break
+        }
+        const data = await Api.searchData(send)
+        window.localStorage.removeItem('building_data')
+        window.localStorage.removeItem('search_data')
+        window.localStorage.setItem('search_data', JSON.stringify(send))
+        window.localStorage.setItem('building_data', JSON.stringify(data))
+        if (window.location.hash !== '#/list') {
+          window.location.href = '/#/list'
+        }
+      })
+    }
+
+    ff.innerHTML = funFacts[0]
+    tags = document.getElementsByClassName('tag')
     for (let index = 0; index < tags.length; index++) {
       tags[index].addEventListener('click', () => {
-        // Redirect to building list page
+        tags[index].addEventListener('click', async () => {
+          const str = tags[index].className
+          const pos1 = str.indexOf('-')
+          const pos2 = str.indexOf(' ', pos1 + 1)
+          const sub = str.substring(pos1 + 2, pos2)
+          switch (sub) {
+            case 'type':
+              send.typologies.push(tags[index].innerHTML)
+              break
+            case 'style':
+              send.styles.push(tags[index].innerHTML)
+              break
+            case 'architect':
+              send.intervenants.push(tags[index].innerHTML)
+              break
+          }
+          console.log(send)
+          const data = await Api.searchData(send)
+          window.localStorage.removeItem('building_data')
+          window.localStorage.removeItem('search_data')
+          window.localStorage.setItem('search_data', JSON.stringify(send))
+          window.localStorage.setItem('building_data', JSON.stringify(data))
+          if (window.location.hash !== '#/list') {
+            window.location.href = '/#/list'
+          }
+        })
       })
     }
 
@@ -183,8 +248,31 @@ const Landing = {
       ff.innerHTML = funFacts[funFactsCounter]
       const tags = document.getElementsByClassName('tag')
       for (let index = 0; index < tags.length; index++) {
-        tags[index].addEventListener('click', () => {
-          // Redirect to building list page
+        tags[index].addEventListener('click', async () => {
+          const str = tags[index].className
+          const pos1 = str.indexOf('-')
+          const pos2 = str.indexOf(' ', pos1 + 1)
+          const sub = str.substring(pos1 + 2, pos2)
+          switch (sub) {
+            case 'type':
+              send.typologies.push(tags[index].innerHTML)
+              break
+            case 'style':
+              send.styles.push(tags[index].innerHTML)
+              break
+            case 'architect':
+              send.intervenants.push(tags[index].innerHTML)
+              break
+          }
+          console.log(send)
+          const data = await Api.searchData(send)
+          window.localStorage.removeItem('building_data')
+          window.localStorage.removeItem('search_data')
+          window.localStorage.setItem('search_data', JSON.stringify(send))
+          window.localStorage.setItem('building_data', JSON.stringify(data))
+          if (window.location.hash !== '#/list') {
+            window.location.href = '/#/list'
+          }
         })
       }
       if (funFactsCounter > 0) {
