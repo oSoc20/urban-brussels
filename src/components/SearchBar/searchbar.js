@@ -158,7 +158,6 @@ const SearchBar = {
       // }
 
       const data = await Api.searchData(send);
-      console.log(send)
       window.localStorage.removeItem("building_data");
       window.localStorage.removeItem("search_data");
       window.localStorage.setItem("search_data", JSON.stringify(send));

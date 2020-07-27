@@ -61,6 +61,7 @@ const Landing = {
   },
   // Behavior after rendering
   after_render: async () => {
+    console.time("ici");
     // Search bar code
     SearchBar.displaySearchBar('search_container')
     SearchBar.searchFunction()
@@ -80,10 +81,13 @@ const Landing = {
       intervenants: [],
       streets: [],
     };
-
-    let resp = await Api.getFunFacts(language, 50)
+    console.timeEnd("ici");
+    console.time("concatenation");
+    let resp = await Api.getFunFacts(language, 10)
     let funFacts = resp.facts;
     
+    console.timeEnd("concatenation");
+
     ff.innerHTML = funFacts[0]
     let tags = document.getElementsByClassName('tag')
       for (let index = 0; index < tags.length; index++) {
@@ -109,7 +113,9 @@ const Landing = {
           window.localStorage.removeItem("search_data");
           window.localStorage.setItem("search_data", JSON.stringify(send));
           window.localStorage.setItem("building_data", JSON.stringify(data));
-          window.location.href = "/#/list";
+          if (window.location.hash !== "#/list") {
+            window.location.href = "/#/list";
+          }
         })
       }
 
@@ -153,7 +159,9 @@ const Landing = {
           window.localStorage.removeItem("search_data");
           window.localStorage.setItem("search_data", JSON.stringify(send));
           window.localStorage.setItem("building_data", JSON.stringify(data));
-          window.location.href = "/#/list";
+          if (window.location.hash !== "#/list") {
+            window.location.href = "/#/list";
+          }
         })
       }
       if (funFactsCounter > 0){
