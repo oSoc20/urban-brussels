@@ -11,14 +11,6 @@ import Chart from './charts.js'
 const style = process.env.MAPBOX_STYLE
 const token = process.env.MAPBOX_ACCESS_TOKEN
 
-let map
-let data
-const moveMap = true
-let popup
-const itemsPerPage = 4
-const features = []
-let coordinates
-
 const Dashboard = {
   render: async () => {
     const view = /* html */ `
