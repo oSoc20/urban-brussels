@@ -150,7 +150,6 @@ const SearchBar = {
       intervenants: tags.architectArr,
       streets: tags.streetArr
     }
-
     const data = await Api.searchData(send)
     window.localStorage.removeItem('building_data')
     window.localStorage.removeItem('search_data')

@@ -75,12 +75,7 @@ const Landing = {
     let funFacts = resp.facts
 
     ff.innerHTML = funFacts[0]
-    const tags = document.getElementsByClassName('tag')
-    for (let index = 0; index < tags.length; index++) {
-      tags[index].addEventListener('click', () => {
-        // Redirect to building list page
-      })
-    }
+    Landing.getTags()
 
     if (funFactsCounter === 0) {
       prev.style.display = 'none'
@@ -92,6 +87,7 @@ const Landing = {
       if (funFactsCounter <= 0) {
         prev.style.display = 'none'
       }
+      Landing.getTags()
     })
 
     next.addEventListener('click', async () => {
@@ -113,6 +109,7 @@ const Landing = {
       if (funFactsCounter === funFacts.length - 1) {
         next.style.display = 'none'
       }
+      Landing.getTags()
     })
 
     // Map
@@ -194,6 +191,19 @@ const Landing = {
     window.localStorage.removeItem('random_building_data')
     window.localStorage.setItem('random_building_data', JSON.stringify(dataRandom.features))
     window.location.href = '/#/list'
+  },
+  getTags: () => {
+    const tags = document.querySelectorAll('.tag')
+    tags.forEach(item => item.addEventListener('click', Landing.clickHanlderTag))
+  },
+  clickHanlderTag: (e) => {
+    if (e.currentTarget.classList.contains('tag--style')) {
+      console.log('style')
+    } else if (e.currentTarget.classList.contains('tag--type')) {
+      console.log('type')
+    } else if (e.currentTarget.classList.contains('tag--architect')) {
+      console.log('architect')
+    }
   }
 }
 
