@@ -12,6 +12,8 @@ import Api from '../api.js'
  */
 const style = process.env.MAPBOX_STYLE
 const token = process.env.MAPBOX_ACCESS_TOKEN
+let language = 'fr';
+let funFactsCounter = 0
 
 // Rendering of the landing/home page
 const Landing = {
@@ -31,7 +33,7 @@ const Landing = {
       </div>
 
         <div class="fun-fact__container">
-            <p class="fun-fact__txt"> Did you know that <span class="tag tag--architect tag--small tag--no-margin">Victor Horta</span> built more than 100 buildings of <span class="tag tag--type tag--small tag--no-margin">Residential</span> and <span class="tag tag--style tag--small tag--no-margin">Art Nouveau</span>.</p>
+            <p class="fun-fact__txt"></p>
             <div class="fun-fact__arrows">
               <a class="arrowLeft"><img src="${arrowRight}" /></a>
               <a class="arrowRight"><img src="${arrowRight}" /></a>
@@ -47,6 +49,56 @@ const Landing = {
     // Search bar code
     SearchBar.displaySearchBar('search_container')
     SearchBar.searchFunction()
+
+    // Fun facts
+    let prev = document.getElementsByClassName('arrowLeft')[0]
+    let next = document.getElementsByClassName('arrowRight')[0]
+    let ff = document.getElementsByClassName('fun-fact__txt')[0]
+
+    let resp = await Api.getFunFacts(language, 50)
+    let funFacts = resp.facts;
+    
+    ff.innerHTML = funFacts[0]
+    let tags = document.getElementsByClassName('tag')
+      for (let index = 0; index < tags.length; index++) {
+        tags[index].addEventListener('click', () => {
+          //Redirect to building list?
+        })
+      }
+
+
+    if (funFactsCounter === 0){
+      prev.style.display = 'none';
+    }
+
+    prev.addEventListener("click", () => {
+      funFactsCounter--;
+      ff.innerHTML = funFacts[funFactsCounter]
+      if (funFactsCounter <= 0){
+        prev.style.display = 'none';
+      }
+    })
+
+    next.addEventListener("click", async () => {
+      funFactsCounter++;
+      ff.innerHTML = funFacts[funFactsCounter]
+      let tags = document.getElementsByClassName('tag')
+      for (let index = 0; index < tags.length; index++) {
+        tags[index].addEventListener('click', () => {
+          //Redirect to building list?
+        })
+      }
+      if (funFactsCounter > 0){
+        prev.style.display = 'inline';
+      }
+      if (funFactsCounter > funFacts.length/2){
+        let tmp = await Api.getFunFacts(language, 50)
+        funFacts = funFacts.concat(tmp.facts)
+      }
+      if (funFactsCounter === funFacts.length-1){
+        next.style.display = 'none'
+      }
+    })
 
     // Map
     mapboxgl.accessToken = token
