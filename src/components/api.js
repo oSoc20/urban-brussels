@@ -93,17 +93,15 @@ const Api = {
    * limit: the number of results that will be returned
    */
 
-  searchFunFacts: async (lang, limit) => {
+  getFunFacts: async (lang, limit) => {
     const options = {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        lang: lang,
-        limit: limit
       }
     }
     try {
-      const response = await fetch('https://urban-brussels-api-dev.netlify.app/.netlify/functions/app/getInfo/fun-facts', options)
+      const response = await fetch('https://api.urban-brussels.osoc.be/funfacts?lang=' + lang + '&limit=' + limit, options)
       const json = await response.json()
       return json
     } catch (err) {

@@ -21,11 +21,27 @@
 }
 
 .btn--random {
+  overflow: hidden;
   width: 80px;
   border: 2px solid #81D8BF;
   background-color: white;
   margin-left: 20px;
 }
+
+.btn--random div {
+  width: inherit;
+  height: auto;
+  margin-left: -9px;
+  margin-top: -1px;
+  box-shadow: inset 0 0 0 #81D8BF;
+  transition: all .6s ease;
+
+}
+
+.btn--random:hover div {
+  box-shadow: inset 100px 0 0 #81D8BF;
+}
+
 .btn--random:focus, .btn--search:focus {
   outline: none;
 }
@@ -36,11 +52,31 @@
   margin-top: 2px;
 }
 
-.btn--random img {
+.btn--random svg {
   width: 35px;
   height: 35px;
 }
 
+.svg__stroke {
+  stroke: #81D8BF;
+  stroke-width:2;
+  stroke-miterlimit:10;
+  stroke-linejoin: round;
+  transition: all .6s ease;
+}
+
+.svg__fill {
+  fill: #81D8BF;
+  transition: all .6s ease;
+}
+
+.btn--random:hover div svg .svg__fill {
+  fill: white;
+}
+
+.btn--random:hover div svg .svg__stroke {
+  stroke: white;
+}
 
 .searchbar_ctn {
   display: flex;
@@ -66,7 +102,6 @@
   clear: both;
   display: table;
 }
-
 
 
 /* AUTOCOMPLETE */
