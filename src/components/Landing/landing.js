@@ -1,7 +1,7 @@
 /**
  * Modules imports
  */
-import SearchBar from '../SearchBar/searchbar.js'
+import SearchBar from './searchbar.js'
 import mapboxgl from 'mapbox-gl'
 import arrowRight from '../../assets/icons/arrow-icon.svg'
 import Api from '../api.js'
@@ -67,51 +67,50 @@ const Landing = {
 
     document.querySelector('#searchrandom_btn').addEventListener('click', Landing.clickHandlerRandomBtn)
     // Fun facts
-    let prev = document.getElementsByClassName('arrowLeft')[0]
-    let next = document.getElementsByClassName('arrowRight')[0]
-    let ff = document.getElementsByClassName('fun-fact__txt')[0]
+    const prev = document.getElementsByClassName('arrowLeft')[0]
+    const next = document.getElementsByClassName('arrowRight')[0]
+    const ff = document.getElementsByClassName('fun-fact__txt')[0]
 
-    let resp = await Api.getFunFacts(language, 50)
-    let funFacts = resp.facts;
-    
+    const resp = await Api.getFunFacts(language, 50)
+    let funFacts = resp.facts
+
     ff.innerHTML = funFacts[0]
-    let tags = document.getElementsByClassName('tag')
-      for (let index = 0; index < tags.length; index++) {
-        tags[index].addEventListener('click', () => {
-          //Redirect to building list page
-        })
-      }
-
-
-    if (funFactsCounter === 0){
-      prev.style.display = 'none';
+    const tags = document.getElementsByClassName('tag')
+    for (let index = 0; index < tags.length; index++) {
+      tags[index].addEventListener('click', () => {
+        // Redirect to building list page
+      })
     }
 
-    prev.addEventListener("click", () => {
-      funFactsCounter--;
+    if (funFactsCounter === 0) {
+      prev.style.display = 'none'
+    }
+
+    prev.addEventListener('click', () => {
+      funFactsCounter--
       ff.innerHTML = funFacts[funFactsCounter]
-      if (funFactsCounter <= 0){
-        prev.style.display = 'none';
+      if (funFactsCounter <= 0) {
+        prev.style.display = 'none'
       }
     })
 
-    next.addEventListener("click", async () => {
-      funFactsCounter++;
+    next.addEventListener('click', async () => {
+      funFactsCounter++
       ff.innerHTML = funFacts[funFactsCounter]
-      let tags = document.getElementsByClassName('tag')
+      const tags = document.getElementsByClassName('tag')
       for (let index = 0; index < tags.length; index++) {
         tags[index].addEventListener('click', () => {
-          //Redirect to building list page
+          // Redirect to building list page
         })
       }
-      if (funFactsCounter > 0){
-        prev.style.display = 'inline';
+      if (funFactsCounter > 0) {
+        prev.style.display = 'inline'
       }
-      if (funFactsCounter > funFacts.length/2){
-        let tmp = await Api.getFunFacts(language, 50)
+      if (funFactsCounter > funFacts.length / 2) {
+        const tmp = await Api.getFunFacts(language, 50)
         funFacts = funFacts.concat(tmp.facts)
       }
-      if (funFactsCounter === funFacts.length-1){
+      if (funFactsCounter === funFacts.length - 1) {
         next.style.display = 'none'
       }
     })
