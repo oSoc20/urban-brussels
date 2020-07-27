@@ -24,7 +24,7 @@ let resp
 let val
 let searchDiv
 let inp
-const noSearchItem = true
+// const noSearchItem = true
 
 // Rendering of the search bar
 const SearchBar = {
@@ -46,7 +46,6 @@ const SearchBar = {
     inp = document.getElementById('search_bar')
 
     const search = document.getElementById('search_btn')
-    let currentFocus
 
     // Execute when an input is typed in the search field
     inp.addEventListener('input', async function (e) {
@@ -76,7 +75,6 @@ const SearchBar = {
       if (!val) {
         return false
       }
-      currentFocus = -1
 
       // Create a div element that will contain the items (values)
       a = document.createElement('DIV')
@@ -167,22 +165,6 @@ const SearchBar = {
         window.location.href = '/#/list'
       }
     })
-  },
-
-  // Classify an item as "active"
-  addActive: (x, currentFocus) => {
-    if (!x) return false
-    SearchBar.removeActive(x)
-    if (currentFocus >= x.length) currentFocus = 0
-    if (currentFocus < 0) currentFocus = x.length - 1
-    x[currentFocus].classList.add('autocomplete-active')
-  },
-
-  // Remove "active" class from all autocomplete items
-  removeActive: (x) => {
-    for (var i = 0; i < x.length; i++) {
-      x[i].classList.remove('autocomplete-active')
-    }
   },
 
   // Close all autocomplete list in the document except the ones in argument
