@@ -118,7 +118,7 @@ const buildingList = {
                   <div class="building__tags">`
 
       html += buildingList.showTags(building.styles, 'style')
-      html += buildingList.showTags(building.typographies, 'type')
+      html += buildingList.showTags(building.typologies, 'type')
       html += buildingList.showTags(building.intervenants, 'architect')
       html += '</div>'
 

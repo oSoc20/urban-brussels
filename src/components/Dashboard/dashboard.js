@@ -215,8 +215,8 @@ const Dashboard = {
       sValArray[index] = Object.values(data.BuildingsPerStyle)[index]
       architectArray[index] = Object.keys(data.BuildingsPerIntervenant)[index]
       aValArray[index] = Object.values(data.BuildingsPerIntervenant)[index]
-      typologyArray[index] = Object.keys(data.BuildingsPerTypography)[index]
-      tValArray[index] = Object.values(data.BuildingsPerTypography)[index]
+      typologyArray[index] = Object.keys(data.BuildingsPerTypology)[index]
+      tValArray[index] = Object.values(data.BuildingsPerTypology)[index]
     }
 
     // Buildings per architect

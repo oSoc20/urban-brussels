@@ -104,7 +104,7 @@ const SearchBar = {
         strict: false,
         zipcode: '',
         cities: tags_set.city,
-        typographies: tags_set.type,
+        typologies: tags_set.type,
         styles: tags_set.style,
         intervenants: tags_set.architect,
         streets: tags_set.street

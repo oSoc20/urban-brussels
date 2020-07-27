@@ -36,12 +36,12 @@ const detail = {
       <div class="detail-popup-info">`
 
     html += detail.showTags(building.styles, styleIcon, 'style', 'Styles')
-    html += detail.showTags(building.typographies, typeIcon, 'type', 'Types')
+    html += detail.showTags(building.typologies, typeIcon, 'type', 'Types')
     html += detail.showTags(building.intervenants, architectIcon, 'architect', 'Architects')
 
     html += `
        </div>
-        <a href="${building.url}" class="button button--dark" >Get to know more</a> 
+        <a href="${building.url}" class="button button--dark" >Get to know more</a>
       </div>`
 
     detailSection.innerHTML = html
