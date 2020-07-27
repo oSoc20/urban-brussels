@@ -34,7 +34,6 @@ const SearchBar = {
         <div class="search_ctn">
             <form class="searchbar_ctn" autocomplete="off">
                 <input id="search_bar" type="text" placeholder="${search_text[0]}" />
-                <button class="btn btn--search" id="search_btn"><img src="${searchIcon}"/></button>
             </form>
             <div class="selected-items">
             </div>
@@ -95,73 +94,53 @@ const SearchBar = {
     })
 
     // When search button is clicked
-    search.addEventListener('click', async (e) => {
-      e.preventDefault()
+    // search.addEventListener('click', async (e) => {
+    //   e.preventDefault()
 
-      // JSON body that will be sent
-      const send = {
-        lang: 'fr',
-        strict: false,
-        zipcode: '',
-        cities: tags_set.city,
-        typologies: tags_set.type,
-        styles: tags_set.style,
-        intervenants: tags_set.architect,
-        streets: tags_set.street
-      }
+    //   // JSON body that will be sent
+    //   const send = {
+    //     lang: 'fr',
+    //     strict: false,
+    //     zipcode: '',
+    //     cities: tags_set.city,
+    //     typologies: tags_set.type,
+    //     styles: tags_set.style,
+    //     intervenants: tags_set.architect,
+    //     streets: tags_set.street
+    //   }
 
-      // TOT DELETE WHEN MULTIPLE VALUES ARE POSSIBLE
-      if (tags_set['zip code'].length !== 0) {
-        send.zipcode = tags_set['zip code'][0]
-      }
+    //   // TOT DELETE WHEN MULTIPLE VALUES ARE POSSIBLE
+    //   if (tags_set['zip code'].length !== 0) {
+    //     send.zipcode = tags_set['zip code'][0]
+    //   }
 
-      // if (tags_set.city.length !== 0) {
-      //   send.city = tags_set.city[0]
-      // }
+    //   const data = await Api.searchData(send)
 
-      // if (tags_set.type.length !== 0) {
-      //   send.typology = tags_set.type[0]
-      // }
-
-      // if (tags_set.style.length !== 0) {
-      //   send.style = tags_set.style[0]
-      // }
-
-      // if (tags_set.architect.length !== 0) {
-      //   send.architects = tags_set.architect[0]
-      // }
-
-      // if (tags_set.street.length !== 0) {
-      //   send.streets = tags_set.street[0]
-      // }
-
-      const data = await Api.searchData(send)
-
-      window.localStorage.removeItem('building_data')
-      window.localStorage.removeItem('search_data')
-      window.localStorage.setItem('search_data', JSON.stringify(send))
-      window.localStorage.setItem('building_data', JSON.stringify(data))
-      if (window.location.hash !== '#/list') {
-        window.location.href = '/#/list'
-      }
-    })
+    //   window.localStorage.removeItem('building_data')
+    //   window.localStorage.removeItem('search_data')
+    //   window.localStorage.setItem('search_data', JSON.stringify(send))
+    //   window.localStorage.setItem('building_data', JSON.stringify(data))
+    //   if (window.location.hash !== '#/list') {
+    //     window.location.href = '/#/list'
+    //   }
+    // })
   },
 
   // Classify an item as "active"
-  addActive: (x, currentFocus) => {
-    if (!x) return false
-    SearchBar.removeActive(x)
-    if (currentFocus >= x.length) currentFocus = 0
-    if (currentFocus < 0) currentFocus = (x.length - 1)
-    x[currentFocus].classList.add('autocomplete-active')
-  },
+  // addActive: (x, currentFocus) => {
+  //   if (!x) return false
+  //   SearchBar.removeActive(x)
+  //   if (currentFocus >= x.length) currentFocus = 0
+  //   if (currentFocus < 0) currentFocus = (x.length - 1)
+  //   x[currentFocus].classList.add('autocomplete-active')
+  // },
 
   // Remove "active" class from all autocomplete items
-  removeActive: (x) => {
-    for (var i = 0; i < x.length; i++) {
-      x[i].classList.remove('autocomplete-active')
-    }
-  },
+  // removeActive: (x) => {
+  //   for (var i = 0; i < x.length; i++) {
+  //     x[i].classList.remove('autocomplete-active')
+  //   }
+  // },
 
   // Close all autocomplete list in the document except the ones in argument
   closeAllLists: (elmnt, inp) => {
@@ -244,18 +223,6 @@ const SearchBar = {
                   if (index > -1) {
                     tags_set[name.toLowerCase()].splice(index, 1)
                   }
-
-                  // for (const o in tags_set) {
-                  //   if (tags_set[o].length !== 0) {
-                  //     noSearchItem = false
-                  //   }
-                  // }
-
-                  // if (noSearchItem) {
-                  //   if (window.location.hash === '#/list') {
-                  //     window.location.href = '/#'
-                  //   }
-                  // }
                 })
               }
             }

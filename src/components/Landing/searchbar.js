@@ -143,13 +143,18 @@ const SearchBar = {
     // JSON body that will be sent
     const send = {
       lang: 'fr',
-      zipcodes: tags.zipcodeArr,
+      zipcode: '',
       cities: tags.cityArr,
       typologies: tags.typeArr,
       styles: tags.styleArr,
       intervenants: tags.architectArr,
       streets: tags.streetArr
     }
+
+    if (tags.zipcodeArr.length !== 0) {
+      send.zipcode = tags.zipcodeArr[0]
+    }
+
     const data = await Api.searchData(send)
     window.localStorage.removeItem('building_data')
     window.localStorage.removeItem('search_data')
