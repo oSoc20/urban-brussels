@@ -1,4 +1,5 @@
 import mapboxgl from 'mapbox-gl'
+import BaseLayerSwitch from '../Map/baselayerswitch.js'
 
 let map
 const MapWithClusters = {
@@ -12,9 +13,10 @@ const MapWithClusters = {
     })
 
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
-
+    BaseLayerSwitch.addEventListener(map)
     if (data) {
       map.on('load', () => {
+        BaseLayerSwitch.initSources (map, 'FR')
         map.addSource('buildings', {
           type: 'geojson',
           data: data,

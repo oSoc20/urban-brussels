@@ -5,6 +5,7 @@ import SearchBar from '../SearchBar/searchbar.js'
 import mapboxgl from 'mapbox-gl'
 import arrowRight from '../../assets/icons/arrow-icon.svg'
 import Api from '../api.js'
+import BaseLayerSwitch from '../Map/baselayerswitch.js'
 
 /**
  * Variable declarations
@@ -19,11 +20,7 @@ const Landing = {
   render: async () => {
     const view = /* html */`
     <div id="map-landing-page" class="map-landing-page"></div>
-      <nav id="menu">
-        <button id="grayscaleNL">URBIS</button>
-        <button id="aerial">Aerial Imagery</button>
-        <button id="mapbox">OpenStreetMap</button>
-      </nav>
+    <div id="baselayer_container"></div>
     <button id="clickDashboard" onClick="window.location.href='/#/Dashboard';">
     <span id="dash_text">Dashboard</span>
     </button>
@@ -131,6 +128,9 @@ const Landing = {
     })
 
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
+    // Map BaseLayerSwitch //
+    BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container')
+    BaseLayerSwitch.addEventListener(map)
 
     const bounds = new mapboxgl.LngLatBounds()
 
@@ -142,23 +142,7 @@ const Landing = {
 
     // Map load MapBox layer
     map.on('load', function () {
-      // Dutch grayscale layer//
-      map.addSource('wms-test-source-grayscale-dutch', {
-        type: 'raster',
-        tiles: [
-          'https://geoservices-urbis.irisnet.be/geoserver/ows/?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&transparent=true&width=256&height=256&layers=urbisNLGray'
-        ],
-        tileSize: 256
-      })
-// Aerial Imagery layer //
-    map.addSource('wms-test-source-aerial', {
-      type: 'raster',
-      tiles: [
-        'https://geoservices-urbis.irisnet.be/geoserver/ows/?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&transparent=true&width=256&height=256&layers=Urbis:Ortho2019'
-      ],
-      tileSize: 256
-    })
-    //
+      BaseLayerSwitch.initSources (map, 'FR')
       map.addSource('randomBuildings', {
         type: 'geojson',
         data: dataRandom
@@ -180,36 +164,6 @@ const Landing = {
           'circle-stroke-color': '#fff'
         }
       })
-    })
-    document.getElementById('grayscaleNL').addEventListener('click', function() {
-      map.addLayer({
-        id: 'wms-test-source-grayscale-dutch',
-        type: 'raster',
-        source: 'wms-test-source-grayscale-dutch',
-        paint: {}
-      })
-      if (map.getLayer('wms-test-source-aerial')) {
-        map.removeLayer('wms-test-source-aerial')
-      }
-    })
-    document.getElementById('aerial').addEventListener('click', function() {
-      map.addLayer({
-        id: 'wms-test-source-aerial',
-        type: 'raster',
-        source: 'wms-test-source-aerial',
-        paint: {}
-      })
-      if (map.getLayer('wms-test-source-grayscale-dutch')) {
-        map.removeLayer('wms-test-source-grayscale-dutch')
-      }
-    })
-    document.getElementById('mapbox').addEventListener('click', function() {
-      if (map.getLayer('wms-test-source-grayscale-dutch')) {
-        map.removeLayer('wms-test-source-grayscale-dutch')
-      }
-      if (map.getLayer('wms-test-source-aerial')){
-        map.removeLayer('wms-test-source-aerial')
-      }
     })
     // Map data
     map.on('sourcedata', (event) => {

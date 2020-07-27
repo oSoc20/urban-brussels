@@ -6,6 +6,7 @@ import pulsingDot from '../BuildingDetail/pulsingDot'
 import buildingDetail from '../BuildingDetail/buildingDetail'
 
 import backButton from '../../assets/icons/back-button.svg'
+import BaseLayerSwitch from '../Map/baselayerswitch.js'
 
 let searchData, map, popup
 let data = []
@@ -35,6 +36,7 @@ const buildingList = {
 
     let view = /* html */`
     <div id="buildingListMap" class="map-building-list ${randomBuildingClicked ? 'map-building-list__detail' : ''}"></div>
+    <div id="baselayer_container"></div>
     <img class="btn--back" src="${backButton}" alt="go back button">
           <section class= "detail-popup">
       <div class="detail-popup__container">
@@ -61,6 +63,7 @@ const buildingList = {
   after_render: async () => {
     if (!randomBuildingClicked) {
       buildingList.initPagination()
+      BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container')
       map = clusteredMap.init(data)
       popup = popupBuilding.init(map)
       map.on('moveend', () => {
