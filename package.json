@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "main.js",
   "dependencies": {
-    "chartist": "^0.11.4",
     "mapbox-gl": "^1.11.1"
   },
   "devDependencies": {

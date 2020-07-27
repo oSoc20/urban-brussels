@@ -11,7 +11,11 @@ import Api from '../api.js'
  */
 const style = process.env.MAPBOX_STYLE
 const token = process.env.MAPBOX_ACCESS_TOKEN
+<<<<<<< HEAD
 let language = 'fr'
+=======
+const language = 'fr'
+>>>>>>> e2c848ea213ba2855cf5d630ae4e95b035b3b9fe
 let funFactsCounter = 0
 
 // Rendering of the landing/home page
@@ -68,6 +72,7 @@ const Landing = {
 
     document.querySelector('#searchrandom_btn').addEventListener('click', Landing.clickHandlerRandomBtn)
     // Fun facts
+<<<<<<< HEAD
     let prev = document.getElementsByClassName('arrowLeft')[0]
     let next = document.getElementsByClassName('arrowRight')[0]
     let ff = document.getElementsByClassName('fun-fact__txt')[0]
@@ -118,25 +123,41 @@ const Landing = {
           }
         })
       }
+=======
+    const prev = document.getElementsByClassName('arrowLeft')[0]
+    const next = document.getElementsByClassName('arrowRight')[0]
+    const ff = document.getElementsByClassName('fun-fact__txt')[0]
 
+    const resp = await Api.getFunFacts(language, 50)
+    let funFacts = resp.facts
+>>>>>>> e2c848ea213ba2855cf5d630ae4e95b035b3b9fe
 
-    if (funFactsCounter === 0){
-      prev.style.display = 'none';
+    ff.innerHTML = funFacts[0]
+    const tags = document.getElementsByClassName('tag')
+    for (let index = 0; index < tags.length; index++) {
+      tags[index].addEventListener('click', () => {
+        // Redirect to building list page
+      })
     }
 
-    prev.addEventListener("click", () => {
-      funFactsCounter--;
+    if (funFactsCounter === 0) {
+      prev.style.display = 'none'
+    }
+
+    prev.addEventListener('click', () => {
+      funFactsCounter--
       ff.innerHTML = funFacts[funFactsCounter]
-      if (funFactsCounter <= 0){
-        prev.style.display = 'none';
+      if (funFactsCounter <= 0) {
+        prev.style.display = 'none'
       }
     })
 
-    next.addEventListener("click", async () => {
-      funFactsCounter++;
+    next.addEventListener('click', async () => {
+      funFactsCounter++
       ff.innerHTML = funFacts[funFactsCounter]
-      let tags = document.getElementsByClassName('tag')
+      const tags = document.getElementsByClassName('tag')
       for (let index = 0; index < tags.length; index++) {
+<<<<<<< HEAD
         tags[index].addEventListener('click', async () => {
           let str = tags[index].className;
           let pos1 = str.indexOf("-");
@@ -162,16 +183,25 @@ const Landing = {
           if (window.location.hash !== "#/list") {
             window.location.href = "/#/list";
           }
+=======
+        tags[index].addEventListener('click', () => {
+          // Redirect to building list page
+>>>>>>> e2c848ea213ba2855cf5d630ae4e95b035b3b9fe
         })
       }
-      if (funFactsCounter > 0){
-        prev.style.display = 'inline';
+      if (funFactsCounter > 0) {
+        prev.style.display = 'inline'
       }
+<<<<<<< HEAD
       if (funFactsCounter > funFacts.length/2){
         let tmp = await Api.getFunFacts(language, 25)
+=======
+      if (funFactsCounter > funFacts.length / 2) {
+        const tmp = await Api.getFunFacts(language, 50)
+>>>>>>> e2c848ea213ba2855cf5d630ae4e95b035b3b9fe
         funFacts = funFacts.concat(tmp.facts)
       }
-      if (funFactsCounter === funFacts.length-1){
+      if (funFactsCounter === funFacts.length - 1) {
         next.style.display = 'none'
       }
     })
