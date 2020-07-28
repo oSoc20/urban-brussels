@@ -2,7 +2,7 @@
     "fr": {
         "search_bar": "Chercher",
         "switch_text": "Rechercher en déplaçant la carte",
-        "no-result": "Aucun bâtiment trouvé sur cette partie de la carte, faites glisser la carte pour voir plus de résultats.",
+        "no_result": "Aucun bâtiment trouvé sur cette partie de la carte, faites glisser la carte pour voir plus de résultats.",
         "title_buildingslist": "Bâtiments",
         "chart_title1": "Bâtiments par architecte",
         "chart_title2": "Bâtiments par style",
@@ -14,7 +14,7 @@
     "nl": {
         "search_bar": "Zoeken",
         "switch_text": "Zoek door de kaart te verplaatsen",
-        "no-result": "Geen gebouwen gevonden op dit deel van de kaart, sleep de kaart om meer resultaten te zien.",
+        "no_result": "Geen gebouwen gevonden op dit deel van de kaart, sleep de kaart om meer resultaten te zien.",
         "title_buildingslist": "Gebouwen",
         "chart_title1": "Gebouwen door architect",
         "chart_title2": "Gebouwen op stijl",

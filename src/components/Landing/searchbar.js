@@ -11,6 +11,7 @@ import architectIcon from '../../assets/icons/architect-icon.svg'
 /**
  * Variables declarations
  */
+const language = window.sessionStorage.getItem('lang')
 const tags = {
   zipcodeArr: [],
   cityArr: [],
@@ -46,7 +47,7 @@ const SearchBar = {
         styles: [],
         intervenants: []
       }
-      resp = await Api.getAutocomplete('fr', inputValue)
+      resp = await Api.getAutocomplete(language, inputValue)
       mainSearchBar.addItemsToObj(resp.zipCodes, obj.zipCodes)
       mainSearchBar.addItemsToObj(resp.cities, obj.cities)
       mainSearchBar.addItemsToObj(resp.streets, obj.streets)
@@ -113,7 +114,7 @@ const SearchBar = {
   goToList: async () => {
     // JSON body that will be sent
     const send = {
-      lang: 'fr',
+      lang: language,
       zipcode: '',
       cities: tags.cityArr,
       typologies: tags.typeArr,

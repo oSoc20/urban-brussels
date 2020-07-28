@@ -192,7 +192,7 @@ const buildingList = {
         </li>`
     }
     if (html === '') {
-      html = '<p class="no-result">No buildings found on this part of the map, drag the map to see more results.</p>'
+      html = '<p class="no-result">'+window.langText.no_result+'</p>'
       document.querySelector('.pagination').classList.add('is-not-visible')
     } else {
       document.querySelector('.pagination').classList.remove('is-not-visible')
