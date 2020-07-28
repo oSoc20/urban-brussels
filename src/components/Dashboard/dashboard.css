@@ -18,8 +18,8 @@
     margin-bottom: 30px;
 }
 .section__search__dashboard {
-    position: initial;
-    width: 80%;
+    position: relative;
+    width: 87%;
     padding: 45px 0 0 30px;
     margin-bottom: 0;
 }

@@ -151,7 +151,7 @@
 .selected-items {
   display: flex;
   flex-wrap: wrap;
-  width: 460px;
+  width: 365px;
   margin-top: 15px;
 }
 

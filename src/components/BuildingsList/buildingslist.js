@@ -10,6 +10,7 @@ import buildingDetail from '../BuildingDetail/buildingDetail'
 
 import backButton from '../../assets/icons/back-button.svg'
 import BaseLayerSwitch from '../Map/baselayerswitch.js'
+import PageSwitch from '../pageSwitch/pageSwitch.js'
 
 let searchData, map, popup
 let data = []
@@ -64,8 +65,10 @@ const buildingList = {
         <input type="checkbox" id="switch" checked /><label for="switch">Toggle</label>
       </div>
       <section class="section__list">
-      <div id="search_container"></div>
-      <button class="btn_dashboard">Dashboard</button>
+      <div class="btn__container">
+        <div id="search_container"></div>
+        <div class="switch__container"></div>
+      </div>
       <div class="section__list__title">
         <h1 id="title_buildingslist">` + window.langText.title_buildingslist + `</h1>
         <div class="pagination"></div>
@@ -77,6 +80,8 @@ const buildingList = {
   },
   after_render: async () => {
     if (!randomBuildingClicked) {
+      PageSwitch.displaySwitch('switch__container')
+      PageSwitch.clickHandlerBtn()
       SearchBar.displaySearchBar('search_container')
       SearchBar.searchFunction(buildingList.SearchBarCalback, buildingList.noTags)
 
@@ -110,9 +115,6 @@ const buildingList = {
       })
     }
     pulsingDot.init(map)
-    document.querySelector('.btn_dashboard').addEventListener('click', () => {
-      window.location.href = '/#/dashboard'
-    })
   },
   SearchBarCalback: async (tags) => {
     const send = {
