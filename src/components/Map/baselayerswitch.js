@@ -2,10 +2,10 @@
 import dropdownIcon from '../../assets/icons/dropdown-icon.svg'
 
 const BaseLayerSwitch = {
-  displayBaseLayerSwitch: (containerIdName) => {
+  displayBaseLayerSwitch: (containerIdName, fixed = false) => {
     document.getElementById(containerIdName).innerHTML = /* html */`
     <div class="dropdown_layers">
-      <div class="dropdown_menu">
+      <div class="dropdown_menu ${fixed ? 'dropdown_menu__fixed' : ''}">
         <button id="main-button"><img id="layers_icon" src="${dropdownIcon}"/>
         </button>
         <div class="menu_class" id="menu">

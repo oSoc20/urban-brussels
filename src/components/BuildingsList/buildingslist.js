@@ -81,7 +81,7 @@ const buildingList = {
       SearchBar.searchFunction(buildingList.SearchBarCalback, buildingList.noTags)
 
       buildingList.initPagination()
-      BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container')
+      BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container', true)
       map = clusteredMap.init(data)
       popup = popupBuilding.init(map)
       map.on('moveend', () => {

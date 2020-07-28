@@ -9,6 +9,7 @@
 }
 
 .main-overview {
+    position: relative;
     grid-area: main;
     display: grid;
     grid-gap: 20px;
