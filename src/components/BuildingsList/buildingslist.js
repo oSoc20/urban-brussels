@@ -5,7 +5,7 @@ import Landing from '../Landing/landing'
 
 import clusteredMap from '../MapWithClusters/mapWithClusters'
 import popupBuilding from './popupBuilding'
-import pulsingDot from '../BuildingDetail/pulsingDot'
+import pulsingDot from '../Map/pulsingDot'
 import buildingDetail from '../BuildingDetail/buildingDetail'
 
 import backButton from '../../assets/icons/back-button.svg'

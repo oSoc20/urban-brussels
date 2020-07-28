@@ -7,6 +7,7 @@ import mapboxgl from 'mapbox-gl'
 import arrowRight from '../../assets/icons/arrow-icon.svg'
 import Api from '../api.js'
 import BaseLayerSwitch from '../Map/baselayerswitch.js'
+import pulsingDot from '../Map/pulsingDot'
 
 /**
  * Variable declarations
@@ -90,6 +91,9 @@ const Landing = {
     })
 
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
+
+    pulsingDot.init(map)
+
     // Map BaseLayerSwitch //
     map.on('load', () => {
       BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container')
@@ -100,6 +104,20 @@ const Landing = {
 
     // Retrieves random building
     const dataRandom = await Api.searchRandom(language, '3')
+
+    map.addSource('random-points', {
+      type: 'geojson',
+      data: dataRandom
+    })
+    map.addLayer({
+      id: 'random-points',
+      type: 'symbol',
+      source: 'random-points',
+      layout: {
+        'icon-image': 'pulsing-dot'
+      }
+    })
+
     dataRandom.features.forEach((feature) => {
       bounds.extend(
         feature.geometry.coordinates
@@ -126,16 +144,10 @@ const Landing = {
         window.location.href = '/#/list'
       })
 
-      const popup = new mapboxgl.Popup({
-        closeOnClick: false,
-        closeButton: false
-      }).setDOMContent(element)
-
-      new mapboxgl.Marker()
+      new mapboxgl.Popup({ closeOnClick: false, closeButton: false })
+        .setDOMContent(element)
         .setLngLat(feature.geometry.coordinates)
-        .setPopup(popup)
         .addTo(map)
-        .togglePopup()
     })
 
     map.fitBounds(bounds, {
