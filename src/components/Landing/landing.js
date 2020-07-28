@@ -98,7 +98,7 @@ const Landing = {
     map.on('load', () => {
       BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container')
       BaseLayerSwitch.initSources(map, 'FR')
-      BaseLayerSwitch.addEventListener(map)
+      BaseLayerSwitch.addEventListener(map, 'random-points')
     })
     const bounds = new mapboxgl.LngLatBounds()
 
