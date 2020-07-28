@@ -3,7 +3,6 @@ import dropdownIcon from '../../assets/icons/dropdown-icon.svg'
 
 const BaseLayerSwitch = {
   displayBaseLayerSwitch: (containerIdName, fixed) => {
-    console.log(fixed)
     document.getElementById(containerIdName).innerHTML = /* html */`
     <div class="dropdown_layers">
       <div class="dropdown_menu ${fixed ? 'dropdown_menu__fixed' : ''}">
