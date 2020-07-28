@@ -83,7 +83,6 @@ const Dashboard = {
       Dashboard.noTags()
       map = clusteredMap.init()
     } else {
-      // // searchData = JSON.parse(searchData)
       mapData = await Api.searchData(searchData)
       map = clusteredMap.init(mapData)
       sendData = {
