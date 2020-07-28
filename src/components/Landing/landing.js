@@ -1,7 +1,8 @@
 /**
  * Modules imports
  */
-import SearchBar from '../SearchBar/searchbar.js'
+import SearchBar from './searchbar.js'
+import mainSearchBar from '../SearchBar/searchbar'
 import mapboxgl from 'mapbox-gl'
 import arrowRight from '../../assets/icons/arrow-icon.svg'
 import Api from '../api.js'
@@ -61,8 +62,9 @@ const Landing = {
   },
   // Behavior after rendering
   after_render: async () => {
+    Landing.emptyLocalStorage()
     // Search bar code
-    SearchBar.displaySearchBar('search_container')
+    mainSearchBar.displaySearchBar('search_container')
     SearchBar.searchFunction()
 
     document.querySelector('#searchrandom_btn').addEventListener('click', Landing.clickHandlerRandomBtn)
@@ -97,8 +99,10 @@ const Landing = {
         feature.geometry.coordinates
       )
 
-      const content = `
-        <div class="pop-up--landing">
+      const element = document.createElement('div')
+      element.className = 'pop-up--landing'
+      element.style.cursor = 'pointer'
+      element.innerHTML = `
           <div>
             <div class="pop-up__img--landing" style="background-image: url('${feature.properties.image}');">
           </div>
@@ -106,10 +110,20 @@ const Landing = {
             <p class="pop-up__info--landing">${feature.properties.street} ${feature.properties.number}</p>
             <p class="pop-up__info--landing">${feature.properties.zip_code} ${feature.properties.city}</p>
           </div>
-        </div>
         `
+      element.addEventListener('click', () => {
+        window.localStorage.removeItem('random_building_data')
+        window.localStorage.setItem(
+          'random_building_data',
+          JSON.stringify([feature])
+        )
+        window.location.href = '/#/list'
+      })
 
-      const popup = new mapboxgl.Popup({ closeOnClick: false, closeButton: false }).setHTML(content)
+      const popup = new mapboxgl.Popup({
+        closeOnClick: false,
+        closeButton: false
+      }).setDOMContent(element)
 
       new mapboxgl.Marker()
         .setLngLat(feature.geometry.coordinates)
@@ -257,7 +271,24 @@ const Landing = {
       if (funFactsCounter === funFacts.length - 1) {
         next.style.display = 'none'
       }
+      Landing.getTags()
     })
+  },
+  getTags: () => {
+    const tags = document.querySelectorAll('.tag')
+    tags.forEach(item => item.addEventListener('click', Landing.clickHanlderTag))
+  },
+  clickHanlderTag: (e) => {
+    if (e.currentTarget.classList.contains('tag--style')) {
+      console.log('style')
+    } else if (e.currentTarget.classList.contains('tag--type')) {
+      console.log('type')
+    } else if (e.currentTarget.classList.contains('tag--architect')) {
+      console.log('architect')
+    }
+  },
+  emptyLocalStorage: () => {
+    window.localStorage.clear()
   }
 }
 
