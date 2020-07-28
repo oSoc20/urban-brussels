@@ -33,12 +33,18 @@ const Chart = {
 
   // Create a timeline chart
   createTimeline: (container, labels, series) => {
+    const data = labels.map((year, index) => {
+      return { x: parseInt(year), y: series[index] }
+    })
+
     // eslint-disable-next-line
     new Chartist.Line(
       container,
       {
-        labels: labels,
-        series: [series]
+        series: [{
+          name: 'timeline',
+          data
+        }]
       },
       {
         low: 0,
@@ -46,16 +52,13 @@ const Chart = {
         showLine: false,
         showPoint: false,
         axisX: {
-          labelInterpolationFnc: function (value, index) {
-            return index % 12 === 0 ? +value : null
-          }
+          // eslint-disable-next-line
+          type: Chartist.FixedScaleAxis,
+          ticks: [1350, 1400, 1450, 1500, 1550, 1600, 1650, 1700, 1750, 1800, 1850, 1900, 1950, 2000, 2050]
         }
       }
     )
   }
-
-  // Update function
-
 }
 
 export default Chart
