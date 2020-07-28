@@ -14,7 +14,16 @@
 img {
 	width: 100%;
 }
-
+.img-team {
+	border-radius: 50%;
+}
+.img-partners {
+	width: 200px;
+}
+ul.team, ul.partners {
+	list-style: none;
+	padding: 1rem 0;
+}
 
 /* osoc colors
 
