@@ -89,9 +89,11 @@ const Dashboard = {
       map = clusteredMap.init()
       document.querySelector('.map_dashboard').classList.add('is-not-visible')
       document.querySelector('#baselayer_container').classList.add('is-not-visible')
+      document.querySelector('.switch__container--dashboard').classList.add('is-not-visible')
     } else {
       document.querySelector('.map_dashboard').classList.remove('is-not-visible')
       document.querySelector('#baselayer_container').classList.remove('is-not-visible')
+      document.querySelector('.switch__container--dashboard').classList.remove('is-not-visible')
       mapData = await Api.searchData(searchData)
       map = clusteredMap.init(mapData)
       sendData = {
@@ -173,6 +175,7 @@ const Dashboard = {
     if (!mapDisabled) {
       document.querySelector('.map_dashboard').classList.remove('is-not-visible')
       document.querySelector('#baselayer_container').classList.remove('is-not-visible')
+      document.querySelector('.switch__container--dashboard').classList.remove('is-not-visible')
       mapData = await Api.searchData(sendDataMap)
       if (map !== undefined) {
         map.resize()
@@ -188,7 +191,7 @@ const Dashboard = {
     if (mapDisabled) {
       document.querySelector('.map_dashboard').classList.add('is-not-visible')
       document.querySelector('#baselayer_container').classList.add('is-not-visible')
-
+      document.querySelector('.switch__container--dashboard').classList.add('is-not-visible')
       if (map !== undefined) {
         map.resize()
       }

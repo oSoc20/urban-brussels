@@ -86,6 +86,11 @@
   margin-left: 9px;
 }
 
+.tag--small {
+  stroke: #2C3550;
+}
+
+
 .tag--style, .line--style {
   background-color: #F0F5FF;
   color: #618EEC;
