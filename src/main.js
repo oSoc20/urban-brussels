@@ -27,7 +27,6 @@ if (typeof lang === 'undefined' || lang == null){
   window.sessionStorage.setItem('lang', lang)
 }
 
-
 window.langText = ''
 
 if (lang == 'fr' || lang == 'nl'){
