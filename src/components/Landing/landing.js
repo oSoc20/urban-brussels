@@ -196,22 +196,8 @@ const Landing = {
       if (funFactsCounter === funFacts.length - 1) {
         next.style.display = 'none'
       }
-      // Landing.getTags()
     })
   },
-  // getTags: () => {
-  //   const tags = document.querySelectorAll('.tag')
-  //   tags.forEach(item => item.addEventListener('click', Landing.clickHanlderTag))
-  // },
-  // clickHanlderTag: (e) => {
-  //   if (e.currentTarget.classList.contains('tag--style')) {
-  //     console.log('style')
-  //   } else if (e.currentTarget.classList.contains('tag--type')) {
-  //     console.log('type')
-  //   } else if (e.currentTarget.classList.contains('tag--architect')) {
-  //     console.log('architect')
-  //   }
-  // },
   emptyLocalStorage: () => {
     window.localStorage.clear()
   },
