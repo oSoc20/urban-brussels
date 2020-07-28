@@ -2,8 +2,8 @@
 import dropdownIcon from '../../assets/icons/dropdown-icon.svg'
 
 const BaseLayerSwitch = {
-  displayBaseLayerSwitch: (container_idname) => {
-    document.getElementById(container_idname).innerHTML = /* html */`
+  displayBaseLayerSwitch: (containerIdName) => {
+    document.getElementById(containerIdName).innerHTML = /* html */`
     <div class="dropdown_layers">
       <div class="dropdown_menu">
         <button id="main-button"><img id="layers_icon" src="${dropdownIcon}"/>
@@ -22,7 +22,7 @@ const BaseLayerSwitch = {
       id: 'wms-layer-grayscale',
       type: 'raster',
       source: 'wms-source-grayscale',
-      paint: {},
+      paint: {}
     }, layerId)
     if (map.getLayer('wms-layer-aerial')) {
       map.removeLayer('wms-layer-aerial')

@@ -16,7 +16,7 @@ const MapWithClusters = {
     BaseLayerSwitch.addEventListener(map, 'clusters')
     if (data) {
       map.on('load', () => {
-        BaseLayerSwitch.initSources (map, 'FR')
+        BaseLayerSwitch.initSources(map, 'FR')
         map.addSource('buildings', {
           type: 'geojson',
           data: data,
