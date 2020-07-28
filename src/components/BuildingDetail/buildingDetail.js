@@ -45,7 +45,7 @@ const detail = {
 
     html += `
        </div>
-        <a target="_blank" href="${building.url}" class="button button--dark" id="iris_link">`+window.langText.iris_link+`</a>
+        <a target="_blank" href="${building.url}" class="button button--dark" id="iris_link">` + window.langText.iris_link + `</a>
       </div>`
 
     detailSection.innerHTML = html

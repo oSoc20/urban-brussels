@@ -16,16 +16,25 @@ const itemsPerPage = 5
 let moveMap = true
 let randomBuildingClicked = false
 let randomBuilding = []
+const language = window.sessionStorage.getItem('lang')
+let refreshLang = false
 
 const buildingList = {
   render: async () => {
     randomBuilding = JSON.parse(window.localStorage.getItem('random_building_data'))
-    searchData = window.localStorage.getItem('search_data')
+    searchData = JSON.parse(window.localStorage.getItem('search_data'))
+    if (searchData.lang !== language) {
+      searchData.lang = language
+      window.localStorage.setItem('search_data', JSON.stringify(searchData))
+      refreshLang = true
+      console.log(searchData)
+    }
 
-    if (typeof randomBuilding === 'undefined' || randomBuilding === null) {
+    if (typeof randomBuilding === 'undefined' || randomBuilding === null || refreshLang) {
+      console.log('hello')
       randomBuildingClicked = false
       data = window.localStorage.getItem('building_data')
-      if (typeof data === 'undefined' || data === null) {
+      if (typeof data === 'undefined' || data === null || refreshLang) {
         data = await Api.searchData(searchData)
         window.localStorage.setItem('building_data', JSON.stringify(data))
       } else {
@@ -48,13 +57,13 @@ const buildingList = {
     if (!randomBuildingClicked) {
       view += `
       <div class="switch">
-        <p id="switch_text">`+window.langText.switch_text+`</p>
+        <p id="switch_text">` + window.langText.switch_text + `</p>
         <input type="checkbox" id="switch" checked /><label for="switch">Toggle</label>
       </div>
       <section class="section__list">
       <div id="search_container"></div>
       <div class="section__list__title">
-        <h1 id="title_buildingslist">`+window.langText.title_buildingslist+`</h1>
+        <h1 id="title_buildingslist">` + window.langText.title_buildingslist + `</h1>
         <div class="pagination"></div>
       </div>
         <ul class="building-list"></ul>
@@ -192,7 +201,7 @@ const buildingList = {
         </li>`
     }
     if (html === '') {
-      html = '<p class="no-result">'+window.langText.no_result+'</p>'
+      html = '<p class="no-result">' + window.langText.no_result + '</p>'
       document.querySelector('.pagination').classList.add('is-not-visible')
     } else {
       document.querySelector('.pagination').classList.remove('is-not-visible')

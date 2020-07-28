@@ -18,10 +18,9 @@ const routes = {
 // Get navigator language or set to default language
 let lang = window.sessionStorage.getItem('lang')
 
-if (typeof lang === 'undefined' || lang == null){
-  console.log("hello")
-  lang = navigator.language.slice(0, 2);
-  if (lang !== 'fr' || lang !== 'nl'){
+if (typeof lang === 'undefined' || lang == null) {
+  lang = navigator.language.slice(0, 2)
+  if (lang !== 'fr' || lang !== 'nl') {
     lang = 'fr'
   }
   window.sessionStorage.setItem('lang', lang)
@@ -29,7 +28,7 @@ if (typeof lang === 'undefined' || lang == null){
 
 window.langText = ''
 
-if (lang == 'fr' || lang == 'nl'){
+if (lang === 'fr' || lang === 'nl') {
   window.langText = Languages[lang]
 } else {
   window.langText = Languages.fr
