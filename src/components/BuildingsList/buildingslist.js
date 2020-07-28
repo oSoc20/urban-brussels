@@ -65,6 +65,7 @@ const buildingList = {
       </div>
       <section class="section__list">
       <div id="search_container"></div>
+      <button class="btn_dashboard">Dashboard</button>
       <div class="section__list__title">
         <h1 id="title_buildingslist">` + window.langText.title_buildingslist + `</h1>
         <div class="pagination"></div>
@@ -109,6 +110,9 @@ const buildingList = {
       })
     }
     pulsingDot.init(map)
+    document.querySelector('.btn_dashboard').addEventListener('click', () => {
+      window.location.href = '/#/dashboard'
+    })
   },
   SearchBarCalback: async (tags) => {
     const send = {

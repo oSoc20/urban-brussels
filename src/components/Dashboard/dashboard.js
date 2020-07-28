@@ -7,7 +7,6 @@ import clusteredMap from '../MapWithClusters/mapWithClusters'
 import SearchBar from '../SearchBar/searchbar'
 import BaseLayerSwitch from '../Map/baselayerswitch.js'
 
-
 let map
 let searchData
 let mapData
@@ -50,6 +49,7 @@ const Dashboard = {
     <section class="section__list section__search__dashboard">
       <div id="search_container"></div>
     </section>
+    <button class="btn_list">list</button>
 <div class="grid-container">
 <main class="main">
     <div class="main-overview">
@@ -81,11 +81,16 @@ const Dashboard = {
     SearchBar.displaySearchBar('search_container')
     SearchBar.searchFunction(Dashboard.SearchBarCalback, Dashboard.noTags)
     BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container')
+    document.querySelector('.btn_list').addEventListener('click', () => {
+      window.location.href = '/#/list'
+    })
 
     if (mapDisabled) {
       Dashboard.noTags()
       map = clusteredMap.init()
+      document.querySelector('.map_dashboard').classList.add('is-not-visible')
     } else {
+      document.querySelector('.map_dashboard').classList.remove('is-not-visible')
       mapData = await Api.searchData(searchData)
       map = clusteredMap.init(mapData)
       sendData = {
@@ -165,13 +170,12 @@ const Dashboard = {
     window.localStorage.setItem('search_data', JSON.stringify(sendDataMap))
 
     if (!mapDisabled) {
+      document.querySelector('.map_dashboard').classList.remove('is-not-visible')
       mapData = await Api.searchData(sendDataMap)
       if (map !== undefined) {
+        map.resize()
         map.getSource('buildings').setData(mapData)
         map.getSource('unclustered-locations').setData(mapData)
-        map.setLayoutProperty('clusters', 'visibility', 'visible')
-        map.setLayoutProperty('cluster-count', 'visibility', 'visible')
-        map.setLayoutProperty('unclustered-point', 'visibility', 'visible')
         map.easeTo({
           center: [4.4006, 50.8452],
           zoom: 10.24
@@ -180,10 +184,9 @@ const Dashboard = {
     }
 
     if (mapDisabled) {
+      document.querySelector('.map_dashboard').classList.add('is-not-visible')
       if (map !== undefined) {
-        map.setLayoutProperty('clusters', 'visibility', 'none')
-        map.setLayoutProperty('cluster-count', 'visibility', 'none')
-        map.setLayoutProperty('unclustered-point', 'visibility', 'none')
+        map.resize()
       }
     }
 

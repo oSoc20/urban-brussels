@@ -179,6 +179,7 @@ const SearchBar = {
         }
 
         tag.className = `tag tag--small tag--selected ${className}`
+        console.log(tag)
         tag.innerHTML =
           /* html */ `
         <span class="close_tags_button">
@@ -188,6 +189,7 @@ const SearchBar = {
           </svg>
         </span>
         ` + name + ': ' + value
+        console.log(tag)
         searchDiv[0].appendChild(tag)
         if (name === 'Zip code') {
           tags.zipcodeArr.push(value)
