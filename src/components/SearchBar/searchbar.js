@@ -3,7 +3,6 @@ import Api from '../api.js'
 import styleIcon from '../../assets/icons/style-icon.svg'
 import typeIcon from '../../assets/icons/type-icon.svg'
 import architectIcon from '../../assets/icons/architect-icon.svg'
-import Landing from '../Landing/landing.js'
 
 /**  Variables declarations */
 const searchText = ['Search', 'Chercher', 'Zoeken']
@@ -17,7 +16,7 @@ const tags = {
 }
 
 let obj = {}
-let resp, inputValue, searchDiv, input, callbackFunction
+let resp, inputValue, searchDiv, input, callbackFunction, callbackFunctionNoTags
 let prevTagsTotalIndex = 0
 let prevTagsIndex = 0
 
@@ -34,8 +33,9 @@ const SearchBar = {
         </div>`
   },
 
-  searchFunction: (callback) => {
+  searchFunction: (callback, callbackNoTags) => {
     callbackFunction = callback
+    callbackFunctionNoTags = callbackNoTags
     searchDiv = document.getElementsByClassName('selected-items')
     input = document.getElementById('search_bar')
     SearchBar.getSearchedTag()
@@ -46,7 +46,7 @@ const SearchBar = {
 
   getSearchedTag: () => {
     let searchData = window.localStorage.getItem('search_data')
-    if (typeof searchData !== 'undefined' || searchData !== null) {
+    if (typeof searchData !== 'undefined' && searchData !== null) {
       searchData = JSON.parse(searchData)
       for (const item in searchData) {
         prevTagsTotalIndex += searchData[item].length
@@ -222,8 +222,7 @@ const SearchBar = {
         count += tags[item].length
       }
       if (count === 0) {
-        Landing.emptyLocalStorage()
-        window.location.href = '/#'
+        SearchBar.noTags()
       } else {
         SearchBar.updateList()
       }
@@ -232,6 +231,10 @@ const SearchBar = {
 
   updateList: async () => {
     callbackFunction(tags)
+  },
+
+  noTags: () => {
+    callbackFunctionNoTags()
   }
 }
 

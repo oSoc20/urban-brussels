@@ -2,8 +2,7 @@
     display: grid;
     grid-template-areas:
       "header"
-      "main"
-      "footer";
+      "main";
     height: 100%;
     width: 100%;
     }
@@ -21,9 +20,16 @@
     height: 250px;
     padding: 20px;
     background-color: #FDFDFD;
-    box-shadow: 0 8px 6px -6px rgb(148, 148, 148);
+    box-shadow: 0px 3.3655px 3.3655px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
     line-height: 10px;
+}
+
+.map_dashboard  {
+    height: 100%;
+    grid-column-start: 2;
+    grid-row-start: 1;
+    grid-row-end: 4;
 }
 
 /* GENERAL CHARTS */

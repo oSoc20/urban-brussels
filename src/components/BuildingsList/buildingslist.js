@@ -1,6 +1,7 @@
 import Api from '../api.js'
 import Pagination from '../Pagination/pagination'
 import SearchBar from '../SearchBar/searchbar'
+import Landing from '../Landing/landing'
 
 import clusteredMap from '../MapWithClusters/mapWithClusters'
 import popupBuilding from './popupBuilding'
@@ -37,7 +38,7 @@ const buildingList = {
     }
 
     let view = /* html */`
-    <div id="buildingListMap" class="map-building-list ${randomBuildingClicked ? 'map-building-list__detail' : ''}"></div>
+    <div id="clusterMap" class="map-building-list ${randomBuildingClicked ? 'map-building-list__detail' : ''}"></div>
     <img class="btn--back" src="${backButton}" alt="go back button">
           <section class= "detail-popup">
       <div class="detail-popup__container">
@@ -65,7 +66,7 @@ const buildingList = {
   after_render: async () => {
     if (!randomBuildingClicked) {
       SearchBar.displaySearchBar('search_container')
-      SearchBar.searchFunction(buildingList.SearchBarCalback)
+      SearchBar.searchFunction(buildingList.SearchBarCalback, buildingList.noTags)
 
       buildingList.initPagination()
       map = clusteredMap.init(data)
@@ -225,6 +226,10 @@ const buildingList = {
     } else {
       buildingDetail.goBack(map)
     }
+  },
+  noTags: () => {
+    Landing.emptyLocalStorage()
+    window.location.href = '/#'
   }
 }
 

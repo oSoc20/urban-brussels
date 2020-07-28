@@ -1,19 +1,53 @@
 /**
  * Modules import
  */
-import mapboxgl from 'mapbox-gl'
 import Api from '../api.js'
 import Chart from './charts.js'
+import clusteredMap from '../MapWithClusters/mapWithClusters'
+import SearchBar from '../SearchBar/searchbar'
 
-/**
- * Variable declarations
- */
-const style = process.env.MAPBOX_STYLE
-const token = process.env.MAPBOX_ACCESS_TOKEN
+let map
+let searchData
+let mapData
+let mapDisabled = true
+let statsData = []
+let sendData = {
+  lang: 'fr',
+  cities: [],
+  intervenants: [],
+  streets: [],
+  styles: [],
+  typologies: [],
+  zipcodes: []
+}
 
 const Dashboard = {
   render: async () => {
+    searchData = window.localStorage.getItem('search_data')
+    if (typeof searchData !== 'undefined' && searchData !== null) {
+      mapDisabled = false
+      searchData = JSON.parse(searchData)
+      for (const item in searchData) {
+        if (Array.isArray(searchData[item]) && searchData[item].length === 0) {
+          mapDisabled = true
+        } else {
+          if (item !== 'lang' && item !== 'zipcode') {
+            mapDisabled = false
+            break
+          }
+        }
+      }
+      if (searchData.zipcode !== '') {
+        mapDisabled = false
+      }
+    } else {
+      mapDisabled = true
+    }
+
     const view = /* html */ `
+    <section class="section__list">
+      <div id="search_container"></div>
+    </section>
 <div class="grid-container">
 <main class="main">
     <div class="main-overview">
@@ -29,7 +63,7 @@ const Dashboard = {
           <div class="chart_title">Buildings per typology</div>
           <div class="ct-chart3" id="chart3"></div>
         </div>
-        <div class="item" id="map_dashboard">
+        <div class="item map_dashboard" id="clusterMap">
         </div>
     </div>
     <div class="item">
@@ -37,162 +71,40 @@ const Dashboard = {
           <div class="ct-chart4" id="chart4"></div>
         </div>
 </main>
-<footer class="footer"></footer>
 </div>
           `
     return view
   },
   after_render: async () => {
-    mapboxgl.accessToken = token
+    SearchBar.displaySearchBar('search_container')
+    SearchBar.searchFunction(Dashboard.SearchBarCalback, Dashboard.noTags)
 
-    var map = new mapboxgl.Map({
-      container: document.getElementById('map_dashboard'),
-      style, // stylesheet location
-      center: [4.3517, 50.8503],
-      zoom: 12.71 // starting zoom
-    })
-    map.on('load', function () {
-      // Add a new source from our GeoJSON data and
-      // set the 'cluster' option to true. GL-JS will
-      // add the point_count property to your source data.
-      map.addSource('buildings', {
-        type: 'geojson',
-        // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
-        // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
-        data:
-          'https://gis.urban.brussels/geoserver/ows?service=wfs&version=2.0.0&request=GetFeature&TypeName=BSO_DML_BESC:Inventaris_Irismonument&outputformat=application/json&cql_filter=CITY%20=%20%271090%27&srsname=EPSG:4326',
-        cluster: true,
-        clusterMaxZoom: 14, // Max zoom to cluster points on
-        clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
-      })
+    if (mapDisabled) {
+      Dashboard.noTags()
+      map = clusteredMap.init()
+    } else {
+      // // searchData = JSON.parse(searchData)
+      mapData = await Api.searchData(searchData)
+      map = clusteredMap.init(mapData)
+      sendData = {
+        lang: 'fr',
+        cities: searchData.cities,
+        intervenants: searchData.intervenants,
+        streets: searchData.streets,
+        styles: searchData.styles,
+        typologies: searchData.typologies,
+        zipcodes: []
+      }
 
-      // ADDING CLUSTER STARTS FROM HERE
-      map.addLayer({
-        id: 'clusters',
-        type: 'circle',
-        source: 'buildings',
-        filter: ['has', 'point_count'],
-        paint: {
-          //   * Blue, 20px circles when point count is less than 100
-          //   * Yellow, 30px circles when point count is between 100 and 750
-          //   * Pink, 40px circles when point count is greater than or equal to 750
-          'circle-color': [
-            'step',
-            ['get', 'point_count'],
-            '#8F9BCC',
-            100,
-            '#476291',
-            750,
-            '#212E44'
-          ],
-          'circle-radius': [
-            'step',
-            ['get', 'point_count'],
-            20,
-            100,
-            30,
-            750,
-            40
-          ]
-        }
-      })
+      if (searchData.zipcode !== '') {
+        sendData.zipcodes.push(searchData.zipcode)
+      }
 
-      map.addLayer({
-        id: 'cluster-count',
-        type: 'symbol',
-        source: 'buildings',
-        filter: ['has', 'point_count'],
-        layout: {
-          'text-field': '{point_count_abbreviated}',
-          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-          'text-size': 12
-        },
-        paint: {
-          'text-color': '#ffffff'
-        }
-      })
-
-      map.addLayer({
-        id: 'unclustered-point',
-        type: 'circle',
-        source: 'buildings',
-        filter: ['!', ['has', 'point_count']],
-        paint: {
-          'circle-color': '#212E44',
-          'circle-radius': 11,
-          'circle-stroke-width': 2,
-          'circle-stroke-color': '#fff'
-        }
-      })
-
-      map.addSource('unclustered-locations', {
-        type: 'geojson',
-        data: data,
-        cluster: false,
-        clusterMaxZoom: 14,
-        clusterRadius: 50
-      })
-
-      map.addLayer({
-        id: 'hidden-locations',
-        type: 'circle',
-        source: 'unclustered-locations',
-        paint: {
-          'circle-radius': 0
-        }
-      })
-
-      // inspect a cluster on click
-      map.on('click', 'clusters', function (e) {
-        var features = map.queryRenderedFeatures(e.point, {
-          layers: ['clusters']
-        })
-        var clusterId = features[0].properties.cluster_id
-        map
-          .getSource('buildings')
-          .getClusterExpansionZoom(clusterId, function (err, zoom) {
-            if (err) return
-
-            map.easeTo({
-              center: features[0].geometry.coordinates,
-              zoom: zoom
-            })
-          })
-      })
-      // CHANGE PROPERTY.
-      map.on('click', 'unclustered-point', function (e) {
-        var coordinates = e.features[0].geometry.coordinates.slice()
-        var mag = e.features[0].properties.mag
-        var houses
-
-        if (e.features[0].properties.houses === 1) {
-          houses = 'yes'
-        } else {
-          houses = 'no'
-        }
-        // CHANGE coordinates
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
-        }
-
-        new mapboxgl.Popup()
-          .setLngLat(coordinates) // COORDINATES TO DO
-          .setHTML('magnitude: ' + mag + '<br>Was there a tsunami?: ' + houses)
-          .addTo(map)
-      })
-
-      map.on('mouseenter', 'clusters', function () {
-        map.getCanvas().style.cursor = 'pointer'
-      })
-      map.on('mouseleave', 'clusters', function () {
-        map.getCanvas().style.cursor = ''
-      })
-    })
-    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
-
-    // Retrieve stats data
-    const data = await Api.getStats()
-
+      statsData = await Api.getStats(sendData)
+      Dashboard.showStats()
+    }
+  },
+  showStats: () => {
     // Declare labels and series arrays
     const styleArray = []
     const sValArray = []
@@ -203,12 +115,12 @@ const Dashboard = {
 
     // Store top 10 in arrays
     for (let index = 0; index < 10; index++) {
-      styleArray[index] = Object.keys(data.BuildingsPerStyle)[index]
-      sValArray[index] = Object.values(data.BuildingsPerStyle)[index]
-      architectArray[index] = Object.keys(data.BuildingsPerIntervenant)[index]
-      aValArray[index] = Object.values(data.BuildingsPerIntervenant)[index]
-      typologyArray[index] = Object.keys(data.BuildingsPerTypology)[index]
-      tValArray[index] = Object.values(data.BuildingsPerTypology)[index]
+      styleArray[index] = Object.keys(statsData.BuildingsPerStyle)[index]
+      sValArray[index] = Object.values(statsData.BuildingsPerStyle)[index]
+      architectArray[index] = Object.keys(statsData.BuildingsPerIntervenant)[index]
+      aValArray[index] = Object.values(statsData.BuildingsPerIntervenant)[index]
+      typologyArray[index] = Object.keys(statsData.BuildingsPerTypology)[index]
+      tValArray[index] = Object.values(statsData.BuildingsPerTypology)[index]
     }
 
     // Buildings per architect
@@ -221,7 +133,99 @@ const Dashboard = {
     Chart.createHBarChart('.ct-chart3', typologyArray, tValArray)
 
     // Buildings over time (timeline)
-    Chart.createTimeline('.ct-chart4', Object.keys(data.BuildingsPerYear), Object.values(data.BuildingsPerYear))
+    Chart.createTimeline('.ct-chart4', Object.keys(statsData.BuildingsPerYear), Object.values(statsData.BuildingsPerYear))
+  },
+  SearchBarCalback: async (tags) => {
+    for (const item in tags) {
+      if (Array.isArray(tags[item]) && tags[item].length === 0) {
+        mapDisabled = true
+      } else {
+        mapDisabled = false
+        break
+      }
+    }
+
+    const sendDataMap = {
+      lang: 'fr',
+      zipcode: '',
+      cities: tags.cityArr,
+      typologies: tags.typeArr,
+      styles: tags.styleArr,
+      intervenants: tags.architectArr,
+      streets: tags.streetArr
+    }
+
+    if (tags.zipcodeArr.length > 0) {
+      sendDataMap.zipcode = tags.zipcodeArr[0]
+    }
+
+    window.localStorage.removeItem('search_data')
+    window.localStorage.setItem('search_data', JSON.stringify(sendDataMap))
+
+    if (!mapDisabled) {
+      mapData = await Api.searchData(sendDataMap)
+      if (map !== undefined) {
+        map.getSource('buildings').setData(mapData)
+        map.getSource('unclustered-locations').setData(mapData)
+        map.setLayoutProperty('clusters', 'visibility', 'visible')
+        map.setLayoutProperty('cluster-count', 'visibility', 'visible')
+        map.setLayoutProperty('unclustered-point', 'visibility', 'visible')
+        map.easeTo({
+          center: [4.4006, 50.8452],
+          zoom: 10.24
+        })
+      }
+    }
+
+    if (mapDisabled) {
+      if (map !== undefined) {
+        map.setLayoutProperty('clusters', 'visibility', 'none')
+        map.setLayoutProperty('cluster-count', 'visibility', 'none')
+        map.setLayoutProperty('unclustered-point', 'visibility', 'none')
+      }
+    }
+
+    sendData = {
+      lang: 'fr',
+      cities: tags.cityArr,
+      intervenants: tags.architectArr,
+      streets: tags.streetArr,
+      styles: tags.styleArr,
+      typologies: tags.typeArr,
+      zipcodes: []
+    }
+
+    if (tags.zipcodeArr.length !== 0) {
+      tags.zipcodeArr.forEach(item => {
+        sendData.zipcodes.push(item)
+      })
+    }
+    if (mapDisabled) {
+      let statsNoTags = JSON.parse(window.localStorage.getItem('stats_no_tags_data'))
+      if (typeof statsNoTags === 'undefined' || statsNoTags === null) {
+        statsNoTags = await Api.getStats(sendData)
+        window.localStorage.setItem('stats_no_tags_data', JSON.stringify(statsNoTags))
+        statsData = statsNoTags
+      } else {
+        statsData = statsNoTags
+      }
+    } else {
+      statsData = await Api.getStats(sendData)
+    }
+
+    Dashboard.showStats()
+  },
+  noTags: () => {
+    const tags = {
+      zipcodeArr: [],
+      cityArr: [],
+      typeArr: [],
+      styleArr: [],
+      architectArr: [],
+      streetArr: []
+    }
+    mapDisabled = true
+    Dashboard.SearchBarCalback(tags)
   }
 }
 

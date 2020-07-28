@@ -70,17 +70,17 @@ const Api = {
    * Fetches stats about the dataset
    */
 
-  getStats: async () => {
+  getStats: async (json) => {
     const options = {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify(json)
     }
     try {
       const response = await fetch('https://api.urban-brussels.osoc.be/stats', options)
       const json = await response.json()
-      console.log(json)
       return json
     } catch (err) {
       console.log('Error getting documents', err)

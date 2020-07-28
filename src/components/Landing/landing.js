@@ -228,7 +228,6 @@ const Landing = {
         send.intervenants.push(searchString)
         break
     }
-    console.log(send)
     const data = await Api.searchData(send)
     window.localStorage.removeItem('building_data')
     window.localStorage.removeItem('search_data')
