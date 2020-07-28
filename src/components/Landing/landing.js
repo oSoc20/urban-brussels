@@ -1,7 +1,8 @@
 /**
  * Modules imports
  */
-import SearchBar from '../SearchBar/searchbar.js'
+import SearchBar from './searchbar.js'
+import mainSearchBar from '../SearchBar/searchbar'
 import mapboxgl from 'mapbox-gl'
 import arrowRight from '../../assets/icons/arrow-icon.svg'
 import Api from '../api.js'
@@ -12,7 +13,7 @@ import BaseLayerSwitch from '../Map/baselayerswitch.js'
  */
 const style = process.env.MAPBOX_STYLE
 const token = process.env.MAPBOX_ACCESS_TOKEN
-let language = 'fr';
+const language = 'fr'
 let funFactsCounter = 0
 
 // Rendering of the landing/home page
@@ -21,7 +22,7 @@ const Landing = {
     const view = /* html */`
     <div id="map-landing-page" class="map-landing-page"></div>
     <div id="baselayer_container"></div>
-    <button id="clickDashboard" onClick="window.location.href='/#/Dashboard';">
+    <button id="clickDashboard" onClick="window.location.href='/#/dashboard';">
     <span id="dash_text">Dashboard</span>
     </button>
 
@@ -62,60 +63,23 @@ const Landing = {
   },
   // Behavior after rendering
   after_render: async () => {
+    Landing.emptyLocalStorage()
     // Search bar code
-    SearchBar.displaySearchBar('search_container')
+    mainSearchBar.displaySearchBar('search_container')
     SearchBar.searchFunction()
 
     document.querySelector('#searchrandom_btn').addEventListener('click', Landing.clickHandlerRandomBtn)
-    // Fun facts
-    let prev = document.getElementsByClassName('arrowLeft')[0]
-    let next = document.getElementsByClassName('arrowRight')[0]
-    let ff = document.getElementsByClassName('fun-fact__txt')[0]
 
-    let resp = await Api.getFunFacts(language, 50)
-    let funFacts = resp.facts;
-    ff.innerHTML = funFacts[0]
-    let tags = document.getElementsByClassName('tag')
-    for (let index = 0; index < tags.length; index++) {
-      tags[index].addEventListener('click', () => {
-        // Redirect to building list page
-      })
-    }
-
-    if (funFactsCounter === 0) {
-    prev.style.display = 'none';
-}
-
-    prev.addEventListener("click", () => {
-      funFactsCounter--;
-      ff.innerHTML = funFacts[funFactsCounter]
-      if (funFactsCounter <= 0) {
-        prev.style.display = 'none';
-      }
-    })
-
-    next.addEventListener("click", async () => {
-      funFactsCounter++;
-      ff.innerHTML = funFacts[funFactsCounter]
-      let tags = document.getElementsByClassName('tag')
-      for (let index = 0; index < tags.length; index++) {
-        tags[index].addEventListener('click', () => {
-          // Redirect to building list page //
-        })
-      }
-      if (funFactsCounter > 0) {
-        prev.style.display = 'inline';
-      }
-      if (funFactsCounter > funFacts.length / 2) {
-        let tmp = await Api.getFunFacts(language, 50)
-        funFacts = funFacts.concat(tmp.facts)
-      }
-      if (funFactsCounter === funFacts.length - 1) {
-        next.style.display = 'none'
-      }
-    })
-
-    // Map
+    Landing.initMap()
+    Landing.initFunFacts()
+  },
+  clickHandlerRandomBtn: async () => {
+    const dataRandom = await Api.searchRandom('fr', '1')
+    window.localStorage.removeItem('random_building_data')
+    window.localStorage.setItem('random_building_data', JSON.stringify(dataRandom.features))
+    window.location.href = '/#/list'
+  },
+  initMap: async () => {
     mapboxgl.accessToken = token
 
     var map = new mapboxgl.Map({
@@ -135,66 +99,148 @@ const Landing = {
     // Retrieves random building
     const dataRandom = await Api.searchRandom('fr', '3')
     dataRandom.features.forEach((feature) => {
-      bounds.extend(feature.geometry.coordinates)
-    })
-    // Map load MapBox layer
-    map.on('load', function () {
-      BaseLayerSwitch.initSources (map, 'FR')
-      map.addSource('randomBuildings', {
-        type: 'geojson',
-        data: dataRandom
-      })
-      map.addLayer({
-        id: 'randomBuildings',
-        type: 'circle',
-        source: 'randomBuildings',
-        paint: {
-          'circle-radius': {
-            base: 10,
-            stops: [
-              [12, 10],
-              [22, 180]
-            ]
-          },
-          'circle-color': '#2C3550',
-          'circle-stroke-width': 2,
-          'circle-stroke-color': '#fff'
-        }
-      })
-    })
-    // Map data
-    map.on('sourcedata', (event) => {
-      if (event.isSourceLoaded === true) {
-        map.querySourceFeatures('randomBuildings').forEach((feature) => {
-          const str = `
-          <div class="pop-up--landing">
+      bounds.extend(
+        feature.geometry.coordinates
+      )
+
+      const element = document.createElement('div')
+      element.className = 'pop-up--landing'
+      element.style.cursor = 'pointer'
+      element.innerHTML = `
           <div>
             <div class="pop-up__img--landing" style="background-image: url('${feature.properties.image}');">
           </div>
-            <div class="pop-up__address--landing">
-              <p class="pop-up__info--landing">${feature.properties.street} ${feature.properties.number}</p>
-              <p class="pop-up__info--landing"> ${feature.properties.zip_code} ${feature.properties.city}</p>
-            </div>
+          <div class="pop-up__address--landing">
+            <p class="pop-up__info--landing">${feature.properties.street} ${feature.properties.number}</p>
+            <p class="pop-up__info--landing">${feature.properties.zip_code} ${feature.properties.city}</p>
           </div>
-          `
+        `
+      element.addEventListener('click', () => {
+        window.localStorage.removeItem('random_building_data')
+        window.localStorage.setItem(
+          'random_building_data',
+          JSON.stringify([feature])
+        )
+        window.location.href = '/#/list'
+      })
 
-          new mapboxgl.Popup({ closeOnClick: false, closeButton: false })
-            .setLngLat(feature.geometry.coordinates)
-            .setHTML(str)
-            .addTo(map)
+      const popup = new mapboxgl.Popup({
+        closeOnClick: false,
+        closeButton: false
+      }).setDOMContent(element)
+
+      new mapboxgl.Marker()
+        .setLngLat(feature.geometry.coordinates)
+        .setPopup(popup)
+        .addTo(map)
+        .togglePopup()
+    })
+
+    map.fitBounds(bounds, {
+      padding: { top: 50, bottom: 50, left: 50, right: 50 }
+    })
+  },
+  initFunFacts: async () => {
+    const prev = document.getElementsByClassName('arrowLeft')[0]
+    const next = document.getElementsByClassName('arrowRight')[0]
+    const ff = document.getElementsByClassName('fun-fact__txt')[0]
+
+    // Get 15 fun facts first (faster)
+    const resp = await Api.getFunFacts(language, 15)
+    let funFacts = resp.facts
+
+    // Hide "previous" arrow
+    if (funFactsCounter === 0) {
+      prev.style.display = 'none'
+    }
+
+    // Load first fun fact
+    ff.innerHTML = funFacts[0]
+    const tags = document.getElementsByClassName('tag')
+    for (let index = 0; index < tags.length; index++) {
+      tags[index].addEventListener('click', () => {
+        tags[index].addEventListener('click', async () => {
+          Landing.factsToList(tags[index].className, tags[index].innerHTML)
         })
+      })
+    }
 
-        map.fitBounds(bounds, {
-          padding: { top: 25, bottom: 25, left: 25, right: 25 }
+    // On "previous" arrow click
+    prev.addEventListener('click', () => {
+      funFactsCounter--
+      ff.innerHTML = funFacts[funFactsCounter]
+      if (funFactsCounter <= 0) {
+        prev.style.display = 'none'
+      }
+      const tags = document.getElementsByClassName('tag')
+      for (let index = 0; index < tags.length; index++) {
+        tags[index].addEventListener('click', async () => {
+          Landing.factsToList(tags[index].className, tags[index].innerHTML)
         })
       }
     })
+
+    // On "next" arrow click
+    next.addEventListener('click', async () => {
+      funFactsCounter++
+      ff.innerHTML = funFacts[funFactsCounter]
+      const tags = document.getElementsByClassName('tag')
+      for (let index = 0; index < tags.length; index++) {
+        tags[index].addEventListener('click', async () => {
+          Landing.factsToList(tags[index].className, tags[index].innerHTML)
+        })
+      }
+      if (funFactsCounter > 0) {
+        prev.style.display = 'inline'
+      }
+      if (funFactsCounter > funFacts.length / 2) {
+        const tmp = await Api.getFunFacts(language, 50)
+        funFacts = funFacts.concat(tmp.facts)
+      }
+      if (funFactsCounter === funFacts.length - 1) {
+        next.style.display = 'none'
+      }
+    })
   },
-  clickHandlerRandomBtn: async () => {
-    const dataRandom = await Api.searchRandom('fr', '1')
-    window.localStorage.removeItem('random_building_data')
-    window.localStorage.setItem('random_building_data', JSON.stringify(dataRandom.features))
-    window.location.href = '/#/list'
+  emptyLocalStorage: () => {
+    window.localStorage.clear()
+  },
+  // Redirect user to buildings list page when he clicks on a fun fact tag
+  factsToList: async (classString, searchString) => {
+    const send = {
+      lang: 'fr',
+      strict: false,
+      zipcode: '',
+      cities: [],
+      typologies: [],
+      styles: [],
+      intervenants: [],
+      streets: []
+    }
+    const str = classString
+    const pos1 = str.indexOf('-')
+    const pos2 = str.indexOf(' ', pos1 + 1)
+    const sub = str.substring(pos1 + 2, pos2)
+    switch (sub) {
+      case 'type':
+        send.typologies.push(searchString)
+        break
+      case 'style':
+        send.styles.push(searchString)
+        break
+      case 'architect':
+        send.intervenants.push(searchString)
+        break
+    }
+    console.log(send)
+    const data = await Api.searchData(send)
+    window.localStorage.removeItem('building_data')
+    window.localStorage.removeItem('search_data')
+    window.localStorage.setItem('search_data', JSON.stringify(send))
+    window.localStorage.setItem('building_data', JSON.stringify(data))
+    if (window.location.hash !== '#/list') {
+      window.location.href = '/#/list'
+    }
   }
 }
 

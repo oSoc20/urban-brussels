@@ -1,5 +1,7 @@
 import Api from '../api.js'
 import Pagination from '../Pagination/pagination'
+import SearchBar from '../SearchBar/searchbar'
+
 import clusteredMap from '../MapWithClusters/mapWithClusters'
 import popupBuilding from './popupBuilding'
 import pulsingDot from '../BuildingDetail/pulsingDot'
@@ -19,11 +21,12 @@ let randomBuilding = []
 const buildingList = {
   render: async () => {
     randomBuilding = JSON.parse(window.localStorage.getItem('random_building_data'))
+    searchData = window.localStorage.getItem('search_data')
+
     if (typeof randomBuilding === 'undefined' || randomBuilding === null) {
       randomBuildingClicked = false
       data = window.localStorage.getItem('building_data')
       if (typeof data === 'undefined' || data === null) {
-        searchData = window.localStorage.getItem('search_data')
         data = await Api.searchData(searchData)
         window.localStorage.setItem('building_data', JSON.stringify(data))
       } else {
@@ -51,6 +54,7 @@ const buildingList = {
         <input type="checkbox" id="switch" checked /><label for="switch">Toggle</label>
       </div>
       <section class="section__list">
+      <div id="search_container"></div>
       <div class="section__list__title">
         <h1>Buildings</h1>
         <div class="pagination"></div>
@@ -62,6 +66,9 @@ const buildingList = {
   },
   after_render: async () => {
     if (!randomBuildingClicked) {
+      SearchBar.displaySearchBar('search_container')
+      SearchBar.searchFunction(buildingList.SearchBarCalback)
+
       buildingList.initPagination()
       BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container')
       map = clusteredMap.init(data)
@@ -92,6 +99,41 @@ const buildingList = {
       })
     }
     pulsingDot.init(map)
+  },
+  SearchBarCalback: async (tags) => {
+    const send = {
+      lang: 'fr',
+      zipcode: '',
+      cities: tags.cityArr,
+      typologies: tags.typeArr,
+      styles: tags.styleArr,
+      intervenants: tags.architectArr,
+      streets: tags.streetArr
+    }
+
+    if (tags.zipcodeArr.length > 0) {
+      send.zipcode = tags.zipcodeArr[0]
+    }
+    data = await Api.searchData(send)
+    features = data.features
+    buildingList.initPagination()
+    buildingList.displayContent(1)
+
+    const mapSource = map.getSource('buildings')
+    const mapSourceHidden = map.getSource('unclustered-locations')
+    if (mapSource !== undefined) {
+      mapSource.setData(data)
+      mapSourceHidden.setData(data)
+      map.easeTo({
+        center: [4.4006, 50.8452],
+        zoom: 10.24
+      })
+    }
+
+    window.localStorage.removeItem('building_data')
+    window.localStorage.removeItem('search_data')
+    window.localStorage.setItem('search_data', JSON.stringify(send))
+    window.localStorage.setItem('building_data', JSON.stringify(data))
   },
 
   initPagination: () => {
