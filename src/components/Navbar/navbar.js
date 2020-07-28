@@ -1,10 +1,10 @@
 const Navbar = {
   render: async () => {
     const view = /* html */`
-            <div class="ButtonDashContainer"> 
+            <div class="ButtonDashContainer">
                 <div class="dropdown">
                     <button id="dropbtn"></button>
-                </div>           
+                </div>
             </div>
         `
     return view
@@ -25,7 +25,6 @@ const Navbar = {
       } else {
         window.sessionStorage.setItem('lang', 'fr')
       }
-      // console.log(window.sessionStorage.getItem('lang'))
       location.reload()
     })
   }

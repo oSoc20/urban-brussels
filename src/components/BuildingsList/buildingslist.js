@@ -29,12 +29,10 @@ const buildingList = {
         searchData.lang = language
         window.localStorage.setItem('search_data', JSON.stringify(searchData))
         refreshLang = true
-        console.log(searchData)
       }
     }
 
     if (typeof randomBuilding === 'undefined' || randomBuilding === null || refreshLang) {
-      console.log('hello')
       randomBuildingClicked = false
       data = window.localStorage.getItem('building_data')
       if (typeof data === 'undefined' || data === null || refreshLang) {
