@@ -7,7 +7,6 @@ import clusteredMap from '../MapWithClusters/mapWithClusters'
 import SearchBar from '../SearchBar/searchbar'
 import BaseLayerSwitch from '../Map/baselayerswitch.js'
 
-
 let map
 let searchData
 let mapData

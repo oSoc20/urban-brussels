@@ -63,7 +63,7 @@ const BaseLayerSwitch = {
     map.addSource('wms-source-grayscale', {
       type: 'raster',
       tiles: [
-            `https://geoservices-urbis.irisnet.be/geoserver/ows/?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&transparent=false&width=256&height=256&layers=urbis${language.toUpperCase()}Gray`
+        `https://geoservices-urbis.irisnet.be/geoserver/ows/?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&transparent=false&width=256&height=256&layers=urbis${language.toUpperCase()}Gray`
       ],
       tileSize: 256
     })
