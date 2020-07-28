@@ -17,7 +17,6 @@
     position: relative;
     display: inline;
   }
-  
   .dropdown-content {
     display: none;
     position: absolute;

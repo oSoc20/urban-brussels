@@ -2,7 +2,6 @@ const Navbar = {
   render: async () => {
     const view = /* html */`
             <div class="ButtonDashContainer"> 
-
                 <div class="dropdown">
                     <button id="dropbtn">NL</button>
                     <div class="dropdown-content">
@@ -12,7 +11,6 @@ const Navbar = {
                     </div>
                 </div>           
             </div>
-            
         `
     return view
   },
