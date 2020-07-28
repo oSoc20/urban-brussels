@@ -17,10 +17,10 @@ const Navbar = {
     // Language switch
     let langBtn = document.getElementById('dropbtn')
     let lang = window.sessionStorage.getItem('lang')
-    if (lang === 'fr'){
-      langBtn.innerHTML = 'NL'
-    } else {
+    if (lang === 'nl'){
       langBtn.innerHTML = 'FR'
+    } else {
+      langBtn.innerHTML = 'NL'
     }
 
     langBtn.addEventListener('click', () => {

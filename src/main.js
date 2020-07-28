@@ -17,20 +17,24 @@ const routes = {
 
 // Get navigator language or set to default language
 let lang = window.sessionStorage.getItem('lang')
-if (typeof lang === 'undefined'){
+
+if (typeof lang === 'undefined' || lang == null){
+  console.log("hello")
   lang = navigator.language.slice(0, 2);
+  if (lang !== 'fr' || lang !== 'nl'){
+    lang = 'fr'
+  }
+  window.sessionStorage.setItem('lang', lang)
 }
+
+
 window.langText = ''
-if (lang === 'fr'){
-  langText = Languages.fr;
-} else if (lang === 'nl'){
-  langText = Languages.nl
+
+if (lang == 'fr' || lang == 'nl'){
+  window.langText = Languages[lang]
 } else {
-  // Default language
-  langText = Languages.fr;
-  lang = 'fr'
+  window.langText = Languages.fr
 }
-console.log("main", window.lang)
 
 // The router code. Takes a URL, checks the list of supported routes and then renders the corresponding content page.
 const router = async () => {
