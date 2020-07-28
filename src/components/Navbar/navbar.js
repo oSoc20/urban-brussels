@@ -1,15 +1,12 @@
+import Languages from '../../languages/languages.json'
+
 const Navbar = {
   render: async () => {
     const view = /* html */`
             <div class="ButtonDashContainer"> 
 
                 <div class="dropdown">
-                    <button id="dropbtn">NL</button>
-                    <div class="dropdown-content">
-                    <a class="lang_select" href="#">NL</a>
-                    <a class="lang_select" href="#">FR</a>
-                    <a class="lang_select" href="#">EN</a>
-                    </div>
+                    <button id="dropbtn"></button>
                 </div>           
             </div>
             
@@ -18,12 +15,23 @@ const Navbar = {
   },
   after_render: async () => {
     // Language switch
-    const lang = document.getElementsByClassName('lang_select')
-    for (let index = 0; index < lang.length; index++) {
-      lang[index].addEventListener('click', () => {
-        document.getElementById('dropbtn').innerHTML = lang[index].innerHTML
-      })
+    let langBtn = document.getElementById('dropbtn')
+    let lang = window.sessionStorage.getItem('lang')
+    if (lang === 'fr'){
+      langBtn.innerHTML = 'NL'
+    } else {
+      langBtn.innerHTML = 'FR'
     }
+
+    langBtn.addEventListener('click', () => {
+      if (lang === 'fr'){
+        window.sessionStorage.setItem('lang', 'nl')
+      } else {
+        window.sessionStorage.setItem('lang', 'fr')
+      }
+      //console.log(window.sessionStorage.getItem('lang'))
+      location.reload()
+    })
   }
 
 }

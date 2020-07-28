@@ -5,6 +5,7 @@ import Detail from './components/BuildingDetail/buildingDetail.js'
 import List from './components/BuildingsList/buildingslist.js'
 
 import Utils from './utils.js'
+import Languages from './languages/languages.json'
 
 // List of supported routes. Any url other than these routes will redirect to the home page
 const routes = {
@@ -13,6 +14,23 @@ const routes = {
   '/dashboard': Dashboard,
   '/detail': Detail
 }
+
+// Get navigator language or set to default language
+let lang = window.sessionStorage.getItem('lang')
+if (typeof lang === 'undefined'){
+  lang = navigator.language.slice(0, 2);
+}
+window.langText = ''
+if (lang === 'fr'){
+  langText = Languages.fr;
+} else if (lang === 'nl'){
+  langText = Languages.nl
+} else {
+  // Default language
+  langText = Languages.fr;
+  lang = 'fr'
+}
+console.log("main", window.lang)
 
 // The router code. Takes a URL, checks the list of supported routes and then renders the corresponding content page.
 const router = async () => {

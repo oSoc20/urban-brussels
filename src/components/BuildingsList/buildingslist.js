@@ -48,13 +48,13 @@ const buildingList = {
     if (!randomBuildingClicked) {
       view += `
       <div class="switch">
-        <p>Search as I move the map </p>
+        <p id="switch_text">`+window.langText.switch_text+`</p>
         <input type="checkbox" id="switch" checked /><label for="switch">Toggle</label>
       </div>
       <section class="section__list">
       <div id="search_container"></div>
       <div class="section__list__title">
-        <h1>Buildings</h1>
+        <h1 id="title_buildingslist">`+window.langText.title_buildingslist+`</h1>
         <div class="pagination"></div>
       </div>
         <ul class="building-list"></ul>

@@ -27,7 +27,7 @@
 }
 
 /* GENERAL CHARTS */
-.chart_title{
+div[class^=chart_title]{
     margin-left: 40px;
     font-size: large;
 }

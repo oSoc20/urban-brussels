@@ -18,22 +18,22 @@ const Dashboard = {
 <main class="main">
     <div class="main-overview">
         <div class="item">
-          <div class="chart_title">Buildings per architect</div>
+          <div class="chart_title1">`+window.langText.chart_title1+`</div>
           <div class="ct-chart1" id="chart1"></div>
         </div>
         <div class="item">
-          <div class="chart_title">Buildings per style</div>
+          <div class="chart_title2">`+window.langText.chart_title2+`</div>
           <div class="ct-chart2" id="chart2"></div>
         </div>
         <div class="item">
-          <div class="chart_title">Buildings per typology</div>
+          <div class="chart_title3">`+window.langText.chart_title3+`</div>
           <div class="ct-chart3" id="chart3"></div>
         </div>
         <div class="item" id="map_dashboard">
         </div>
     </div>
     <div class="item">
-          <div class="chart_title">Buildings over time</div>
+          <div class="chart_title4">`+window.langText.chart_title4+`</div>
           <div class="ct-chart4" id="chart4"></div>
         </div>
 </main>

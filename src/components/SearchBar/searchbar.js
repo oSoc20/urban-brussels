@@ -6,7 +6,6 @@ import architectIcon from '../../assets/icons/architect-icon.svg'
 import Landing from '../Landing/landing.js'
 
 /**  Variables declarations */
-const searchText = ['Search', 'Chercher', 'Zoeken']
 const tags = {
   zipcodeArr: [],
   cityArr: [],
@@ -27,7 +26,7 @@ const SearchBar = {
     document.getElementById(container).innerHTML = /* html */ `
         <div class="search_ctn">
             <form class="searchbar_ctn" autocomplete="off">
-                <input id="search_bar" type="text" placeholder="${searchText[0]}" />
+                <input id="search_bar" type="text" placeholder="${window.langText.search_bar}" />
             </form>
             <div class="selected-items">
             </div>
