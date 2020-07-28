@@ -1,0 +1,87 @@
+.btn-switch {
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: min-content;
+  border-radius: 5px; 
+}
+.btn__dashboard, .btn__list  {
+  border: none;
+  background-color: white;
+  width: 60px;
+  height: 40px;
+  cursor: pointer;
+  transition: all .4s ease-in-out;
+  border-radius: 5px 0 0 5px;
+}
+
+ .list__fill {
+  fill: #2C3550;
+  stroke: #2C3550;
+  transition: all .4s ease-in-out;
+ }
+
+ .list__stroke {
+  stroke-width: 0.3
+ }
+
+ .dashboard__fill {
+  fill: #2C3550;
+  transition: all .2s ease-in-out;
+ }
+
+
+.btn__dashboard:hover {
+  background: #81D8BF;
+}
+
+.btn__dashboard:focus, .btn__list:focus {
+  outline: none;
+}
+
+.dashboard--enabled:hover .dashboard__fill, .list--enabled:hover .list__fill  {
+  fill: white;
+  stroke: white;
+}
+
+.btn__dashboard {
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+.btn__list:hover {
+  background: #81D8BF;
+}
+
+.btn__dashboard svg {
+  width: 55%;
+  height: auto;
+}
+
+.btn__list svg {
+  width: 48%;
+  height: auto;
+}
+
+.is--disabled {
+  cursor: auto;
+  background: #81D8BF;
+  box-shadow: inset -3px 0px 4px rgba(0, 0, 0, 0.25);
+}
+
+.is--disabled .dashboard__fill, .is--disabled .list__fill {
+  fill: white;
+  stroke: white;
+}
+
+.btn__container {
+  position: relative;
+}
+
+.switch__container {
+  position: absolute;
+  top: 60px;
+  right: 0;
+}
+.switch__container--dashboard {
+  top: 100px;
+  right: 0;
+}

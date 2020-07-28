@@ -6,7 +6,7 @@ import architectIcon from '../../assets/icons/architect-icon.svg'
 
 /**  Variables declarations */
 const language = window.sessionStorage.getItem('lang')
-const tags = {
+let tags = {
   zipcodeArr: [],
   cityArr: [],
   typeArr: [],
@@ -45,6 +45,14 @@ const SearchBar = {
   },
 
   getSearchedTag: () => {
+    tags = {
+      zipcodeArr: [],
+      cityArr: [],
+      typeArr: [],
+      styleArr: [],
+      architectArr: [],
+      streetArr: []
+    }
     let searchData = window.localStorage.getItem('search_data')
     if (typeof searchData !== 'undefined' && searchData !== null) {
       searchData = JSON.parse(searchData)

@@ -6,6 +6,7 @@ import Chart from './charts.js'
 import clusteredMap from '../MapWithClusters/mapWithClusters'
 import SearchBar from '../SearchBar/searchbar'
 import BaseLayerSwitch from '../Map/baselayerswitch.js'
+import PageSwitch from '../pageSwitch/pageSwitch.js'
 
 let map
 let searchData
@@ -48,35 +49,37 @@ const Dashboard = {
     const view = /* html */ `
     <section class="section__list section__search__dashboard">
       <div id="search_container"></div>
+      <div class="switch__container switch__container--dashboard"></div>
     </section>
-<div class="grid-container">
-<main class="main">
-    <div class="main-overview">
-        <div class="item">
-          <div class="chart_title1">` + window.langText.chart_title1 + `</div>
-          <div class="ct-chart1" id="chart1"></div>
-        </div>
-        <div class="item">
-          <div class="chart_title2">` + window.langText.chart_title2 + `</div>
-          <div class="ct-chart2" id="chart2"></div>
-        </div>
-        <div class="item">
-          <div class="chart_title3">` + window.langText.chart_title3 + `</div>
-          <div class="ct-chart3" id="chart3"></div>
-        </div>
-        <div class="item map_dashboard" id="clusterMap"></div>
-        <div id="baselayer_container"></div>
-    </div>
-    <div class="item">
-          <div class="chart_title4">` + window.langText.chart_title4 + `</div>
-          <div class="ct-chart4" id="chart4"></div>
-        </div>
-</main>
-</div>
-          `
+    <div class="grid-container">
+      <main class="main">
+          <div class="main-overview">
+              <div class="item">
+                <div class="chart_title1">` + window.langText.chart_title1 + `</div>
+                <div class="ct-chart1" id="chart1"></div>
+              </div>
+              <div class="item">
+                <div class="chart_title2">` + window.langText.chart_title2 + `</div>
+                <div class="ct-chart2" id="chart2"></div>
+              </div>
+              <div class="item">
+                <div class="chart_title3">` + window.langText.chart_title3 + `</div>
+                <div class="ct-chart3" id="chart3"></div>
+              </div>
+              <div class="item map_dashboard" id="clusterMap"></div>
+              <div id="baselayer_container"></div>
+          </div>
+          <div class="item">
+                <div class="chart_title4">` + window.langText.chart_title4 + `</div>
+                <div class="ct-chart4" id="chart4"></div>
+              </div>
+      </main>
+    </div>`
     return view
   },
   after_render: async () => {
+    PageSwitch.displaySwitch('switch__container')
+    PageSwitch.clickHandlerBtn()
     SearchBar.displaySearchBar('search_container')
     SearchBar.searchFunction(Dashboard.SearchBarCalback, Dashboard.noTags)
     BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container')
@@ -84,7 +87,13 @@ const Dashboard = {
     if (mapDisabled) {
       Dashboard.noTags()
       map = clusteredMap.init()
+      document.querySelector('.map_dashboard').classList.add('is-not-visible')
+      document.querySelector('#baselayer_container').classList.add('is-not-visible')
+      document.querySelector('.switch__container--dashboard').classList.add('is-not-visible')
     } else {
+      document.querySelector('.map_dashboard').classList.remove('is-not-visible')
+      document.querySelector('#baselayer_container').classList.remove('is-not-visible')
+      document.querySelector('.switch__container--dashboard').classList.remove('is-not-visible')
       mapData = await Api.searchData(searchData)
       map = clusteredMap.init(mapData)
       sendData = {
@@ -164,13 +173,14 @@ const Dashboard = {
     window.localStorage.setItem('search_data', JSON.stringify(sendDataMap))
 
     if (!mapDisabled) {
+      document.querySelector('.map_dashboard').classList.remove('is-not-visible')
+      document.querySelector('#baselayer_container').classList.remove('is-not-visible')
+      document.querySelector('.switch__container--dashboard').classList.remove('is-not-visible')
       mapData = await Api.searchData(sendDataMap)
       if (map !== undefined) {
+        map.resize()
         map.getSource('buildings').setData(mapData)
         map.getSource('unclustered-locations').setData(mapData)
-        map.setLayoutProperty('clusters', 'visibility', 'visible')
-        map.setLayoutProperty('cluster-count', 'visibility', 'visible')
-        map.setLayoutProperty('unclustered-point', 'visibility', 'visible')
         map.easeTo({
           center: [4.4006, 50.8452],
           zoom: 10.24
@@ -179,10 +189,11 @@ const Dashboard = {
     }
 
     if (mapDisabled) {
+      document.querySelector('.map_dashboard').classList.add('is-not-visible')
+      document.querySelector('#baselayer_container').classList.add('is-not-visible')
+      document.querySelector('.switch__container--dashboard').classList.add('is-not-visible')
       if (map !== undefined) {
-        map.setLayoutProperty('clusters', 'visibility', 'none')
-        map.setLayoutProperty('cluster-count', 'visibility', 'none')
-        map.setLayoutProperty('unclustered-point', 'visibility', 'none')
+        map.resize()
       }
     }
 
