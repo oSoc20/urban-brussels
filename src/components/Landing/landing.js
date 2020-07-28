@@ -91,9 +91,11 @@ const Landing = {
 
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
     // Map BaseLayerSwitch //
-    BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container')
-    BaseLayerSwitch.addEventListener(map)
-
+    map.on('load', () => {
+      BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container')
+      BaseLayerSwitch.initSources(map, 'FR')
+      BaseLayerSwitch.addEventListener(map)
+    })
     const bounds = new mapboxgl.LngLatBounds()
 
     // Retrieves random building

@@ -17,24 +17,24 @@ const BaseLayerSwitch = {
     </div>
           `
   },
-  showGrayScale: (map) => {
+  showGrayScale: (map, layerId) => {
     map.addLayer({
       id: 'wms-layer-grayscale',
       type: 'raster',
       source: 'wms-source-grayscale',
-      paint: {}
-    })
+      paint: {},
+    }, layerId)
     if (map.getLayer('wms-layer-aerial')) {
       map.removeLayer('wms-layer-aerial')
     }
   },
-  showAerial: (map) => {
+  showAerial: (map, layerId) => {
     map.addLayer({
       id: 'wms-layer-aerial',
       type: 'raster',
       source: 'wms-source-aerial',
       paint: {}
-    })
+    }, layerId)
     if (map.getLayer('wms-layer-grayscale')) {
       map.removeLayer('wms-layer-grayscale')
     }
@@ -47,12 +47,12 @@ const BaseLayerSwitch = {
       map.removeLayer('wms-layer-aerial')
     }
   },
-  addEventListener: (map) => {
+  addEventListener: (map, layerId) => {
     document.getElementById('grayscale').addEventListener('click', () => {
-      BaseLayerSwitch.showGrayScale(map)
+      BaseLayerSwitch.showGrayScale(map, layerId)
     })
     document.getElementById('aerial').addEventListener('click', () => {
-      BaseLayerSwitch.showAerial(map)
+      BaseLayerSwitch.showAerial(map, layerId)
     })
     document.getElementById('mapbox').addEventListener('click', () => {
       BaseLayerSwitch.showMapbox(map)

@@ -13,7 +13,7 @@ const MapWithClusters = {
     })
 
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
-    BaseLayerSwitch.addEventListener(map)
+    BaseLayerSwitch.addEventListener(map, 'clusters')
     if (data) {
       map.on('load', () => {
         BaseLayerSwitch.initSources (map, 'FR')
