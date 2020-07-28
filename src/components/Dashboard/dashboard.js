@@ -5,7 +5,6 @@ import Api from '../api.js'
 import Chart from './charts.js'
 import clusteredMap from '../MapWithClusters/mapWithClusters'
 import SearchBar from '../SearchBar/searchbar'
-import BaseLayerSwitch from '../Map/baselayerswitch.js'
 import PageSwitch from '../pageSwitch/pageSwitch.js'
 
 let map
@@ -82,7 +81,6 @@ const Dashboard = {
     PageSwitch.clickHandlerBtn()
     SearchBar.displaySearchBar('search_container')
     SearchBar.searchFunction(Dashboard.SearchBarCalback, Dashboard.noTags)
-    BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container')
 
     if (mapDisabled) {
       Dashboard.noTags()

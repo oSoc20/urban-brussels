@@ -9,7 +9,6 @@ import pulsingDot from '../Map/pulsingDot'
 import buildingDetail from '../BuildingDetail/buildingDetail'
 
 import backButton from '../../assets/icons/back-button.svg'
-import BaseLayerSwitch from '../Map/baselayerswitch.js'
 import PageSwitch from '../pageSwitch/pageSwitch.js'
 
 let searchData, map, popup
@@ -86,7 +85,6 @@ const buildingList = {
       SearchBar.searchFunction(buildingList.SearchBarCalback, buildingList.noTags)
 
       buildingList.initPagination()
-      BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container', true)
       map = clusteredMap.init(data)
       popup = popupBuilding.init(map)
       map.on('moveend', () => {

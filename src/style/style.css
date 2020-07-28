@@ -13,6 +13,11 @@ body {
   top: 40px;
 }
 
+.ButtonDashContainer--building {
+  position: fixed;
+}
+
+
 #clickDashboard{
 width: 140px;
 padding: 13px;

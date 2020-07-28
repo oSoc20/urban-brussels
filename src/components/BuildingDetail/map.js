@@ -37,7 +37,7 @@ const map = {
     })
 
     map.once('load', () => {
-      BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container')
+      BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container', true)
       BaseLayerSwitch.addEventListener(map, 'points')
       BaseLayerSwitch.initSources(map, 'FR')
     })

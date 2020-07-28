@@ -19,6 +19,10 @@ const Navbar = {
       langBtn.innerHTML = 'NL'
     }
 
+    if (window.location.hash === '#/list') {
+      document.querySelector('.ButtonDashContainer').classList.add('ButtonDashContainer--building')
+    }
+
     langBtn.addEventListener('click', () => {
       if (lang === 'fr') {
         window.sessionStorage.setItem('lang', 'nl')

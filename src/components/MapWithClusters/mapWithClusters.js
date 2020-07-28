@@ -21,7 +21,11 @@ const MapWithClusters = {
     }
 
     map.on('load', () => {
-      BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container')
+      if (window.location.hash === '#/list') {
+        BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container', true)
+      } else {
+        BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container', false)
+      }
       BaseLayerSwitch.addEventListener(map, 'clusters')
       BaseLayerSwitch.initSources(map, 'FR')
 
