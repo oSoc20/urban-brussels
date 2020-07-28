@@ -21,7 +21,7 @@
   z-index: 2;
   transition: transform 0.4s ease, width 0.4s ease;
   box-shadow: 0px 3.3655px 3.3655px rgba(0, 0, 0, 0.1);
-  height: fit-content;  
+  height: fit-content;
   border-radius: 15px 15px 0 0;
 }
 
@@ -92,7 +92,8 @@
   stroke: #618EEC;
 }
 
-.tag--type, .line--type {
+.tag--type, .line--type,
+.tag--typology, .line--typology {
   background-color: #FDF5F2;
   color: #F58975;
   stroke: #F58975;
@@ -226,7 +227,7 @@
     height: 350px;
     position: relative;
   }
-  
+
   .detail-popup {
     left: 0;
     top: 330px;
@@ -283,7 +284,7 @@
     bottom: 35px;
     right: 10px;
     cursor: pointer;
-  } 
+  }
 }
 
 
