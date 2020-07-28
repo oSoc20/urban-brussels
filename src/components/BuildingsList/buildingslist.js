@@ -24,11 +24,13 @@ const buildingList = {
   render: async () => {
     randomBuilding = JSON.parse(window.localStorage.getItem('random_building_data'))
     searchData = JSON.parse(window.localStorage.getItem('search_data'))
-    if (searchData.lang !== language) {
-      searchData.lang = language
-      window.localStorage.setItem('search_data', JSON.stringify(searchData))
-      refreshLang = true
-      console.log(searchData)
+    if (typeof searchData !== 'undefined' && searchData !== null) {
+      if (searchData.lang !== language) {
+        searchData.lang = language
+        window.localStorage.setItem('search_data', JSON.stringify(searchData))
+        refreshLang = true
+        console.log(searchData)
+      }
     }
 
     if (typeof randomBuilding === 'undefined' || randomBuilding === null || refreshLang) {
