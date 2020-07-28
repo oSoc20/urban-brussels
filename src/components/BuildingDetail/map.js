@@ -1,3 +1,4 @@
+import BaseLayerSwitch from '../Map/baselayerswitch.js'
 
 const map = {
   init: (map, item) => {
@@ -33,6 +34,12 @@ const map = {
     map.easeTo({
       center: [coordinatesItem.long, coordinatesItem.lat],
       zoom: 13
+    })
+
+    map.once('load', () => {
+      BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container')
+      BaseLayerSwitch.addEventListener(map, 'points')
+      BaseLayerSwitch.initSources(map, 'FR')
     })
   }
 }
