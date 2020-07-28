@@ -45,7 +45,7 @@ const detail = {
 
     html += `
        </div>
-        <a href="${building.url}" class="button button--dark" >Get to know more</a>
+        <a target="_blank" href="${building.url}" class="button button--dark" >Get to know more</a>
       </div>`
 
     detailSection.innerHTML = html

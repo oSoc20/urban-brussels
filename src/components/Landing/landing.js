@@ -97,8 +97,10 @@ const Landing = {
         feature.geometry.coordinates
       )
 
-      const content = `
-        <div class="pop-up--landing">
+      const element = document.createElement('div')
+      element.className = 'pop-up--landing'
+      element.style.cursor = 'pointer'
+      element.innerHTML = `
           <div>
             <div class="pop-up__img--landing" style="background-image: url('${feature.properties.image}');">
           </div>
@@ -106,10 +108,20 @@ const Landing = {
             <p class="pop-up__info--landing">${feature.properties.street} ${feature.properties.number}</p>
             <p class="pop-up__info--landing">${feature.properties.zip_code} ${feature.properties.city}</p>
           </div>
-        </div>
         `
+      element.addEventListener('click', () => {
+        window.localStorage.removeItem('random_building_data')
+        window.localStorage.setItem(
+          'random_building_data',
+          JSON.stringify([feature])
+        )
+        window.location.href = '/#/list'
+      })
 
-      const popup = new mapboxgl.Popup({ closeOnClick: false, closeButton: false }).setHTML(content)
+      const popup = new mapboxgl.Popup({
+        closeOnClick: false,
+        closeButton: false
+      }).setDOMContent(element)
 
       new mapboxgl.Marker()
         .setLngLat(feature.geometry.coordinates)
