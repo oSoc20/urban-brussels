@@ -5,7 +5,9 @@
 	padding: 0;
 	box-sizing: border-box;
 }
-
+body {
+	background-color: #E5E5E5;
+}
 .layout {
 	overflow-x: hidden;
 	overflow-y: auto;
@@ -24,7 +26,10 @@ ul.team, ul.partners {
 	list-style: none;
 	padding: 1rem 0;
 }
-
+.col-xs-3 {
+	flex-basis: 75%;
+	max-width: 75%;
+}
 /* osoc colors
 
 Green: #44dba4;
