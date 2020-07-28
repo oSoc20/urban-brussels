@@ -222,7 +222,7 @@ const Landing = {
     const pos2 = str.indexOf(' ', pos1 + 1)
     const sub = str.substring(pos1 + 2, pos2)
     switch (sub) {
-      case 'type':
+      case 'typology':
         send.typologies.push(searchString)
         break
       case 'style':
