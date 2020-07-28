@@ -17,9 +17,9 @@
         "no_result": "Geen gebouwen gevonden op dit deel van de kaart, sleep de kaart om meer resultaten te zien.",
         "title_buildingslist": "Gebouwen",
         "chart_title1": "Gebouwen door architect",
-        "chart_title2": "Gebouwen op stijl",
-        "chart_title3": "Gebouwen op typologie",
-        "chart_title4": "Gebouwen in de tijd",
+        "chart_title2": "Gebouwen per stijl",
+        "chart_title3": "Gebouwen per typologie",
+        "chart_title4": "Gebouwen doorheen tijd",
         "iris_link" : "Meer informatie"
     }
 }

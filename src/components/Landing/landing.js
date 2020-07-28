@@ -155,9 +155,7 @@ const Landing = {
     const tags = document.getElementsByClassName('tag')
     for (let index = 0; index < tags.length; index++) {
       tags[index].addEventListener('click', () => {
-        tags[index].addEventListener('click', async () => {
-          Landing.factsToList(tags[index].className, tags[index].innerHTML)
-        })
+        Landing.factsToList(tags[index].className, tags[index].innerHTML)
       })
     }
 
@@ -228,7 +226,6 @@ const Landing = {
         send.intervenants.push(searchString)
         break
     }
-    console.log(send)
     const data = await Api.searchData(send)
     window.localStorage.removeItem('building_data')
     window.localStorage.removeItem('search_data')
