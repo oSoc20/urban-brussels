@@ -44,11 +44,11 @@ const MapWithClusters = {
           'circle-color': [
             'step',
             ['get', 'point_count'],
-            '#8F9BCC',
+            '#5C9983',
             100,
-            '#476291',
+            '#24674F',
             750,
-            '#212E44'
+            '#003221'
           ],
           'circle-radius': [
             'step',
@@ -83,7 +83,7 @@ const MapWithClusters = {
         source: 'buildings',
         filter: ['!', ['has', 'point_count']],
         paint: {
-          'circle-color': '#212E44',
+          'circle-color': '#24674F',
           'circle-radius': 11,
           'circle-stroke-width': 2,
           'circle-stroke-color': '#fff'
