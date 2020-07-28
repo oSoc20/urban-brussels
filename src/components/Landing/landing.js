@@ -93,61 +93,33 @@ const Landing = {
     // Retrieves random building
     const dataRandom = await Api.searchRandom('fr', '3')
     dataRandom.features.forEach((feature) => {
-      bounds.extend(feature.geometry.coordinates)
-    })
+      bounds.extend(
+        feature.geometry.coordinates
+      )
 
-    // Map load
-    map.once('load', function () {
-      map.addSource('randomBuildings', {
-        type: 'geojson',
-        data: dataRandom
-      })
-
-      map.addLayer({
-        id: 'randomBuildings',
-        type: 'circle',
-        source: 'randomBuildings',
-        paint: {
-          'circle-radius': {
-            base: 10,
-            stops: [
-              [12, 10],
-              [22, 180]
-            ]
-          },
-          'circle-color': '#2C3550',
-          'circle-stroke-width': 2,
-          'circle-stroke-color': '#fff'
-        }
-      })
-    })
-
-    // Map data
-    map.on('sourcedata', (event) => {
-      if (event.sourceId === 'randomBuildings' && event.isSourceLoaded === true) {
-        map.querySourceFeatures('randomBuildings').forEach((feature) => {
-          const str = `
-          <div class="pop-up--landing">
+      const content = `
+        <div class="pop-up--landing">
           <div>
             <div class="pop-up__img--landing" style="background-image: url('${feature.properties.image}');">
           </div>
-            <div class="pop-up__address--landing">
-              <p class="pop-up__info--landing">${feature.properties.street} ${feature.properties.number}</p>
-              <p class="pop-up__info--landing"> ${feature.properties.zip_code} ${feature.properties.city}</p>
-            </div>
+          <div class="pop-up__address--landing">
+            <p class="pop-up__info--landing">${feature.properties.street} ${feature.properties.number}</p>
+            <p class="pop-up__info--landing">${feature.properties.zip_code} ${feature.properties.city}</p>
           </div>
-          `
+        </div>
+        `
 
-          new mapboxgl.Popup({ closeOnClick: false, closeButton: false })
-            .setLngLat(feature.geometry.coordinates)
-            .setHTML(str)
-            .addTo(map)
-        })
+      const popup = new mapboxgl.Popup({ closeOnClick: false, closeButton: false }).setHTML(content)
 
-        map.fitBounds(bounds, {
-          padding: { top: 25, bottom: 25, left: 25, right: 25 }
-        })
-      }
+      new mapboxgl.Marker()
+        .setLngLat(feature.geometry.coordinates)
+        .setPopup(popup)
+        .addTo(map)
+        .togglePopup()
+    })
+
+    map.fitBounds(bounds, {
+      padding: { top: 50, bottom: 50, left: 50, right: 50 }
     })
   },
   initFunFacts: async () => {
