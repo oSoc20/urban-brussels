@@ -45,7 +45,7 @@ const Dashboard = {
     }
 
     const view = /* html */ `
-    <section class="section__list">
+    <section class="section__list section__search__dashboard">
       <div id="search_container"></div>
     </section>
 <div class="grid-container">

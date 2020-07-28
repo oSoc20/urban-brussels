@@ -4,21 +4,28 @@
       "header"
       "main";
     height: 100%;
-    width: 100%;
-    }
+    width: calc(100vw - 110px);
+    margin: 20px 45px 0 45px;
+}
 
 .main-overview {
     grid-area: main;
     display: grid;
     grid-gap: 20px;
-    padding: 10px;
-    margin: 20px;
     background-color: #ffffff;
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 55% 45%;
+    margin-bottom: 30px;
 }
+.section__search__dashboard {
+    position: initial;
+    width: 80%;
+    padding: 45px 0 0 30px;
+    margin-bottom: 0;
+}
+
 .item {
     height: 250px;
-    padding: 20px;
+    padding: 20px 20px 20px 0;
     background-color: #FDFDFD;
     box-shadow: 0px 3.3655px 3.3655px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
@@ -26,7 +33,7 @@
 }
 
 .map_dashboard  {
-    height: 100%;
+    height: 95.5%;
     grid-column-start: 2;
     grid-row-start: 1;
     grid-row-end: 4;
@@ -36,6 +43,7 @@
 .chart_title{
     margin-left: 40px;
     font-size: large;
+    margin-bottom: 5px;
 }
 
 div[class^=ct-chart]{

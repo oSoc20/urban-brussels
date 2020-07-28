@@ -114,6 +114,8 @@ const buildingList = {
     }
     data = await Api.searchData(send)
     features = data.features
+    console.log(send)
+
     buildingList.initPagination()
     buildingList.displayContent(1)
 
