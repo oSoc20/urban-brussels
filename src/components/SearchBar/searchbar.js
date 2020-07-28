@@ -5,7 +5,7 @@ import typeIcon from '../../assets/icons/type-icon.svg'
 import architectIcon from '../../assets/icons/architect-icon.svg'
 
 /**  Variables declarations */
-const searchText = ['Search', 'Chercher', 'Zoeken']
+const language = window.sessionStorage.getItem('lang')
 const tags = {
   zipcodeArr: [],
   cityArr: [],
@@ -26,7 +26,7 @@ const SearchBar = {
     document.getElementById(container).innerHTML = /* html */ `
         <div class="search_ctn">
             <form class="searchbar_ctn" autocomplete="off">
-                <input id="search_bar" type="text" placeholder="${searchText[0]}" />
+                <input id="search_bar" type="text" placeholder="${window.langText.search_bar}" />
             </form>
             <div class="selected-items">
             </div>
@@ -96,7 +96,7 @@ const SearchBar = {
         styles: [],
         intervenants: []
       }
-      resp = await Api.getAutocomplete('fr', inputValue)
+      resp = await Api.getAutocomplete(language, inputValue)
       SearchBar.addItemsToObj(resp.zipCodes, obj.zipCodes)
       SearchBar.addItemsToObj(resp.cities, obj.cities)
       SearchBar.addItemsToObj(resp.streets, obj.streets)

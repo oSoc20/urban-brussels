@@ -6,13 +6,14 @@ import mainSearchBar from '../SearchBar/searchbar'
 import mapboxgl from 'mapbox-gl'
 import arrowRight from '../../assets/icons/arrow-icon.svg'
 import Api from '../api.js'
+import BaseLayerSwitch from '../Map/baselayerswitch.js'
 
 /**
  * Variable declarations
  */
 const style = process.env.MAPBOX_STYLE
 const token = process.env.MAPBOX_ACCESS_TOKEN
-const language = 'fr'
+const language = window.sessionStorage.getItem('lang')
 let funFactsCounter = 0
 
 // Rendering of the landing/home page
@@ -20,7 +21,7 @@ const Landing = {
   render: async () => {
     const view = /* html */`
     <div id="map-landing-page" class="map-landing-page"></div>
-
+    <div id="baselayer_container"></div>
     <button id="clickDashboard" onClick="window.location.href='/#/dashboard';">
     <span id="dash_text">Dashboard</span>
     </button>
@@ -73,7 +74,7 @@ const Landing = {
     Landing.initFunFacts()
   },
   clickHandlerRandomBtn: async () => {
-    const dataRandom = await Api.searchRandom('fr', '1')
+    const dataRandom = await Api.searchRandom(language, '1')
     window.localStorage.removeItem('random_building_data')
     window.localStorage.setItem('random_building_data', JSON.stringify(dataRandom.features))
     window.location.href = '/#/list'
@@ -89,11 +90,16 @@ const Landing = {
     })
 
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
-
+    // Map BaseLayerSwitch //
+    map.on('load', () => {
+      BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container')
+      BaseLayerSwitch.initSources(map, 'FR')
+      BaseLayerSwitch.addEventListener(map)
+    })
     const bounds = new mapboxgl.LngLatBounds()
 
     // Retrieves random building
-    const dataRandom = await Api.searchRandom('fr', '3')
+    const dataRandom = await Api.searchRandom(language, '3')
     dataRandom.features.forEach((feature) => {
       bounds.extend(
         feature.geometry.coordinates
@@ -155,9 +161,7 @@ const Landing = {
     const tags = document.getElementsByClassName('tag')
     for (let index = 0; index < tags.length; index++) {
       tags[index].addEventListener('click', () => {
-        tags[index].addEventListener('click', async () => {
-          Landing.factsToList(tags[index].className, tags[index].innerHTML)
-        })
+        Landing.factsToList(tags[index].className, tags[index].innerHTML)
       })
     }
 
@@ -204,7 +208,7 @@ const Landing = {
   // Redirect user to buildings list page when he clicks on a fun fact tag
   factsToList: async (classString, searchString) => {
     const send = {
-      lang: 'fr',
+      lang: language,
       strict: false,
       zipcode: '',
       cities: [],

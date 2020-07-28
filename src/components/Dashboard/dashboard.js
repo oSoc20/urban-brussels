@@ -5,6 +5,8 @@ import Api from '../api.js'
 import Chart from './charts.js'
 import clusteredMap from '../MapWithClusters/mapWithClusters'
 import SearchBar from '../SearchBar/searchbar'
+import BaseLayerSwitch from '../Map/baselayerswitch.js'
+
 
 let map
 let searchData
@@ -52,22 +54,22 @@ const Dashboard = {
 <main class="main">
     <div class="main-overview">
         <div class="item">
-          <div class="chart_title">Buildings per architect</div>
+          <div class="chart_title1">` + window.langText.chart_title1 + `</div>
           <div class="ct-chart1" id="chart1"></div>
         </div>
         <div class="item">
-          <div class="chart_title">Buildings per style</div>
+          <div class="chart_title2">` + window.langText.chart_title2 + `</div>
           <div class="ct-chart2" id="chart2"></div>
         </div>
         <div class="item">
-          <div class="chart_title">Buildings per typology</div>
+          <div class="chart_title3">` + window.langText.chart_title3 + `</div>
           <div class="ct-chart3" id="chart3"></div>
         </div>
-        <div class="item map_dashboard" id="clusterMap">
-        </div>
+        <div class="item map_dashboard" id="clusterMap"></div>
+        <div id="baselayer_container"></div>
     </div>
     <div class="item">
-          <div class="chart_title">Buildings over time</div>
+          <div class="chart_title4">` + window.langText.chart_title4 + `</div>
           <div class="ct-chart4" id="chart4"></div>
         </div>
 </main>
@@ -78,6 +80,7 @@ const Dashboard = {
   after_render: async () => {
     SearchBar.displaySearchBar('search_container')
     SearchBar.searchFunction(Dashboard.SearchBarCalback, Dashboard.noTags)
+    BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container')
 
     if (mapDisabled) {
       Dashboard.noTags()
