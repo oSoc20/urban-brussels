@@ -150,7 +150,7 @@ const Landing = {
 
     // Load first fun fact
     ff.innerHTML = funFacts[0]
-    let tags = document.getElementsByClassName('tag')
+    const tags = document.getElementsByClassName('tag')
     for (let index = 0; index < tags.length; index++) {
       tags[index].addEventListener('click', () => {
         tags[index].addEventListener('click', async () => {
