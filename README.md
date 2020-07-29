@@ -9,7 +9,7 @@ Together with Urban.Brussels, we want to build an open web application that will
 
 # About project
 Description
-## Built with
+
 
 # Getting started
 1. Install the used npm packages
