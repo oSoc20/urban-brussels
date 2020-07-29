@@ -7,7 +7,7 @@ let popup
 
 const popupBuilding = {
   /** Initializing map
-   * map: loads the map
+   * map: Map object.
    */
   init: (map) => {
     popup = new mapboxgl.Popup({
@@ -15,8 +15,7 @@ const popupBuilding = {
       closeOnClick: false,
       maxWidth: 'max-content'
     })
-    /** Pop-up of one building and its features on the map
-     * e: calls on features from API
+    /** When you hover on an unclustered point on the map a popup is created and visible
      */
     map.on('mouseenter', 'unclustered-point', (e) => {
       map.getCanvas().style.cursor = 'pointer'
@@ -37,6 +36,8 @@ const popupBuilding = {
         .addTo(map)
     })
 
+    /** When you leave an unclustered point the popup is removed
+     */
     map.on('mouseleave', 'unclustered-point', () => {
       map.getCanvas().style.cursor = ''
       popup.remove()
@@ -44,12 +45,12 @@ const popupBuilding = {
 
     return popup
   },
-  /** PopUp displayed when hovering over the point
-   * event: when you hover over the point
-   * map: loads the map
-   * currentPage: number of pages displayed
-   * itemsPerPage: how many buildings to display on the page
-   * data: getting the data from API
+  /** When you hover on a building in the list a popup is created and visible
+   * event: Current event
+   * map: Map object
+   * currentPage: Number of the current page in the list
+   * itemsPerPage: Number of items per page
+   * data: object with building information to show in the popup
   */
   hoverHandlerPopupBuilding: (event, map, currentPage = 1, itemsPerPage, data) => {
     // popup.remove()
@@ -80,6 +81,8 @@ const popupBuilding = {
     }
   },
 
+  /** Remove popup
+  */
   removePopup: () => {
     if (popup) { popup.remove() }
   }
