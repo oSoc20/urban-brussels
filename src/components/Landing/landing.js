@@ -1,4 +1,4 @@
-/**
+/** This file enables the landing page
  * Modules imports
  */
 import SearchBar from './searchbar.js'

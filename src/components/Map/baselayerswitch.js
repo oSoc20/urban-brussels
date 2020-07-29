@@ -1,6 +1,11 @@
+/** This file enables the the switch function between 3 layers on map */
 // Rendering of the search bar
 import dropdownIcon from '../../assets/icons/dropdown-icon.svg'
-
+/**
+ * OpenStreetMap Layer
+ * Aerial Imagenary Layer
+ * Grayscale Layer
+ */
 const BaseLayerSwitch = {
   displayBaseLayerSwitch: (containerIdName, fixed) => {
     document.getElementById(containerIdName).innerHTML = /* html */`

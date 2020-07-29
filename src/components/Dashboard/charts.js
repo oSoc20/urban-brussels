@@ -1,3 +1,4 @@
+/** This file enables the bar charts and the Timeline chart on the Dashboard Page */
 const Chart = {
 
   // Create a horizontal bar chart
