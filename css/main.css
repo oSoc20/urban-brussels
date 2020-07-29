@@ -16,6 +16,10 @@ body {
 img {
 	width: 100%;
 }
+#laptop-icon {
+	width: 15%;
+	height: 15%;
+}
 .img-team {
 	border-radius: 50%;
 }
