@@ -78,7 +78,7 @@ The buildings are shown with dots that are clustered together if you’re zoomed
 
 **Detail Page**
 
-The building details include the position on the map and the different style, type and architect tags. In every page we have a button to change the map shown. Here we see the map version where showing the different options. These options are defined to be either our custom Mapbox map (shown here as background), the black and white BruGIS/UrbGIS map or an aerial map of Brussels.
+The building details include the position on the map and the different style, type and architect tags. On every page, we have a button to change the map shown. Here we see the map version where showing the different options. These options are defined to be either our custom Mapbox map (shown here as background), the black and white BruGIS/UrbGIS map or an aerial map of Brussels.
 
 **Dashboard**
 
