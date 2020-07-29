@@ -23,3 +23,8 @@
    ``` bash
    npm run bundle
    ```
+
+The default api 
+
+**NOTE:** The default api url used is https://api.urban-brussels.osoc.be, get to know more about it in the 
+[the backend](https://github.com/oSoc20/urban-brussels-api) repository.
