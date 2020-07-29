@@ -27,14 +27,19 @@ const tags = {
 let obj = {}
 let resp, inputValue, input
 
-// Rendering of the search bar
+
 const SearchBar = {
+  /**
+   * Add the event listener for the search bar
+   */
   searchFunction: (callback) => {
     input = document.getElementById('search_bar')
-    // Execute when an input is typed in the search field
     input.addEventListener('input', SearchBar.inputHandler)
   },
 
+  /**
+   * Executes when an input is typed in the search filed
+   */
   inputHandler: async (e) => {
     inputValue = e.currentTarget.value
     // Close any already open lists of autocompleted values
@@ -75,7 +80,9 @@ const SearchBar = {
     SearchBar.addItemsToList(divEl, obj.typos, 'Type', typeIcon, 'search--type')
   },
 
-  // Add items to the autocomplete list
+  /**
+   * Add items to the autocomplete list
+   */
   addItemsToList: (divEl, array, name, icon = '', Nameclass = '') => {
     if (array) {
       for (let i = 0; i < array.length; i++) {
@@ -115,6 +122,9 @@ const SearchBar = {
     }
   },
 
+  /**
+   * Redirects to the buildings list page
+   */
   goToList: async () => {
     // JSON body that will be sent
     const send = {

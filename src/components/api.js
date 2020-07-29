@@ -29,7 +29,7 @@ const Api = {
   /**
    * Fetches data for autocomplete
    * @param {string} lang - the language the data should be returned
-   * @param {string} query - the string typed by the user in the search bar
+   * @param {string} query - the input of the user
    */
 
   getAutocomplete: async (lang, query) => {
