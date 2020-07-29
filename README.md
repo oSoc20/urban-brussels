@@ -3,14 +3,8 @@ Together with Urban.Brussels, we want to build an open web application that will
 
 # Table of contents
 * [About the project](#about-the-project)
-    - [Built with](#built-with)
 * [Getting started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
 * [Usage](#usage)
-* [TODO](#todo)
-* [Contributing](#contributing)
-* [License](#license)
 * [Contact](#contact)
 
 # About project
@@ -18,21 +12,21 @@ Description
 ## Built with
 
 # Getting started
-## Prerequisities
-* npm
-
-You will need npm do get the used packages.
-## Installation
 1. Install the used npm packages
 ```
 npm install
 ```
+2. Run Lockally
+```
+npm run bundle
+```
+3. Build
+Ctrl + click
+
+4. API Repo
+
 # Usage
-
-# TODO
-
-# Contributing
-
-# License
+Text about certaint features
 
 # Contact
+list of git profiles of the team
