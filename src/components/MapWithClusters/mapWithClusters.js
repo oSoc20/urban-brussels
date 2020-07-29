@@ -7,6 +7,9 @@ import BaseLayerSwitch from '../Map/baselayerswitch.js'
 
 let map
 const MapWithClusters = {
+  /**
+   * Initiates and displays the map
+   */
   init: (data) => {
     mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
     map = new mapboxgl.Map({
@@ -16,6 +19,7 @@ const MapWithClusters = {
       zoom: 10.24
     })
 
+    // Add controls to the bottom right to the map
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
     if (!data) {
       data = {
@@ -24,6 +28,7 @@ const MapWithClusters = {
       }
     }
 
+    // Load the sources, markers and layers on the map
     map.on('load', () => {
       if (window.location.hash === '#/list') {
         BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container', true)

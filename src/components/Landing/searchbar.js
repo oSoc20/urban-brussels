@@ -27,7 +27,6 @@ const tags = {
 let obj = {}
 let resp, inputValue, input
 
-
 const SearchBar = {
   /**
    * Add the event listener for the search bar
@@ -39,6 +38,7 @@ const SearchBar = {
 
   /**
    * Executes when an input is typed in the search filed
+   * @param {Object} e - the current event
    */
   inputHandler: async (e) => {
     inputValue = e.currentTarget.value
