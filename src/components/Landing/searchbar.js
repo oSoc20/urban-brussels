@@ -82,6 +82,11 @@ const SearchBar = {
 
   /**
    * Add items to the autocomplete list
+   * @param {HTMLElement} divEl- HTML element that will conains the autocomplete list items
+   * @param {Array} array- array that contains the tags/filters that are searched for
+   * @param {string} name- Name of the category the tags/filters belong to (zipcode, city, street, architect, style, type)
+   * @param {image} icon- Image that belongs to the category
+   * @param {string} Nameclass- Class to change the style of the item in the  autocomplete list according to the category
    */
   addItemsToList: (divEl, array, name, icon = '', Nameclass = '') => {
     if (array) {
