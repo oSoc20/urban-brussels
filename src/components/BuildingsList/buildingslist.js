@@ -15,12 +15,8 @@ import buildingDetail from '../BuildingDetail/buildingDetail'
 
 import backButton from '../../assets/icons/back-button.svg'
 import PageSwitch from '../pageSwitch/pageSwitch.js'
-<<<<<<< HEAD
-/** Declaring variables */
-=======
 
 /** Variable declarations */
->>>>>>> c577d768dbf9cc4538265fea8794383999ee80e9
 let searchData, map, popup
 let data = []
 let features = []

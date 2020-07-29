@@ -9,13 +9,7 @@ import Api from '../api.js'
 import BaseLayerSwitch from '../Map/baselayerswitch.js'
 import pulsingDot from '../Map/pulsingDot'
 
-<<<<<<< HEAD
-/**
- * Variable declaration
- */
-=======
 /** Variable declarations */
->>>>>>> c577d768dbf9cc4538265fea8794383999ee80e9
 const style = process.env.MAPBOX_STYLE
 const token = process.env.MAPBOX_ACCESS_TOKEN
 const language = window.sessionStorage.getItem('lang')
