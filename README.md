@@ -31,7 +31,8 @@ Brussels in an interactive and user-friendly way.
    cp .env.example .env
    ```
 
-3. Replace the `MY_SECRET_MAPBOX_ACCESS_TOKEN` value by your generated Mapbox access token
+3. Replace the `MY_SECRET_MAPBOX_ACCESS_TOKEN` value by your generated Mapbox access token.
+
    Click [here](https://docs.mapbox.com/help/tutorials/get-started-tokens-api/) to find how to create an access token using Mapbox Tokens API. 
 
 4. Install the necessary packages
