@@ -161,8 +161,7 @@ const buildingList = {
     Pagination.init(document.getElementsByClassName('pagination')[0], {
       currentPage: 1,
       totalItems: features.length,
-      itemsPerPage: itemsPerPage,
-      stepNum: 1
+      itemsPerPage: itemsPerPage
     })
 
     Pagination.onPageChanged(buildingList.displayContent)
