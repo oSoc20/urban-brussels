@@ -68,12 +68,12 @@ div[class^=ct-chart] .ct-labels .ct-label {
 
   /* Chart 2 STYLES PER CITY */
 .ct-chart2 .ct-series .ct-bar { 
-    stroke: #FFB596; 
+    stroke:#bee9fe;
 }
 
  /* Chart 3 BUILDINGS PER TYPOLOGY */
  .ct-chart3 .ct-bar {
-    stroke:#bee9fe;
+    stroke: #FFB596; 
   }
 
   /* Chart 4 BUILDINGS PER TYPOLOGY */
