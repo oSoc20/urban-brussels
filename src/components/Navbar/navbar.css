@@ -11,6 +11,7 @@
     color: #81d8bf;
     border: 2px solid #81d8bf;
     cursor: pointer;
+    transition: all .4s ease;
   }
   
   .dropdown {
@@ -41,4 +42,7 @@
   
   .dropdown:hover .dropdown-content {display: block;}
   
-  .dropdown:hover #dropbtn {background-color: #ddd;}
+  .dropdown:hover #dropbtn {
+    background-color: #81d8bf; 
+    color: white;
+  }

@@ -30,7 +30,6 @@
   margin-top: -1px;
   box-shadow: inset 0 0 0 #81D8BF;
   transition: all .6s ease;
-
 }
 
 .btn--random:hover .btn-hover-div {
@@ -180,5 +179,4 @@
 
 #search_container--dashboard {
   margin-left: 60px;
-  width: 95%;
 }
