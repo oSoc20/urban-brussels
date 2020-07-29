@@ -3,7 +3,9 @@ import BaseLayerSwitch from '../Map/baselayerswitch.js'
 
 let map
 const MapWithClusters = {
+  /** Initializing data */
   init: (data) => {
+    // Positioning the map and navigation control
     mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
     map = new mapboxgl.Map({
       container: 'clusterMap',
@@ -19,7 +21,7 @@ const MapWithClusters = {
         features: []
       }
     }
-
+    /** Loading the map and three layers */
     map.on('load', () => {
       if (window.location.hash === '#/list') {
         BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container', true)
@@ -30,6 +32,7 @@ const MapWithClusters = {
       BaseLayerSwitch.initSources(map, 'FR')
 
       map.addSource('buildings', {
+        /** Adding building layer from GeoJSON data */
         type: 'geojson',
         data: data,
         cluster: true,
@@ -46,6 +49,7 @@ const MapWithClusters = {
       })
 
       map.addLayer({
+        // Changing clusters style and count on zoom
         id: 'clusters',
         type: 'circle',
         source: 'buildings',
