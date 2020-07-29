@@ -225,7 +225,6 @@ const Landing = {
   factsToList: async (classString, searchString) => {
     const send = {
       lang: language,
-      strict: false,
       zipcode: '',
       cities: [],
       typologies: [],
