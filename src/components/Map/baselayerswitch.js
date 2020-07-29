@@ -1,5 +1,6 @@
-/** This file enables the the switch function between 3 layers on map */
-// Rendering of the search bar
+/** This module enables the the switch function between 3 layers on map */
+
+/** Icons import */
 import dropdownIcon from '../../assets/icons/dropdown-icon.svg'
 /**
  * OpenStreetMap Layer

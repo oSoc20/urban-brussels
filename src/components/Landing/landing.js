@@ -1,6 +1,6 @@
-/** This file enables the landing page
- * Modules imports
- */
+/** This module displays and contains the logic of the the landing page */
+
+/** Modules import */
 import SearchBar from './searchbar.js'
 import mainSearchBar from '../SearchBar/searchbar'
 import mapboxgl from 'mapbox-gl'
@@ -9,9 +9,7 @@ import Api from '../api.js'
 import BaseLayerSwitch from '../Map/baselayerswitch.js'
 import pulsingDot from '../Map/pulsingDot'
 
-/**
- * Variable declarations
- */
+/** Variable declarations */
 const style = process.env.MAPBOX_STYLE
 const token = process.env.MAPBOX_ACCESS_TOKEN
 const language = window.sessionStorage.getItem('lang')
