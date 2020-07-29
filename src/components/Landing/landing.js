@@ -1,6 +1,6 @@
-/**
- * Modules imports
- */
+/** This module displays and contains the logic of the the landing page */
+
+/** Modules import */
 import SearchBar from './searchbar.js'
 import mainSearchBar from '../SearchBar/searchbar'
 import mapboxgl from 'mapbox-gl'
@@ -9,9 +9,7 @@ import Api from '../api.js'
 import BaseLayerSwitch from '../Map/baselayerswitch.js'
 import pulsingDot from '../Map/pulsingDot'
 
-/**
- * Variable declarations
- */
+/** Variable declarations */
 const style = process.env.MAPBOX_STYLE
 const token = process.env.MAPBOX_ACCESS_TOKEN
 const language = window.sessionStorage.getItem('lang')
@@ -75,12 +73,14 @@ const Landing = {
     Landing.initFunFacts()
   },
   clickHandlerRandomBtn: async () => {
+    // Random Search Button
     const dataRandom = await Api.searchRandom(language, '1')
     window.localStorage.removeItem('random_building_data')
     window.localStorage.setItem('random_building_data', JSON.stringify(dataRandom.features))
     window.location.href = '/#/list'
   },
   initMap: async () => {
+    // Creating and positioning the map
     mapboxgl.accessToken = token
 
     var map = new mapboxgl.Map({
@@ -110,6 +110,7 @@ const Landing = {
       data: dataRandom
     })
     map.addLayer({
+      // Adding layer with pulsing dots
       id: 'random-points',
       type: 'symbol',
       source: 'random-points',
@@ -119,6 +120,7 @@ const Landing = {
     })
 
     dataRandom.features.forEach((feature) => {
+      // Displaying features inside the pop-ups
       bounds.extend(
         feature.geometry.coordinates
       )
@@ -136,6 +138,7 @@ const Landing = {
           </div>
         `
       element.addEventListener('click', () => {
+        // Redirecting to the BuildingDetail page after click on the pop-up
         window.localStorage.removeItem('random_building_data')
         window.localStorage.setItem(
           'random_building_data',
@@ -155,6 +158,7 @@ const Landing = {
     })
   },
   initFunFacts: async () => {
+    // Declaring variables for the Fun fact container
     const prev = document.getElementsByClassName('arrowLeft')[0]
     const next = document.getElementsByClassName('arrowRight')[0]
     const ff = document.getElementsByClassName('fun-fact__txt')[0]

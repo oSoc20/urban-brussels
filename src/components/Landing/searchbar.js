@@ -1,4 +1,8 @@
 /**
+ * This module displays and contains the logic of the search bar of the landing page
+ */
+
+/**
  * Modules imports
  */
 import Api from '../api.js'
@@ -23,14 +27,19 @@ const tags = {
 let obj = {}
 let resp, inputValue, input
 
-// Rendering of the search bar
 const SearchBar = {
+  /**
+   * Add the event listener for the search bar
+   */
   searchFunction: (callback) => {
     input = document.getElementById('search_bar')
-    // Execute when an input is typed in the search field
     input.addEventListener('input', SearchBar.inputHandler)
   },
 
+  /**
+   * Executes when an input is typed in the search filed
+   * @param {Object} e - the current event
+   */
   inputHandler: async (e) => {
     inputValue = e.currentTarget.value
     // Close any already open lists of autocompleted values
@@ -71,7 +80,14 @@ const SearchBar = {
     SearchBar.addItemsToList(divEl, obj.typos, 'Type', typeIcon, 'search--type')
   },
 
-  // Add items to the autocomplete list
+  /**
+   * Add items to the autocomplete list
+   * @param {HTMLElement} divEl- HTML element that will conains the autocomplete list items
+   * @param {Array} array- array that contains the tags/filters that are searched for
+   * @param {string} name- Name of the category the tags/filters belong to (zipcode, city, street, architect, style, type)
+   * @param {image} icon- Image that belongs to the category
+   * @param {string} Nameclass- Class to change the style of the item in the  autocomplete list according to the category
+   */
   addItemsToList: (divEl, array, name, icon = '', Nameclass = '') => {
     if (array) {
       for (let i = 0; i < array.length; i++) {
@@ -111,6 +127,9 @@ const SearchBar = {
     }
   },
 
+  /**
+   * Redirects to the buildings list page
+   */
   goToList: async () => {
     // JSON body that will be sent
     const send = {

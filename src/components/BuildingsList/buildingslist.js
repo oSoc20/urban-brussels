@@ -1,3 +1,8 @@
+/**
+ * This module displays and contains the logic of the buildings list page
+ */
+
+/** Modules import */
 import Api from '../api.js'
 import Pagination from '../Pagination/pagination'
 import SearchBar from '../SearchBar/searchbar'
@@ -11,6 +16,7 @@ import buildingDetail from '../BuildingDetail/buildingDetail'
 import backButton from '../../assets/icons/back-button.svg'
 import PageSwitch from '../pageSwitch/pageSwitch.js'
 
+/** Variable declarations */
 let searchData, map, popup
 let data = []
 let features = []
@@ -22,6 +28,12 @@ const language = window.sessionStorage.getItem('lang')
 let refreshLang = false
 
 const buildingList = {
+  /**
+   * Creates and renders the building list and the map
+   * Check if the random button on the landing pages was clicked
+   * Get the searched tags/filters from the local storage
+   * Get the list of buildings from api according to selected tags/filters
+   */
   render: async () => {
     randomBuilding = JSON.parse(window.localStorage.getItem('random_building_data'))
     searchData = JSON.parse(window.localStorage.getItem('search_data'))
@@ -114,6 +126,12 @@ const buildingList = {
     }
     pulsingDot.init(map)
   },
+
+  /**
+   * Executed when a tag/filter was added or removed in the searchbar
+   * Updates the buildings list and the map according to added filter/tag
+   * @param {object} tags -  Object that contains the selected tags/filters per category
+   */
   SearchBarCalback: async (tags) => {
     const send = {
       lang: 'fr',
@@ -151,16 +169,23 @@ const buildingList = {
     window.localStorage.setItem('building_data', JSON.stringify(data))
   },
 
+  /**
+    * Creates and renders pagination
+   */
   initPagination: () => {
     Pagination.init(document.getElementsByClassName('pagination')[0], {
       currentPage: 1,
       totalItems: features.length,
-      itemsPerPage: itemsPerPage,
-      stepNum: 1
+      itemsPerPage: itemsPerPage
     })
 
     Pagination.onPageChanged(buildingList.displayContent)
   },
+  /**
+    * Executes when user stops moving the map
+    * Gets the buildings showing on the visible part of the map
+    * @param {object} map - Map object, the map shown on the list page.
+   */
   getBuildingsFromMap: (map) => {
     if (moveMap) {
       features = map.queryRenderedFeatures({ layers: ['hidden-locations'] })
@@ -168,6 +193,13 @@ const buildingList = {
       buildingList.initPagination()
     }
   },
+
+  /**
+    * Call function to update the building list
+    * Call function when hover over a building in the list
+    * Call function when clicked on a building in the list
+    * @param {number} currentPage - number of the current page in the list
+   */
   displayContent: (currentPage) => {
     document.querySelector('.building-list').innerHTML = buildingList.renderList(currentPage)
     const buildingListItems = document.querySelectorAll('.building-list__item')
@@ -183,6 +215,10 @@ const buildingList = {
     buildingListItems.forEach(item => item.addEventListener('mouseleave', () => popupBuilding.removePopup()))
   },
 
+  /**
+    * Update the building list according to pagination and selected tags/filters in search
+    * @param {number} currentPage - number of the current page in the list
+   */
   renderList: (currentPage) => {
     let html = ''
     for (let i = (currentPage - 1) * itemsPerPage; i < (currentPage * itemsPerPage) && i < features.length; i++) {
@@ -218,6 +254,11 @@ const buildingList = {
     return html
   },
 
+  /**
+    * Show tags that belong to the building
+    * @param {string} item - Contains the name/value of the tag/filter
+    * @param {string} name - Contains the name of the category
+   */
   showTags: (item, name) => {
     let html = ''
     if (item != null && item !== 'null') {
@@ -226,6 +267,12 @@ const buildingList = {
     return html
   },
 
+  /**
+    * Executes when clicked on a building in the list
+    * Get the building object from the building data with the same address
+    * Calls function to show the details of the clicked building
+    * @param {string} address - address of the clicked building
+   */
   showDetail: (address) => {
     let currentAddress = ''
     for (let i = 0; i < features.length; i++) {
@@ -235,6 +282,10 @@ const buildingList = {
     buildingDetail.showDetail(map, [currentAddress], popup)
   },
 
+  /**
+    * Go back to landing page if random button was clicked
+    * Go back to building list if a specific building or popup was clicked
+   */
   goBack: () => {
     moveMap = true
     if (randomBuildingClicked) {
@@ -244,6 +295,10 @@ const buildingList = {
       buildingDetail.goBack(map)
     }
   },
+
+  /**
+   * Executed when no tags/filters where selected in the search
+   */
   noTags: () => {
     Landing.emptyLocalStorage()
     window.location.href = '/#'

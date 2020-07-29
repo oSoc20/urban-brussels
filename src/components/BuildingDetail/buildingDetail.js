@@ -1,3 +1,8 @@
+/**
+ * This module displays and contains the logic of the detail page of a specific building
+ */
+
+/** Modules import */
 import styleIcon from '../../assets/icons/style-icon.svg'
 import typeIcon from '../../assets/icons/type-icon.svg'
 import architectIcon from '../../assets/icons/architect-icon.svg'
@@ -5,8 +10,18 @@ import watchIcon from '../../assets/icons/eye-icon.svg'
 import buildingList from '../BuildingsList/buildingslist'
 import mapDetail from './map'
 
+/** Variable declarations */
 let randomClicked
+
 const detail = {
+  /**
+   * Sets the variables for showing the detail information of a building
+   * Create and display the detail information of a building
+   * @param {object} map - Map object, the map shown on the list page.
+   * @param {object} item -  Object that contains all the informaion about the building that was clicked on
+   * @param {object} popup - Popup object that is visible on the map in the list page
+   * @param {boolean} randomBuildingClicked - Boolean that is true when clicked on random button on landing page
+   */
   showDetail: (map, item, popup, randomBuildingClicked = false) => {
     randomClicked = randomBuildingClicked
     detail.toggleClasses()
@@ -51,6 +66,11 @@ const detail = {
     detailSection.innerHTML = html
   },
 
+  /**
+   * Hidde or show (toggle) the building list and de detail information
+   * Resize the map from the building list
+   * Detect when clicking on the go back button
+   */
   toggleClasses: () => {
     if (!randomClicked) {
       document.querySelector('.section__list').classList.toggle('is-not-visible')
@@ -65,6 +85,12 @@ const detail = {
     }
   },
 
+  /**
+   * Hidde or show (toggle) all layers of the mapbox map visible on the buildingslist page
+   * Resize the map
+   * @param {object} map - Map object, the map shown on the list page.
+   * @param {string} toggle - visible or none, to show or hide the layers on the map
+   */
   toggleMapLayers: (map, toggle) => {
     map.resize()
     map.setLayoutProperty('clusters', 'visibility', toggle)
@@ -72,6 +98,13 @@ const detail = {
     map.setLayoutProperty('unclustered-point', 'visibility', toggle)
   },
 
+  /**
+   * Create and show the different tags: styles, types and architects
+  * @param {Array} item - Array containing all tags from one category (style, type or architect)
+  * @param {image} icon - Image that belongs to the category
+  * @param {string} name - Name of the category
+  * @param {string} namePlural - Plural name of the category
+   */
   showTags: (item, icon, name, namePlural) => {
     let html = ''
     if (item != null && item !== 'null') {
@@ -90,6 +123,10 @@ const detail = {
     return html
   },
 
+  /**
+   * Go back to the building list page
+   * @param {object} map - Map object, the map shown on the list page.
+   */
   goBack: (map) => {
     detail.toggleClasses()
     document.querySelector('#switch').checked = true

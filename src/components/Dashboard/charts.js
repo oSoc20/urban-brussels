@@ -1,11 +1,12 @@
-const Chart = {
+/** This module enables the bar charts and the timeline chart on the Dashboard Page */
 
-  // Create a horizontal bar chart
+const Chart = {
   /**
-     * Create a horizontal bar chart
-     * container: the container for the chart
-     * options: the options of the chart
-     */
+   * Create and display a horizontal bar chart
+   * @param {string} container - the name of the class or id that will contain the bar chart
+   * @param {Object} labels - an array that will contain the labels (X axis)
+   * @param {Object} series - a single or multiple arrays for the values (Y axis)
+   */
   createHBarChart: (container, labels, series) => {
     // eslint-disable-next-line
     new Chartist.Bar(
@@ -31,7 +32,12 @@ const Chart = {
     )
   },
 
-  // Create a timeline chart
+  /**
+   * Create and display a horizontal bar chart
+   * @param {string} container - the name of the class or id that will contain the bar chart
+   * @param {Object} labels - an array that will contain the labels (X axis)
+   * @param {Object} series - a single or multiple arrays for the values (Y axis)
+   */
   createTimeline: (container, labels, series) => {
     const data = labels.map((year, index) => {
       return { x: parseInt(year), y: series[index] }

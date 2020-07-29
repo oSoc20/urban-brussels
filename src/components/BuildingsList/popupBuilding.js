@@ -1,14 +1,22 @@
+/** The file enables the BuildingPopUp on the map of the Building List page
+ * Import Modules */
 import mapboxgl from 'mapbox-gl'
 
+/** Variable declarations */
 let popup
+
 const popupBuilding = {
+  /** Initializing map
+   * map: Map object.
+   */
   init: (map) => {
     popup = new mapboxgl.Popup({
       closeButton: false,
       closeOnClick: false,
       maxWidth: 'max-content'
     })
-
+    /** When you hover on an unclustered point on the map a popup is created and visible
+     */
     map.on('mouseenter', 'unclustered-point', (e) => {
       map.getCanvas().style.cursor = 'pointer'
       const coordinates = e.features[0].geometry.coordinates.slice()
@@ -28,6 +36,8 @@ const popupBuilding = {
         .addTo(map)
     })
 
+    /** When you leave an unclustered point the popup is removed
+     */
     map.on('mouseleave', 'unclustered-point', () => {
       map.getCanvas().style.cursor = ''
       popup.remove()
@@ -35,6 +45,13 @@ const popupBuilding = {
 
     return popup
   },
+  /** When you hover on a building in the list a popup is created and visible
+   * event: Current event
+   * map: Map object
+   * currentPage: Number of the current page in the list
+   * itemsPerPage: Number of items per page
+   * data: object with building information to show in the popup
+  */
   hoverHandlerPopupBuilding: (event, map, currentPage = 1, itemsPerPage, data) => {
     // popup.remove()
     const address = event.currentTarget.dataset.address
@@ -64,6 +81,8 @@ const popupBuilding = {
     }
   },
 
+  /** Remove popup
+  */
   removePopup: () => {
     if (popup) { popup.remove() }
   }

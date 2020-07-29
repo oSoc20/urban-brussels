@@ -1,9 +1,17 @@
+/**
+ * This module displays a map that contains cluster points of locations
+ */
+
 import mapboxgl from 'mapbox-gl'
 import BaseLayerSwitch from '../Map/baselayerswitch.js'
 
 let map
 const MapWithClusters = {
+  /**
+   * Initiates and displays the map
+   */
   init: (data) => {
+    // Positioning the map and navigation control
     mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
     map = new mapboxgl.Map({
       container: 'clusterMap',
@@ -12,6 +20,7 @@ const MapWithClusters = {
       zoom: 10.24
     })
 
+    // Add controls to the bottom right to the map
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
     if (!data) {
       data = {
@@ -20,6 +29,7 @@ const MapWithClusters = {
       }
     }
 
+    // Load the sources, markers and layers on the map
     map.on('load', () => {
       if (window.location.hash === '#/list') {
         BaseLayerSwitch.displayBaseLayerSwitch('baselayer_container', true)
@@ -30,6 +40,7 @@ const MapWithClusters = {
       BaseLayerSwitch.initSources(map, 'FR')
 
       map.addSource('buildings', {
+        // Adding building layer from GeoJSON data
         type: 'geojson',
         data: data,
         cluster: true,
@@ -46,6 +57,7 @@ const MapWithClusters = {
       })
 
       map.addLayer({
+        // Changing clusters style and count on zoom
         id: 'clusters',
         type: 'circle',
         source: 'buildings',

@@ -1,8 +1,12 @@
+/**
+ * This module contains all the endpoints and requests made to the API
+ */
+
 const Api = {
 
   /**
    * Fetches buildings data depending on search
-   * json: the tags and keywords chosen by the user
+   * @param {Object} json - the body of the request, contains all the tags and keywords of the user
    */
 
   searchData: async (json) => {
@@ -24,8 +28,8 @@ const Api = {
 
   /**
    * Fetches data for autocomplete
-   * lang: the language the data should be returned
-   * query: the user's search
+   * @param {string} lang - the language the data should be returned
+   * @param {string} query - the input of the user
    */
 
   getAutocomplete: async (lang, query) => {
@@ -46,8 +50,8 @@ const Api = {
 
   /**
    * Fetches random buildings data
-   * lang: the language the data should be returned
-   * limit: the number of results that will be returned
+   * @param {string} lang: the language the data should be returned
+   * @param {number} limit: the number of results that will be returned
    */
 
   searchRandom: async (lang, limit) => {
@@ -68,6 +72,7 @@ const Api = {
 
   /**
    * Fetches stats about the dataset
+   * @param {Object} json - the body of the request, contains all the tags and keywords of the user
    */
 
   getStats: async (json) => {
@@ -89,8 +94,8 @@ const Api = {
 
   /**
    * Fetches fun facts about the dataset
-   * lang: the language the data should be returned
-   * limit: the number of results that will be returned
+   * @param {string} lang: the language the data should be returned
+   * @param {number} limit: the number of results that will be returned
    */
 
   getFunFacts: async (lang, limit) => {
@@ -109,7 +114,6 @@ const Api = {
     }
   }
 
-  // Add more functions
 }
 
 export default Api

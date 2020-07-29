@@ -1,4 +1,4 @@
-/**
+/** This file enables the Dashboard page
  * Modules import
  */
 import Api from '../api.js'
@@ -6,7 +6,7 @@ import Chart from './charts.js'
 import clusteredMap from '../MapWithClusters/mapWithClusters'
 import SearchBar from '../SearchBar/searchbar'
 import PageSwitch from '../pageSwitch/pageSwitch.js'
-
+/** Declaring variables */
 let map
 let searchData
 let mapData
@@ -21,8 +21,8 @@ let sendData = {
   typologies: [],
   zipcodes: []
 }
-
 const Dashboard = {
+/** Getting the data from local storage */
   render: async () => {
     searchData = window.localStorage.getItem('search_data')
     if (typeof searchData !== 'undefined' && searchData !== null) {
@@ -44,7 +44,7 @@ const Dashboard = {
     } else {
       mapDisabled = true
     }
-
+    /** HTML containers for the charts and baselayer switch function on the map */
     const view = /* html */ `
     <section class="section__list section__search__dashboard">
       <div id="search_container"></div>
@@ -77,6 +77,7 @@ const Dashboard = {
     return view
   },
   after_render: async () => {
+  /** Enabling the SearchBar as the page is loaded */
     PageSwitch.displaySwitch('switch__container')
     PageSwitch.clickHandlerBtn()
     SearchBar.displaySearchBar('search_container')
@@ -143,6 +144,11 @@ const Dashboard = {
     // Buildings over time (timeline)
     Chart.createTimeline('.ct-chart4', Object.keys(statsData.BuildingsPerYear), Object.values(statsData.BuildingsPerYear))
   },
+  /** Selecting tags based on your input in SearchBar
+   * tags: displaying tags with and without the map
+   * tags.zipcodeArr.length: send data to the map if there are buildings from the searc input
+   * mapDisabled: disable the map when there
+  */
   SearchBarCalback: async (tags) => {
     for (const item in tags) {
       if (Array.isArray(tags[item]) && tags[item].length === 0) {
@@ -162,7 +168,7 @@ const Dashboard = {
       intervenants: tags.architectArr,
       streets: tags.streetArr
     }
-
+    // Returning data from the search to th map
     if (tags.zipcodeArr.length > 0) {
       sendDataMap.zipcode = tags.zipcodeArr[0]
     }
@@ -226,6 +232,7 @@ const Dashboard = {
     Dashboard.showStats()
   },
   noTags: () => {
+  /** If no tags are selected, map is disabled */
     const tags = {
       zipcodeArr: [],
       cityArr: [],
