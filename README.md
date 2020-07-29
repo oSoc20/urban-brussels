@@ -62,7 +62,7 @@ The fun fact container was also made for the same reason as the random search bu
 
 **Building List Page**
 
-This is then the building list page or also called the search results page. This is where you will end up when you have entered a search into the search bar on the home page (or if you clicked on a tag in a fun fact for example). we have the toggle next to ‘search as I move the map’. Toggling this feature on will
+This is where you will end up when you have entered a search into the search bar on the home page (or if you clicked on a tag in a fun fact for example). we have the toggle next to ‘search as I move the map’. Toggling this feature on will
 disable automatic filtering when you move the map.
 
 **Detail Page**
@@ -71,6 +71,6 @@ The building details include the position on the map and the different style, ty
 
 **Dashboard**
 
-This is the so-called dashboard. On the dashboard we want to visualise the data in the dataset, or if you search for something, the data that corresponds to your search.
+On the dashboard we want to visualise the data in the dataset, or if you search for something, the data that corresponds to your search.
 
 
