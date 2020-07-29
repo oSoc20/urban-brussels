@@ -17,19 +17,7 @@ Our goal is to build the bridge between the urban database on streets, statues a
 Brussels in an interactive and user-friendly way.
 
 
-# Getting started
-1. Install the used npm packages
-```
-npm install
-```
-2. Run Lockally
-```
-npm run bundle
-```
-3. Build
-Ctrl + click
-
-4. API Repo
+# Getting started (INSTALL.md)
 
 # Usage
 **Landing Page**
