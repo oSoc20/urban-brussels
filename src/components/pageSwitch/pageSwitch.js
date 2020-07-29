@@ -4,7 +4,7 @@
 
 const PageSwitch = {
   /**
-   * Renders the switch button 
+   * Renders the switch button
    * @param {string} container - the class or the id that will contain the switch button
    */
   displaySwitch: (container) => {

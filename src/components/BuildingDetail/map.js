@@ -6,6 +6,9 @@
 import BaseLayerSwitch from '../Map/baselayerswitch.js'
 
 const map = {
+  /**
+   * Displays the layer switch
+   */
   init: (map, item) => {
     const coordinatesItem = {
       long: item[0].geometry.coordinates[0],

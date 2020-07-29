@@ -24,7 +24,6 @@ let resp, inputValue, searchDiv, input, callbackFunction, callbackFunctionNoTags
 let prevTagsTotalIndex = 0
 let prevTagsIndex = 0
 
-
 const SearchBar = {
   /**
    * Renders the search bar
@@ -136,18 +135,26 @@ const SearchBar = {
     SearchBar.addItemsToList(divEl, obj.typos, 'Type', typeIcon, 'search--type', 'tag--type')
   },
 
-  // Add items to the object
+  /**
+   * Add an array of items to another one
+   * @param {Object} arr - array that contains the items that need to be added
+   * @param {Object} objArr - destination array where items will be pushed
+   */
   addItemsToObj: (arr, objArr) => {
     if (arr.length !== 0) { arr.forEach(item => objArr.push(item.name)) }
   },
 
-  // Close all autocomplete list in the document except the ones in argument
+  /**
+   * Close all autocomplete lists
+   */
   closeAllLists: () => {
     const autocompleteItems = document.querySelectorAll('.autocomplete-items')
     autocompleteItems.forEach(item => item.parentNode.removeChild(item))
   },
 
-  // Add items to the autocomplete list
+  /**
+   * Add an item to the autocomplete list
+   */
   addItemsToList: (divEl, array, name, icon = '', Nameclass = '', tagClass = '') => {
     if (array) {
       for (let i = 0; i < array.length; i++) {
