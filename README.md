@@ -13,6 +13,8 @@ Raise public awareness around Brussels’heritage and build the city of tomorrow
 This project focuses primarily on architectural students and researchers but also on people who
 want to modify certain aspects of buildings and landscape and want to check the legality of this.
 Another target audience are tourists who would like to inform themselves about Brussels & architecture.
+Our goal is to build the bridge between the urban database on streets, statues and regional areas and the community of
+Brussels in an interactive and user-friendly way.
 
 
 # Getting started
