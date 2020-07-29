@@ -1,3 +1,8 @@
+/**
+ * This module displays and contains the logic of the buildings list page
+ */
+
+/** Modules import */
 import Api from '../api.js'
 import Pagination from '../Pagination/pagination'
 import SearchBar from '../SearchBar/searchbar'
@@ -10,7 +15,12 @@ import buildingDetail from '../BuildingDetail/buildingDetail'
 
 import backButton from '../../assets/icons/back-button.svg'
 import PageSwitch from '../pageSwitch/pageSwitch.js'
+<<<<<<< HEAD
 /** Declaring variables */
+=======
+
+/** Variable declarations */
+>>>>>>> c577d768dbf9cc4538265fea8794383999ee80e9
 let searchData, map, popup
 let data = []
 let features = []
@@ -156,8 +166,7 @@ const buildingList = {
     Pagination.init(document.getElementsByClassName('pagination')[0], {
       currentPage: 1,
       totalItems: features.length,
-      itemsPerPage: itemsPerPage,
-      stepNum: 1
+      itemsPerPage: itemsPerPage
     })
 
     Pagination.onPageChanged(buildingList.displayContent)

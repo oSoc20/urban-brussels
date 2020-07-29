@@ -1,3 +1,4 @@
+/** Modules import */
 import Navbar from './components/Navbar/navbar.js'
 import Landing from './components/Landing/landing.js'
 import Dashboard from './components/Dashboard/dashboard.js'

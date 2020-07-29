@@ -1,4 +1,12 @@
+/**
+ * This module displays and contains the logic of the switch button that let the user navigate between the buildings list and the dashboard
+ */
+
 const PageSwitch = {
+  /**
+   * Renders the switch button
+   * @param {string} container - the class or the id that will contain the switch button
+   */
   displaySwitch: (container) => {
     document.getElementsByClassName(container)[0].innerHTML = `
     <div class="btn-switch">
@@ -29,6 +37,10 @@ const PageSwitch = {
       </button>
     </div>`
   },
+
+  /**
+   * Let the user switch view between buildings list and dashboard
+   */
   clickHandlerBtn: () => {
     const btnList = document.querySelector('.btn__list')
     const btnDashboard = document.querySelector('.btn__dashboard')

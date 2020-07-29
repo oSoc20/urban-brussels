@@ -1,8 +1,18 @@
+<<<<<<< HEAD
 /** The file enables the BuildingPopUp on the map of the Building List page
  * Import Modules */
+=======
+/**
+ * This module displays pop-ups that contain information on specific buildings
+ */
+
+/** Modules import */
+>>>>>>> c577d768dbf9cc4538265fea8794383999ee80e9
 import mapboxgl from 'mapbox-gl'
 
+/** Variable declarations */
 let popup
+
 const popupBuilding = {
   /** Initializing map
    * map: loads the map

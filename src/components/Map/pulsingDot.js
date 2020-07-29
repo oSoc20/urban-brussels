@@ -1,4 +1,5 @@
-/** This file enables the pulsing dot component on all maps in the application */
+/** This module enables the pulsing dot component on all maps in the application */
+
 const pulsingDot = {
   init: (map) => {
     const size = 200

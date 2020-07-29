@@ -1,3 +1,8 @@
+/**
+ * This module displays and contains the logic of the detail page of a specific building
+ */
+
+/** Modules import */
 import styleIcon from '../../assets/icons/style-icon.svg'
 import typeIcon from '../../assets/icons/type-icon.svg'
 import architectIcon from '../../assets/icons/architect-icon.svg'
@@ -5,7 +10,9 @@ import watchIcon from '../../assets/icons/eye-icon.svg'
 import buildingList from '../BuildingsList/buildingslist'
 import mapDetail from './map'
 
+/** Variable declarations */
 let randomClicked
+
 const detail = {
   showDetail: (map, item, popup, randomBuildingClicked = false) => {
     randomClicked = randomBuildingClicked
