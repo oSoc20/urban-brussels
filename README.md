@@ -19,8 +19,14 @@ Description
 
 # Getting started
 ## Prerequisities
-## Installation
+* npm
 
+You will need npm do get the used packages.
+## Installation
+1. Install the used npm packages
+```
+npm install
+```
 # Usage
 
 # TODO
