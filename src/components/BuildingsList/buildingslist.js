@@ -120,6 +120,7 @@ const buildingList = {
     }
     pulsingDot.init(map)
   },
+
   SearchBarCalback: async (tags) => {
     const send = {
       lang: 'fr',
@@ -187,7 +188,6 @@ const buildingList = {
     })
     buildingListItems.forEach(item => item.addEventListener('mouseleave', () => popupBuilding.removePopup()))
   },
-
   renderList: (currentPage) => {
     let html = ''
     for (let i = (currentPage - 1) * itemsPerPage; i < (currentPage * itemsPerPage) && i < features.length; i++) {

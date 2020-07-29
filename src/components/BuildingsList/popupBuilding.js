@@ -1,21 +1,23 @@
-/**
- * This module displays pop-ups that contain information on specific buildings
- */
-
-/** Modules import */
+/** The file enables the BuildingPopUp on the map of the Building List page
+ * Import Modules */
 import mapboxgl from 'mapbox-gl'
 
 /** Variable declarations */
 let popup
 
 const popupBuilding = {
+  /** Initializing map
+   * map: loads the map
+   */
   init: (map) => {
     popup = new mapboxgl.Popup({
       closeButton: false,
       closeOnClick: false,
       maxWidth: 'max-content'
     })
-
+    /** Pop-up of one building and its features on the map
+     * e: calls on features from API
+     */
     map.on('mouseenter', 'unclustered-point', (e) => {
       map.getCanvas().style.cursor = 'pointer'
       const coordinates = e.features[0].geometry.coordinates.slice()
@@ -42,6 +44,13 @@ const popupBuilding = {
 
     return popup
   },
+  /** PopUp displayed when hovering over the point
+   * event: when you hover over the point
+   * map: loads the map
+   * currentPage: number of pages displayed
+   * itemsPerPage: how many buildings to display on the page
+   * data: getting the data from API
+  */
   hoverHandlerPopupBuilding: (event, map, currentPage = 1, itemsPerPage, data) => {
     // popup.remove()
     const address = event.currentTarget.dataset.address

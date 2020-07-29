@@ -3,7 +3,7 @@
 /** Icons import */
 import dropdownIcon from '../../assets/icons/dropdown-icon.svg'
 /**
- * OpenStreetMap Layer
+ * MapBox Layer
  * Aerial Imagenary Layer
  * Grayscale Layer
  */
@@ -24,6 +24,7 @@ const BaseLayerSwitch = {
           `
   },
   showGrayScale: (map, layerId) => {
+    /** Adding grayscale Layer */
     map.addLayer({
       id: 'wms-layer-grayscale',
       type: 'raster',
@@ -35,6 +36,7 @@ const BaseLayerSwitch = {
     }
   },
   showAerial: (map, layerId) => {
+    /** Adding Aerial Imagery Layer */
     map.addLayer({
       id: 'wms-layer-aerial',
       type: 'raster',
@@ -46,6 +48,7 @@ const BaseLayerSwitch = {
     }
   },
   showMapbox: (map) => {
+    /** Declaring MapBox Layer as a default */
     if (map.getLayer('wms-layer-grayscale')) {
       map.removeLayer('wms-layer-grayscale')
     }
@@ -54,6 +57,7 @@ const BaseLayerSwitch = {
     }
   },
   addEventListener: (map, layerId) => {
+    /** Connecting layers to HTML buttons  */
     document.getElementById('grayscale').addEventListener('click', () => {
       BaseLayerSwitch.showGrayScale(map, layerId)
     })

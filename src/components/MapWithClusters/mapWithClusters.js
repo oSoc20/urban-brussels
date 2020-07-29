@@ -11,6 +11,7 @@ const MapWithClusters = {
    * Initiates and displays the map
    */
   init: (data) => {
+    // Positioning the map and navigation control
     mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
     map = new mapboxgl.Map({
       container: 'clusterMap',
@@ -39,6 +40,7 @@ const MapWithClusters = {
       BaseLayerSwitch.initSources(map, 'FR')
 
       map.addSource('buildings', {
+        // Adding building layer from GeoJSON data
         type: 'geojson',
         data: data,
         cluster: true,
@@ -55,6 +57,7 @@ const MapWithClusters = {
       })
 
       map.addLayer({
+        // Changing clusters style and count on zoom
         id: 'clusters',
         type: 'circle',
         source: 'buildings',
