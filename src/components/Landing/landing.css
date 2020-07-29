@@ -1,0 +1,123 @@
+/** MAP **/
+
+.map-landing-page {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+}
+
+.pop-up__img--landing {
+    border-radius: 10px 10px 0 0 !important;
+    box-shadow: 0px 3.3655px 3.3655px rgba(0, 0, 0, 0.04);
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 200px;
+}
+  
+.pop-up__address--landing {
+    max-width: 170px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 15px;
+    color: #2C3550;
+    line-height: 25px;
+    text-align: start;
+}
+  
+.landing__container {
+    position: absolute;
+    background: white;
+    z-index: 2;
+    border-radius: 0 15px 15px 0;
+    box-shadow: 0px 3.3655px 3.3655px rgba(0, 0, 0, 0.1);
+    min-width: 500px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: fit-content;
+    padding: 30px;
+}
+  
+.fun-fact__container {
+    border: 2px solid #F5F5F5;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 30px 0 30px 0;
+    display: flex;
+    flex-direction: column;
+    width: 550px;
+}
+  
+.fun-fact__txt {
+    font-size: 17px;
+    line-height: 40px;
+    width: 100%;
+    height: 150px;
+}
+  
+.fun-fact__arrows {
+    align-self: flex-end;
+    margin-top: 10px;
+}
+  
+.fun-fact__arrows .arrowLeft img {
+    transform: rotate(180deg);
+    margin-right: 10px;
+}
+/* Layers dropdown button */
+
+.dropdown_menu {
+    float: right;
+    position: absolute;
+    right: 100px;
+    bottom: 50px;
+    cursor: pointer;
+}
+
+.dropdown_menu__fixed {
+    position: fixed;
+}
+#main-button {
+    height: 50px;
+    width: 150px;
+    border: 2px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    cursor: pointer;
+    outline: none;
+}
+.menu_class {
+    display: none;
+    background: #fff;
+    z-index: 1;
+    border-radius: 20px;
+    width: 150px;
+    border: 1px;
+}
+.menu_class a {
+    padding: 12px 16px;
+    display: block;
+}
+.menu_class button:hover {background-color:#81d8bf; padding: 4px;}
+
+.dropdown_menu:hover .menu_class {display: block; border-radius: 20px; bottom: 100%;}
+.dropdown_menu:hover #main-button {background-color: #ddd;}
+
+/* Buttons Layers */
+.menu_class button {
+    border: none;
+    background-color: #fff;
+    border-radius: 20px;
+    width: 100%;
+    font-size: 15px;
+    cursor: pointer;
+    outline: none;
+}
+#main-button img {
+    width: 33%;
+}

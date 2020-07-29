@@ -1,0 +1,77 @@
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+.ButtonDashContainer, #clickDashboard {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  right: 30px;
+  max-width: 400px;
+  float: right;
+  margin-right: 5px;
+  top: 40px;
+}
+
+.ButtonDashContainer--building {
+  position: fixed;
+}
+
+
+#clickDashboard{
+width: 140px;
+padding: 13px;
+background-color: #81d8bf;
+border-radius: 12px;
+font-weight: lighter;
+border: none;
+color: white;
+cursor: pointer;
+}
+
+#dash_text{
+font-size: 15px;
+font-family: 'Lato', sans-serif;
+}
+
+#drop_lang{
+width: 50px;
+}
+
+#lang_drop_content{
+display: none;
+position: absolute;
+background-color: #f1f1f1;
+width: 100%;
+box-shadow: 3px 3px	rgba(190, 233, 254, 0.5);
+z-index: 2;
+}
+header,
+section,
+aside,
+footer {
+  margin: 0 1.5% 24px 1.5%;
+}
+#map {
+  width: 70%;
+  height: 70%;
+  position: absolute; 
+  top: 250px;
+  bottom: 10px;
+}
+ *{
+font-family: 'Lato';
+ }
+
+
+/* Main */
+
+.ButtonDashContainer:hover .lang_drop_content {
+  display: block;
+}
+
+/** MAPBOX **/
+
+.mapboxgl-popup-content {
+  padding: 0
+}

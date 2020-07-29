@@ -1,0 +1,38 @@
+{
+  "name": "urban-brussels",
+  "version": "1.0.0",
+  "main": "main.js",
+  "dependencies": {
+    "mapbox-gl": "^1.11.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.4.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "parcel-bundler": "^1.12.4"
+  },
+  "scripts": {
+    "test": "eslint src/",
+    "fix": "eslint --fix src/",
+    "bundle": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oSoc20/urban-brussels.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oSoc20/urban-brussels/issues"
+  },
+  "homepage": "https://github.com/oSoc20/urban-brussels#readme",
+  "keywords": [],
+  "description": "",
+  "browserslist": [
+    "since 2017-06"
+  ]
+}

@@ -1,0 +1,83 @@
+.grid-container {
+    display: grid;
+    grid-template-areas:
+      "header"
+      "main";
+    height: 100%;
+    width: calc(100vw - 110px);
+    margin: 20px 45px 0 45px;
+}
+
+.main-overview {
+    position: relative;
+    grid-area: main;
+    display: grid;
+    grid-gap: 20px;
+    background-color: #ffffff;
+    grid-template-columns: 55% 45%;
+    margin-bottom: 30px;
+}
+.section__search__dashboard {
+    position: relative;
+    width: 87%;
+    padding: 45px 0 0 30px;
+    margin-bottom: 0;
+}
+
+.item {
+    height: 250px;
+    padding: 20px 20px 20px 0;
+    background-color: #FDFDFD;
+    box-shadow: 0px 3.3655px 3.3655px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    line-height: 10px;
+}
+
+.map_dashboard  {
+    height: 95.5%;
+    grid-column-start: 2;
+    grid-row-start: 1;
+    grid-row-end: 4;
+}
+
+/* GENERAL CHARTS */
+div[class^=chart_title]{
+    margin-left: 40px;
+    font-size: large;
+    margin-bottom: 5px;
+}
+
+div[class^=ct-chart]{
+    height: 100%;
+    width: 100%;
+}
+
+div[class^=ct-chart] .ct-series .ct-bar{
+    stroke-width: 10px;
+}
+
+div[class^=ct-chart] .ct-labels .ct-label {
+    color: black;
+}
+
+/* Chart 1 BUILDINGS PER ARCHITECT */
+
+.ct-chart1 .ct-bar {
+    stroke:#dfbdf3;
+  }
+
+  /* Chart 2 STYLES PER CITY */
+.ct-chart2 .ct-series .ct-bar { 
+    stroke: #FFB596; 
+}
+
+ /* Chart 3 BUILDINGS PER TYPOLOGY */
+ .ct-chart3 .ct-bar {
+    stroke:#bee9fe;
+  }
+
+  /* Chart 4 BUILDINGS PER TYPOLOGY */
+ .ct-chart4 .ct-area {
+    fill:#81d8bf;
+    fill-opacity: 1;
+  }

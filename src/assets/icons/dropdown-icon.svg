@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" version="1.1" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;" viewBox="0 0 847 1058.75" x="0px" y="0px" fill-rule="evenodd" clip-rule="evenodd"><defs><style type="text/css">
+.fil0 {fill:black}
+</style>
+</defs>
+<g>
+<path class="fil0" d="M187 490l15 -8 141 73c22,11 49,18 75,19 27,2 53,-2 72,-12l155 -80 1 1c40,21 46,51 14,68l-178 91c-32,17 -91,14 -131,-7l-151 -77c-39,-21 -45,-51 -13,-68z"/>
+<path class="fil0" d="M187 395l19 -10 137 71c22,11 49,18 75,19 27,1 53,-3 72,-12l151 -78 5 3c40,21 46,51 14,68l-178 91c-32,17 -91,13 -131,-7l-151 -77c-39,-21 -45,-51 -13,-68z"/>
+<rect class="fil0" transform="matrix(0.937638 -0.482245 0.937638 0.482245 128.09 326.155)" width="315" height="315" rx="77" ry="77"/>
+</g>
+</svg>
