@@ -1,4 +1,4 @@
-/**
+/** This file enables the Dashboard page
  * Modules import
  */
 import Api from '../api.js'
@@ -21,8 +21,8 @@ let sendData = {
   typologies: [],
   zipcodes: []
 }
-
 const Dashboard = {
+/** Getting the data from local storage */
   render: async () => {
     searchData = window.localStorage.getItem('search_data')
     if (typeof searchData !== 'undefined' && searchData !== null) {
