@@ -1,6 +1,13 @@
+/**
+ * This module displays pop-ups that contain information on specific buildings
+ */
+
+/** Modules import */
 import mapboxgl from 'mapbox-gl'
 
+/** Variable declarations */
 let popup
+
 const popupBuilding = {
   init: (map) => {
     popup = new mapboxgl.Popup({

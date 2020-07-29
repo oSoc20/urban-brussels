@@ -1,4 +1,8 @@
 /**
+ * This module displays and contains the logic of the search bar of the landing page
+ */
+
+/**
  * Modules imports
  */
 import Api from '../api.js'

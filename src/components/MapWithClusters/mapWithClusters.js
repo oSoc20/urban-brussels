@@ -1,3 +1,7 @@
+/**
+ * This module displays a map that contains cluster points of locations
+ */
+
 import mapboxgl from 'mapbox-gl'
 import BaseLayerSwitch from '../Map/baselayerswitch.js'
 

@@ -1,6 +1,14 @@
+/**
+ * This module displays and contains the logic of the pagination used for the buildings list page
+ */
+
+
+/** Modules import */
 import arrowRight from '../../assets/icons/arrow-icon.svg'
 import BuildingsList from '../BuildingsList/buildingslist'
 
+
+/** Variable declarations */
 let currentPage
 let itemsPerPage
 let size

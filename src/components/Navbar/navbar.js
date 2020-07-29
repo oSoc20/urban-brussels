@@ -1,3 +1,7 @@
+/**
+ * This module displays and contains the logic of the language button switch
+ */
+
 const Navbar = {
   render: async () => {
     const view = /* html */`

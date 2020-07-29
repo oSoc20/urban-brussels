@@ -1,3 +1,8 @@
+/**
+ * This module displays and contains the logic of the buildings list page
+ */
+
+/** Modules import */
 import Api from '../api.js'
 import Pagination from '../Pagination/pagination'
 import SearchBar from '../SearchBar/searchbar'
@@ -11,6 +16,7 @@ import buildingDetail from '../BuildingDetail/buildingDetail'
 import backButton from '../../assets/icons/back-button.svg'
 import PageSwitch from '../pageSwitch/pageSwitch.js'
 
+/** Variable declarations */
 let searchData, map, popup
 let data = []
 let features = []

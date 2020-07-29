@@ -1,3 +1,7 @@
+/**
+ * This module displays and contains the logic of the search bar in the buildings list and dashboard page
+ */
+
 /**  Modules imports */
 import Api from '../api.js'
 import styleIcon from '../../assets/icons/style-icon.svg'
@@ -20,8 +24,12 @@ let resp, inputValue, searchDiv, input, callbackFunction, callbackFunctionNoTags
 let prevTagsTotalIndex = 0
 let prevTagsIndex = 0
 
-// Rendering of the search bar
+
 const SearchBar = {
+  /**
+   * Renders the search bar
+   * @param {string} container - the class or the id that will contain the search bar
+   */
   displaySearchBar: (container) => {
     document.getElementById(container).innerHTML = /* html */ `
         <div class="search_ctn">

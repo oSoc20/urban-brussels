@@ -1,3 +1,8 @@
+/**
+ * This module displays a map along with a base layer switch
+ */
+
+/** Modules import */
 import BaseLayerSwitch from '../Map/baselayerswitch.js'
 
 const map = {
