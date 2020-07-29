@@ -17,7 +17,7 @@ Our goal is to build the bridge between the urban database on streets, statues a
 Brussels in an interactive and user-friendly way.
 
 
-# Getting started (INSTALL.md)
+# [Getting started](INSTALL.md)
 
 # Usage
 **Landing Page**
