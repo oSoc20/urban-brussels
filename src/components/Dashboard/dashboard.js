@@ -50,8 +50,8 @@ const Dashboard = {
     /** HTML containers for the charts and baselayer switch function on the map */
     const view = /* html */ `
     <section class="section__list section__search__dashboard">
-      <div id="home_button_ctn"></div>
-      <div id="search_container"></div>
+      <div id="home_btn_ctn--dashboard"></div>
+      <div id="search_container--dashboard"></div>
       <div class="switch__container switch__container--dashboard"></div>
     </section>
     <div class="grid-container">
@@ -82,13 +82,13 @@ const Dashboard = {
   },
   after_render: async () => {
     /** Home button */
-    HomeButton.displayHomeButton('home_button_ctn')
+    HomeButton.displayHomeButton('home_btn_ctn--dashboard')
     HomeButton.clickHandlerHomeBtn()
 
     /** Enabling the SearchBar as the page is loaded */
     PageSwitch.displaySwitch('switch__container')
     PageSwitch.clickHandlerBtn()
-    SearchBar.displaySearchBar('search_container')
+    SearchBar.displaySearchBar('search_container--dashboard')
     SearchBar.searchFunction(Dashboard.SearchBarCalback, Dashboard.noTags)
 
     if (mapDisabled) {

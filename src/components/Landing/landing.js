@@ -30,7 +30,7 @@ const Landing = {
       <div class="search__container">
         <div id="search_container"></div>
         <button class="btn btn--random" id="searchrandom_btn">
-        <div>
+        <div class="btn-hover-div">
           <svg width="46" height="38" viewBox="0 0 46 38" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M18.5781 1.99992L1 12.1887L11.149 29.8357L28.7271 19.6469L18.5781 1.99992Z" class="svg__stroke"/>
             <path d="M24.6465 12.4795L26.5845 9.04907L44.1795 19.2379L34.0305 36.9019L21.7905 29.7851" class="svg__stroke"/>

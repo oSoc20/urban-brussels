@@ -1,8 +1,48 @@
-.home_button{
-    background: #ffffff;
-    border-color: #81d8bf;
+
+#home_btn_ctn, #home_btn_ctn--dashboard {
+    position: absolute;
+    z-index: 5;
+    left: 0;
 }
 
-.home_svg{
+.home_button {
+    border-color: #81d8bf;
+    width: 50px;
+    overflow: hidden;
+    background: white;
+}
+
+.home_button svg {
+    width: 50%;
+}
+
+.home_button div {
+    width: inherit;
+    height: auto;
+    margin-left: -8px;
+    margin-top: -1px;
+    box-shadow: inset 1px 0 0 #81D8BF;
+    transition: box-shadow .6s ease;
+  }
+  
+.home_button:hover div {
+    box-shadow: inset 50px 0 0 #81D8BF;
+}
+  
+.home_button:focus {
+    outline: none;
+}
+
+.home_svg {
     fill: #81d8bf;
+    transition: all .6s ease;
+}
+
+.home_button:hover div svg .home_svg {
+    fill: white;
+  }
+  
+
+#home_btn_ctn--dashboard {
+    left: 20px;
 }
