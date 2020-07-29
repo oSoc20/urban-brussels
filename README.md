@@ -5,7 +5,6 @@ Together with Urban.Brussels, we want to build an open web application that will
 * [About the project](#about-the-project)
 * [Getting started](#getting-started)
 * [Usage](#usage)
-* [Contact](#contact)
 
 # About project
 
@@ -55,5 +54,4 @@ To get here, you have 3 different options. You either click on a building in you
 
 This is the so-called dashboard. On the dashboard we want to visualise the data in the dataset, or if you search for something, the data that corresponds to your search.
 
-# Contact
-list of git profiles of the team
+
