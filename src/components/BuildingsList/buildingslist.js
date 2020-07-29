@@ -12,6 +12,7 @@ import clusteredMap from '../MapWithClusters/mapWithClusters'
 import popupBuilding from './popupBuilding'
 import pulsingDot from '../Map/pulsingDot'
 import buildingDetail from '../BuildingDetail/buildingDetail'
+import HomeButton from '../HomeButton/homeButton'
 
 import backButton from '../../assets/icons/back-button.svg'
 import PageSwitch from '../pageSwitch/pageSwitch.js'
@@ -76,6 +77,7 @@ const buildingList = {
         <input type="checkbox" id="switch" checked /><label for="switch">Toggle</label>
       </div>
       <section class="section__list">
+      <div id="home_btn_ctn"></div>
       <div class="btn__container">
         <div id="search_container"></div>
         <div class="switch__container"></div>
@@ -91,6 +93,10 @@ const buildingList = {
   },
   after_render: async () => {
     if (!randomBuildingClicked) {
+      /** Home button */
+      HomeButton.displayHomeButton('home_btn_ctn')
+      HomeButton.clickHandlerHomeBtn()
+
       PageSwitch.displaySwitch('switch__container')
       PageSwitch.clickHandlerBtn()
       SearchBar.displaySearchBar('search_container')

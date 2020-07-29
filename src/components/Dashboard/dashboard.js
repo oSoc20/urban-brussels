@@ -6,6 +6,8 @@ import Chart from './charts.js'
 import clusteredMap from '../MapWithClusters/mapWithClusters'
 import SearchBar from '../SearchBar/searchbar'
 import PageSwitch from '../pageSwitch/pageSwitch.js'
+import HomeButton from '../HomeButton/homeButton'
+
 /** Declaring variables */
 let map
 let searchData
@@ -47,6 +49,7 @@ const Dashboard = {
     /** HTML containers for the charts and baselayer switch function on the map */
     const view = /* html */ `
     <section class="section__list section__search__dashboard">
+      <div id="home_button_ctn"></div>
       <div id="search_container"></div>
       <div class="switch__container switch__container--dashboard"></div>
     </section>
@@ -77,7 +80,11 @@ const Dashboard = {
     return view
   },
   after_render: async () => {
-  /** Enabling the SearchBar as the page is loaded */
+    /** Home button */
+    HomeButton.displayHomeButton('home_button_ctn')
+    HomeButton.clickHandlerHomeBtn()
+
+    /** Enabling the SearchBar as the page is loaded */
     PageSwitch.displaySwitch('switch__container')
     PageSwitch.clickHandlerBtn()
     SearchBar.displaySearchBar('search_container')
