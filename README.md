@@ -65,7 +65,7 @@ disable automatic filtering when you move the map.
 
 **Detail Page**
 
-The building details include the position on the map and the different style, type and architect tags. To Get to know more button, which redirects to the Iris Monument page of this specific building, as there is often more information to be found there.
+The building details include the position on the map and the different style, type and architect tags. To get to know more button, which redirects to the Iris Monument page of this specific building, as there is often more information to be found there.
 
 **Dashboard**
 
