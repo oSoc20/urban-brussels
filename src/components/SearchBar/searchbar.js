@@ -39,7 +39,12 @@ const SearchBar = {
             </div>
         </div>`
   },
-
+  /**
+   * Add the event listener for the search bar
+   * Call function to get the searched tags from the local storage
+   * @param {function} callback - callback function this function will be executed when search filters/tags are added or removed
+   * @param {function} callbackNoTags - callback function this function will be executed when no search filters/tags are selected
+   */
   searchFunction: (callback, callbackNoTags) => {
     callbackFunction = callback
     callbackFunctionNoTags = callbackNoTags
@@ -51,6 +56,9 @@ const SearchBar = {
     input.addEventListener('input', SearchBar.inputHandler)
   },
 
+  /**
+   * Get the searched tags from the local storage
+   */
   getSearchedTag: () => {
     tags = {
       zipcodeArr: [],
@@ -79,6 +87,14 @@ const SearchBar = {
       SearchBar.addTag(searchData.typologies, 'Type', 'search--type', 'tag--type')
     }
   },
+
+  /**
+   * Check if array parameter is an array or a string and if it's not empty call function to show the searched tags/filters
+   * @param {Array} array - array that contains the tags/filters that are searched for
+   * @param {string} name - Name of the category the tags/filters belong to (zipcode, city, street, architect, style, type)
+   * @param {string} Nameclass - class to change the style of the item in the  autocomplete list according to the category
+   * @param {string} tagClass - class to change the style of the shown tags/filters according to the category
+   */
   addTag: (array, name, Nameclass = '', tagClass = '') => {
     if (Array.isArray(array)) {
       if (array.length !== 0) {
@@ -95,6 +111,10 @@ const SearchBar = {
     }
   },
 
+  /**
+   * Executes when an input is typed in the search filed
+   * @param {Object} e - the current event
+   */
   inputHandler: async (e) => {
     inputValue = e.currentTarget.value
     // Close any already open lists of autocompleted values
@@ -153,7 +173,13 @@ const SearchBar = {
   },
 
   /**
-   * Add an item to the autocomplete list
+   * Add an item to the autocomplete list in the right style
+   * @param {HTMLElement} divEl- HTML element that will conains the autocomplete list items
+   * @param {Array} array- array that contains the tags/filters that are searched for
+   * @param {string} name- Name of the category the tags/filters belong to (zipcode, city, street, architect, style, type)
+   * @param {image} icon- Image that belongs to the category
+   * @param {string} Nameclass- Class to change the style of the item in the  autocomplete list according to the category
+   * @param {string} tagClass- Class to change the style of the shown tags/filters according to the category
    */
   addItemsToList: (divEl, array, name, icon = '', Nameclass = '', tagClass = '') => {
     if (array) {
@@ -188,6 +214,13 @@ const SearchBar = {
     }
   },
 
+  /**
+   * Create and show the searched tags/filters with icon to remove
+   * @param {string} value - Contains the name/value of the tag/filter
+   * @param {string} name - Name of the category the tags/filters belong to (zipcode, city, street, architect, style, type)
+   * @param {string} Nameclass - Class to change the style of the item in the  autocomplete list according to the category
+   * @param {string} tagClass - Class to change the style of the shown tags/filters according to the category
+   */
   selectTagFromList: (value = '', name, Nameclass = '', tagClass = '') => {
     SearchBar.closeAllLists()
     if (value !== '') {
@@ -228,12 +261,25 @@ const SearchBar = {
       }
     }
   },
+
+  /**
+   * Executes when  clicked on a tag/filter
+   * Gets the value without category name
+   * @param {Object} e - the current event
+   */
   clickHandlerTag: (e) => {
     const txt = e.currentTarget.childNodes[2].data
     const index = txt.indexOf(':')
     SearchBar.closeTag(e.currentTarget, txt.substr(index + 2))
   },
 
+  /**
+   * Executes when clicked on a tag/filter
+   * Removes the clicked tag
+   * Gets the value without category name
+   * @param {Object} item - current tag(html object) that was clicked on
+   * @param {string} value - value of the current tag without category name
+   */
   closeTag: (item, value) => {
     const name = item.dataset.name
     item.style.display = 'none'
@@ -252,10 +298,16 @@ const SearchBar = {
     }
   },
 
+  /**
+   * Calls calback function when tag/filter was removed or added
+   */
   updateList: async () => {
     callbackFunction(tags)
   },
 
+  /**
+   * Calls calback function when there are no tags/filters selected
+   */
   noTags: () => {
     callbackFunctionNoTags()
   }
