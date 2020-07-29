@@ -52,7 +52,7 @@ Navigate to http://localhost:1234. You should see the project running.
 **Landing Page**
 
 The landing page is built up with a large dynamic map as background. 
-On the center left we have a component which stores the search bar, a random search or‘get lucky’ button and a fun facts container.
+On the center left we have a component which stores the search bar, a random search or ‘get lucky’ button and a fun facts container.
 
 The random search button automatically generates a random building and brings the user to the detail page of that building. 
 
