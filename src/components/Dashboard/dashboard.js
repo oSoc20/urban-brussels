@@ -14,8 +14,9 @@ let searchData
 let mapData
 let mapDisabled = true
 let statsData = []
+const language = window.sessionStorage.getItem('lang')
 let sendData = {
-  lang: 'fr',
+  lang: language,
   cities: [],
   intervenants: [],
   streets: [],
@@ -103,7 +104,7 @@ const Dashboard = {
       mapData = await Api.searchData(searchData)
       map = clusteredMap.init(mapData)
       sendData = {
-        lang: 'fr',
+        lang: language,
         cities: searchData.cities,
         intervenants: searchData.intervenants,
         streets: searchData.streets,
@@ -167,7 +168,7 @@ const Dashboard = {
     }
 
     const sendDataMap = {
-      lang: 'fr',
+      lang: language,
       zipcode: '',
       cities: tags.cityArr,
       typologies: tags.typeArr,
@@ -209,7 +210,7 @@ const Dashboard = {
     }
 
     sendData = {
-      lang: 'fr',
+      lang: language,
       cities: tags.cityArr,
       intervenants: tags.architectArr,
       streets: tags.streetArr,

@@ -140,7 +140,7 @@ const buildingList = {
    */
   SearchBarCalback: async (tags) => {
     const send = {
-      lang: 'fr',
+      lang: language,
       zipcode: '',
       cities: tags.cityArr,
       typologies: tags.typeArr,

@@ -71,6 +71,9 @@ const SearchBar = {
     let searchData = window.localStorage.getItem('search_data')
     if (typeof searchData !== 'undefined' && searchData !== null) {
       searchData = JSON.parse(searchData)
+      if (searchData.lang === null) {
+        searchData.lang = 'fr'
+      }
       for (const item in searchData) {
         prevTagsTotalIndex += searchData[item].length
         if (item === 'zipcode' && searchData[item].length >= 4) {

@@ -15,7 +15,7 @@ import architectIcon from '../../assets/icons/architect-icon.svg'
 /**
  * Variables declarations
  */
-const language = window.sessionStorage.getItem('lang')
+let language = window.sessionStorage.getItem('lang')
 const tags = {
   zipcodeArr: [],
   cityArr: [],
@@ -132,6 +132,9 @@ const SearchBar = {
    */
   goToList: async () => {
     // JSON body that will be sent
+    if (language === null) {
+      language = 'fr'
+    }
     const send = {
       lang: language,
       zipcode: '',

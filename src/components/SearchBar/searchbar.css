@@ -31,7 +31,7 @@
 .btn--random div {
   width: inherit;
   height: auto;
-  margin-left: -9px;
+  margin-left: -12px;
   margin-top: -1px;
   box-shadow: inset 0 0 0 #81D8BF;
   transition: all .6s ease;
@@ -183,4 +183,8 @@
 .search-icon {
   width: 12px;
   margin-right: 5px;
+}
+
+#search_container {
+  width: 100%;
 }
