@@ -60,15 +60,17 @@ When clicking a tag that’s incorporated in the fun fact, you will immediately 
 
 **Building List Page**
 
-This is where you will end up when you have entered a search into the search bar on the home page (or if you clicked on a tag in a fun fact for example). we have the toggle next to ‘search as I move the map’. Toggling this feature on will
-disable automatic filtering when you move the map.
+This is where you will end up when you have entered a search into the search bar on the home page (or if you clicked on a tag in a fun fact for example). we have the toggle next to ‘search as I move the map’. Toggling this feature on will disable automatic filtering when you move the map.
+
+The buildings are shown with dots that are clustered together if you’re zoomed out and have a lot of different buildings close together. If you hover over a single dot, you will get a pop-up with some specifics of that building.
 
 **Detail Page**
 
-The building details include the position on the map and the different style, type and architect tags. To get to know more button, which redirects to the Iris Monument page of this specific building, as there is often more information to be found there.
+The building details include the position on the map and the different style, type and architect tags. In every page we have a button to change the map shown. Here we see the map version where showing the different options. These options are defined to be either our custom Mapbox map (shown here as background), the black and white BruGIS/UrbGIS map or an aerial map of Brussels.
 
 **Dashboard**
 
-On the dashboard we want to visualise the data in the dataset, or if you search for something, the data that corresponds to your search.
+On the dashboard we want to visualise the data in the dataset, or if you search for something, the data that corresponds to your search. We provide
+by actually giving you 5 different charts. We plot the number of buildings per architect, style and typography, and we plot the buildings over time and per location.
 
 
