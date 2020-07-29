@@ -48,7 +48,7 @@ disable automatic filtering when you move the map.
 
 **Detail Page**
 
-To get here, you have 3 different options. You either click on a building in your search results, either in the list or on the map. Or you’re coming straight from the landing page by clicking on either the random building button, or one of the randomly generated buildings displayed on the home page.
+The building details include the position on the map and the different style, type and architect tags. Furthermore we show the address, and if there is a name of the building in our database, that will also be shown above the address. Under the details we have a Get to know more button, which redirects to the Iris Monument page of this specific building, as there is often more information to be found there.
 
 **Dashboard**
 
