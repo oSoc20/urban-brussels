@@ -109,7 +109,7 @@
   z-index: 99;
   left: 0;
   border-radius: 12px;
-  width: 415px;
+  width: 100%;
 }
 .autocomplete-items div {
   padding: 10px;
@@ -144,7 +144,6 @@
 }
 
 .search--style {
-  background-color: #F0F5FF !important;
   color: #618EEC;
 }
 
@@ -155,17 +154,15 @@
 }
 
 .search--type  {
-  background-color: #FDF5F2 !important;
   color: #F58975;
 }
 
 .search--architect {
-  background-color: #FCF1F7 !important;
   color: #AF447F;
 }
 
-.search--style:hover, .search--type:hover, .search--architect:hover {
-  background-color: white !important;
+.autocomplete-items div:hover {
+  background-color: #F5F5F5 !important;
 }
 
 .search-icon {
