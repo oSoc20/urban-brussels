@@ -106,7 +106,7 @@ const SearchBar = {
           }
 
           divTag.className = className
-          divTag.innerHTML += name + ': ' + array[i]
+          divTag.innerHTML += SearchBar.toDisplayName(name) + ': ' + array[i]
           divTag.innerHTML += "<input type='hidden' value='" + array[i] + "'>"
 
           // Execute  when someone clicks on an item of the autocomplete list
@@ -157,6 +157,12 @@ const SearchBar = {
     if (window.location.hash !== '#/list') {
       window.location.href = '/#/list'
     }
+  },
+  /**
+   * Translates array name to display name
+   */
+  toDisplayName: (arrName) => {
+    return window.langText[arrName]
   }
 }
 

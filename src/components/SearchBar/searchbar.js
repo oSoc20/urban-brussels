@@ -202,7 +202,7 @@ const SearchBar = {
           }
 
           divTag.className = className
-          divTag.innerHTML += name + ': ' + array[i]
+          divTag.innerHTML += SearchBar.toDisplayName(name) + ': ' + array[i]
           divTag.innerHTML += "<input type='hidden' value='" + array[i] + "'>"
 
           // Execute  when someone clicks on an item of the autocomplete list
@@ -246,7 +246,7 @@ const SearchBar = {
               <path class="${className}" d="M10 1L1 10"  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        ` + name + ': ' + value
+        ` + SearchBar.toDisplayName(name) + ': ' + value
         searchDiv[0].appendChild(tag)
         if (name === 'Zip code') {
           tags.zipcodeArr.push(value)
@@ -313,6 +313,12 @@ const SearchBar = {
    */
   noTags: () => {
     callbackFunctionNoTags()
+  },
+  /**
+   * Translates array name to display name
+   */
+  toDisplayName: (arrName) => {
+    return window.langText[arrName]
   }
 }
 
