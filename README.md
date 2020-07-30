@@ -2,6 +2,9 @@
 
 Together with Urban.Brussels, we want to build an open web application that will visualize and map more than 35k urban properties to preserve the cultural heritage and history of Brussels.
 
+:pencil: Project description: <https://osoc20.github.io/urban-brussels/>  
+:rocket: Project: <https://urban-brussels.osoc.be/>
+
 # Table of contents
 * [About the project](#about-the-project)
 * [Getting started](#getting-started)
