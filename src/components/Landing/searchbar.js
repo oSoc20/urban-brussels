@@ -72,12 +72,12 @@ const SearchBar = {
     // Append the div element as a child of the autocomplete container
     e.target.parentNode.appendChild(divEl)
     // For each item in the array:
-    SearchBar.addItemsToList(divEl, obj.zipCodes, 'Zipcode')
-    SearchBar.addItemsToList(divEl, obj.cities, 'City')
-    SearchBar.addItemsToList(divEl, obj.streets, 'Street')
-    SearchBar.addItemsToList(divEl, obj.intervenants, 'Architect', architectIcon, 'search--architect')
-    SearchBar.addItemsToList(divEl, obj.styles, 'Style', styleIcon, 'search--style')
-    SearchBar.addItemsToList(divEl, obj.typos, 'Type', typeIcon, 'search--type')
+    SearchBar.addItemsToList(divEl, obj.zipCodes, window.langText.zipcode)
+    SearchBar.addItemsToList(divEl, obj.cities, window.langText.city)
+    SearchBar.addItemsToList(divEl, obj.streets, window.langText.street)
+    SearchBar.addItemsToList(divEl, obj.intervenants, window.langText.architect, architectIcon, 'search--architect')
+    SearchBar.addItemsToList(divEl, obj.styles, window.langText.style, styleIcon, 'search--style')
+    SearchBar.addItemsToList(divEl, obj.typos, window.langText.typologie, typeIcon, 'search--type')
   },
 
   /**
@@ -113,12 +113,32 @@ const SearchBar = {
           divTag.addEventListener('click', (e) => {
             const value = e.currentTarget.getElementsByTagName('input')[0].value
             mainSearchBar.closeAllLists(input)
-            if (name === 'Zip code') {
-              tags.zipcodeArr.push(value)
-            } else {
-              tags[name.toLowerCase() + 'Arr'].push(value)
+
+            switch(name){
+              case window.langText.zipcode:
+                tags.zipcodeArr.push(value)
+                break;
+              case window.langText.city:
+                tags.cityArr.push(value)
+                break;
+              case window.langText.street:
+                tags.streetArr.push(value)
+                break;
+              case window.langText.architect:
+                tags.architectArr.push(value)
+                break;
+              case window.langText.style:
+                tags.styleArr.push(value)
+                break;
+              case window.langText.type:
+                tags.typeArr.push(value)
+                break;
+              default:
+                break;  
             }
+
             SearchBar.goToList()
+            
           })
 
           divEl.appendChild(divTag)

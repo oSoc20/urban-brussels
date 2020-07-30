@@ -8,8 +8,13 @@
         "chart_title2": "Bâtiments par style",
         "chart_title3": "Bâtiments par typologie",
         "chart_title4": "Bâtiments au fil du temps",
-        "iris_link" : "En savoir plus"
-
+        "iris_link" : "En savoir plus",
+        "zipcode":"Code postal",
+        "city":"Ville",
+        "street":"Rue",
+        "architect":"Architecte",
+        "style":"Style",
+        "type":"Typologie"
     },
     "nl": {
         "search_bar": "Zoeken",
@@ -20,6 +25,12 @@
         "chart_title2": "Gebouwen per stijl",
         "chart_title3": "Gebouwen per typologie",
         "chart_title4": "Gebouwen doorheen tijd",
-        "iris_link" : "Meer informatie"
+        "iris_link" : "Meer informatie",
+        "zipcode":"Postcode",
+        "city":"Stad",
+        "street":"Straat",
+        "architect":"Architect",
+        "style":"Stijl",
+        "type":"Typologie"
     }
 }

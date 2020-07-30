@@ -23,6 +23,7 @@ let obj = {}
 let resp, inputValue, searchDiv, input, callbackFunction, callbackFunctionNoTags
 let prevTagsTotalIndex = 0
 let prevTagsIndex = 0
+let existingTag = false;
 
 const SearchBar = {
   /**
@@ -82,12 +83,12 @@ const SearchBar = {
       }
       prevTagsTotalIndex -= 2
 
-      SearchBar.addTag(searchData.zipcode, 'Zipcode')
-      SearchBar.addTag(searchData.cities, 'City')
-      SearchBar.addTag(searchData.streets, 'Street')
-      SearchBar.addTag(searchData.intervenants, 'Architect', 'search--architect', 'tag--architect')
-      SearchBar.addTag(searchData.styles, 'Style', 'search--style', 'tag--style')
-      SearchBar.addTag(searchData.typologies, 'Type', 'search--type', 'tag--type')
+      SearchBar.addTag(searchData.zipcode, window.langText.zipcode)
+      SearchBar.addTag(searchData.cities, window.langText.city)
+      SearchBar.addTag(searchData.streets, window.langText.street)
+      SearchBar.addTag(searchData.intervenants, window.langText.architect, 'search--architect', 'tag--architect')
+      SearchBar.addTag(searchData.styles, window.langText.style, 'search--style', 'tag--style')
+      SearchBar.addTag(searchData.typologies, window.langText.type, 'search--type', 'tag--type')
     }
   },
 
@@ -150,12 +151,12 @@ const SearchBar = {
     // Append the div element as a child of the autocomplete container
     e.target.parentNode.appendChild(divEl)
     // For each item in the array:
-    SearchBar.addItemsToList(divEl, obj.zipCodes, 'Zipcode')
-    SearchBar.addItemsToList(divEl, obj.cities, 'City')
-    SearchBar.addItemsToList(divEl, obj.streets, 'Street')
-    SearchBar.addItemsToList(divEl, obj.intervenants, 'Architect', architectIcon, 'search--architect', 'tag--architect')
-    SearchBar.addItemsToList(divEl, obj.styles, 'Style', styleIcon, 'search--style', 'tag--style')
-    SearchBar.addItemsToList(divEl, obj.typos, 'Type', typeIcon, 'search--type', 'tag--type')
+    SearchBar.addItemsToList(divEl, obj.zipCodes, window.langText.zipcode)
+    SearchBar.addItemsToList(divEl, obj.cities, window.langText.city)
+    SearchBar.addItemsToList(divEl, obj.streets, window.langText.street)
+    SearchBar.addItemsToList(divEl, obj.intervenants, window.langText.architect, architectIcon, 'search--architect')
+    SearchBar.addItemsToList(divEl, obj.styles, window.langText.style, styleIcon, 'search--style')
+    SearchBar.addItemsToList(divEl, obj.typos, window.langText.typologie, typeIcon, 'search--type')
   },
 
   /**
@@ -228,7 +229,13 @@ const SearchBar = {
     SearchBar.closeAllLists()
     if (value !== '') {
       // Add tag
-      if (!tags[name.toLowerCase() + 'Arr'].includes(value)) {
+      for (let item in tags) {
+        if (tags[item].includes(value)){
+          existingTag = true;
+          break;
+        }
+      }
+      if (!existingTag) {
         const tag = document.createElement('button')
         tag.dataset.name = name
         let className = ''
@@ -248,10 +255,28 @@ const SearchBar = {
         </span>
         ` + name + ': ' + value
         searchDiv[0].appendChild(tag)
-        if (name === 'Zip code') {
-          tags.zipcodeArr.push(value)
-        } else {
-          tags[name.toLowerCase() + 'Arr'].push(value)
+
+        switch(name){
+          case window.langText.zipcode:
+            tags.zipcodeArr.push(value)
+            break;
+          case window.langText.city:
+            tags.cityArr.push(value)
+            break;
+          case window.langText.street:
+            tags.streetArr.push(value)
+            break;
+          case window.langText.architect:
+            tags.architectArr.push(value)
+            break;
+          case window.langText.style:
+            tags.styleArr.push(value)
+            break;
+          case window.langText.type:
+            tags.typeArr.push(value)
+            break;
+          default:
+            break;  
         }
 
         // Close tags
