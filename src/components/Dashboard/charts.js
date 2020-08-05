@@ -18,6 +18,9 @@ const Chart = {
       {
         reverseData: true,
         horizontalBars: true,
+        axisX: {
+          onlyInteger: true
+        },
         axisY: {
           offset: 200,
           showLabel: true
