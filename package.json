@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "main.js",
   "dependencies": {
-    "mapbox-gl": "^1.11.1"
+    "mapbox-gl": "^1.13.0"
   },
   "devDependencies": {
     "eslint": "^7.6.0",
